@@ -1,0 +1,51 @@
+match_type,match_value,food_name,factor,note
+food,A015,"Rice, raw, milled",2.7,plain boiled rice
+food,A014,"Rice, parboiled, milled",2.6,boiled
+food,A013,"Rice, raw, brown",2.55,boiled
+food,A019,"Wheat flour, atta",1.4,atta -> roti/chapati
+food,A018,"Wheat flour, refined",1.35,maida -> paratha/naan
+food,A022,"Wheat, semolina",2.8,upma/halwa
+food,A021,"Wheat, bulgur",2.5,dalia
+food,A023,"Wheat, vermicelli",2.6,seviyan
+food,A020,"Wheat, whole",2.6,boiled
+food,B020,"Rajmah, red",2.4,soaked + pressure cooked
+food,B018,"Rajmah, black",2.4,soaked + pressure cooked
+food,B019,"Rajmah, brown",2.4,soaked + pressure cooked
+food,B002,"Bengal gram, whole",2.2,kala chana
+food,B001,"Bengal gram, dal",2.3,chana dal
+food,B011,"Green gram, whole",2.3,sabut moong
+food,B010,"Green gram, dal",2.4,moong dal
+food,B021,"Red gram, dal",2.45,toor/arhar dal
+food,B003,"Black gram, dal",2.4,urad dal
+food,B004,"Black gram, whole",2.35,sabut urad
+food,B014,"Lentil whole, brown",2.4,sabut masoor
+food,B015,"Lentil whole, yellowish",2.4,sabut masoor
+food,B013,Lentil dal,2.45,masoor dal
+food,B012,"Horse gram, whole",2.3,kulthi
+food,F006,"Potato, brown skin, big",0.95,boiled
+food,F007,"Potato, brown skin, small",0.95,boiled
+food,F008,"Potato, red skin",0.95,boiled
+food,A010,Ragi,2.6,porridge
+food,A003,Bajra,2.6,boiled
+food,A005,Jowar,2.6,boiled
+food,A009,Quinoa,2.8,boiled
+group,Cereals and Millets,,2.6,boiled/steamed grain absorbs water
+group,Grain Legumes,,2.45,soaked + boiled dal/pulses
+group,Green Leafy Vegetables,,0.6,"wilts, heavy water loss"
+group,Other Vegetables,,0.88,"sauteed/boiled, mild water loss"
+group,Roots and Tubers,,0.93,"boiled, slight loss"
+group,Animal Meat,,0.7,moisture + fat loss
+group,Poultry,,0.72,moisture loss
+group,Marine Fish,,0.78,moisture loss
+group,Fresh Water Fish and Shellfish,,0.78,moisture loss
+group,Marine Shellfish,,0.75,moisture loss
+group,Marine Mollusks,,0.75,moisture loss
+group,Egg and Egg Products,,1.0,"boiled in shell, no change"
+group,Nuts and Oil Seeds,,0.96,dry roasting
+group,Mushrooms,,0.55,very high water loss
+group,Edible Oils and Fats,,1.0,no change
+group,Condiments and Spices,,1.0,negligible quantity
+group,Milk and Milk Products,,1.0,no change
+group,Fruits,,1.0,eaten raw by default
+group,Sugars,,1.0,no change
+group,Miscellaneous Foods,,1.0,no change

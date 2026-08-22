@@ -1,0 +1,5309 @@
+food_id,alias
+1,cavali biya
+1,cheera vithu
+1,chaulali beej
+1,kosala sag manji dhala
+1,thotakoora ginjalu
+1,mawal
+1,chengkruk maru
+1,ramdana
+1,keerai vidai
+1,danthu beeja
+1,moricha guti
+2,cavali biya
+2,cheera vithu
+2,chaulali beej
+2,danthu beeja
+2,thotakoora ginjalu
+2,mawal
+2,chengkruk maru
+2,ramdana
+2,kosala sag maji kale
+2,keerai vidai
+2,rajagaro
+2,moricha guti
+3,pearl millet
+3,bajara
+3,kash. baajra
+3,krai
+3,sajjalu
+3,kambu
+3,sajje
+3,bajri
+3,kambam
+4,yava
+4,sath
+4,krai
+4,jau
+4,barli
+4,jav
+4,wushke
+4,baarli arisi
+4,jaba
+4,jao
+5,sorghum
+5,jondhahlaa
+5,janha
+5,javara
+5,irunku
+5,jonna
+5,krai
+5,pingu
+5,jolada
+5,cholam
+6,makai
+6,corn
+6,mekke jola
+6,chhali
+6,mokkajonna
+6,makoi
+6,sukha makai
+6,yaavanaala
+6,bhutta
+6,makka
+6,chujaak
+6,makka cholam
+6,symbai riewhadem stem
+6,maize
+6,maka
+7,makai
+7,corn
+7,mekke jola
+7,chhali
+7,mokkajonna
+7,makoi
+7,bhutta
+7,makka
+7,chujaak
+7,makka cholam
+7,lili makai
+7,maize
+7,maka
+7,riewhadem stem
+8,makai
+8,corn
+8,mekke jola
+8,chhali
+8,mokkajonna
+8,makoi
+8,bhutta
+8,makka
+8,chujaak
+8,makka cholam
+8,lili makai
+8,maize
+8,maka
+8,riewhadem lieh
+10,panjapulle
+10,ukrai
+10,kelvaragu
+10,mandia
+10,bavato
+10,madhulika
+10,mandal
+10,mandwa
+10,bhakri
+10,kodo
+10,finger millet
+11,aval
+11,chuda
+11,atukulu
+11,chide
+11,attukulu
+11,beaten rice
+11,avalakki
+11,chengpaak
+11,paunva
+11,chevri
+11,chirwre
+11,chira
+11,chudaa
+11,poha
+11,flattened rice
+11,pohe
+11,shira
+11,chiura
+12,muri
+12,murmure
+12,mudhi
+12,kabok mur
+12,phulian
+12,muramure
+12,pori
+12,kalle puri
+12,tomul
+12,mamra
+12,maramaralu
+12,chirmure
+12,murai
+13,whole grain rice
+13,arisi
+13,kuthari
+13,khaw saw
+13,dampudu biyyam
+13,kathai chokha
+13,matia rangar chaul
+13,bhura choul
+13,chawal
+13,tomul
+13,cheng
+14,bafela chokha
+14,siddha chowl
+14,puzhungal ari
+14,usna chawal
+14,kusubalakki
+14,ukadla tandool
+14,uppudu biyyam
+14,khaw boil
+14,ukhua chaul
+14,biga hua chawal
+14,converted rice
+14,tomul
+14,puzhungal arisi
+14,cheng
+14,usuna chaula
+15,akki
+15,chowl
+15,arisi
+15,chaula
+15,choka
+15,khaw boil
+15,tondool
+15,chaul
+15,biyyam
+15,chawal
+15,tomul
+15,milat khunda chaul
+15,cheng
+16,kuri
+16,shavan
+16,suan
+16,little millet
+16,swank
+16,chama
+16,sama
+16,sava
+16,ganuhaar
+17,syama dhan
+17,konidhan
+17,kangni
+17,priyangu thene
+17,ral gana
+17,rala
+17,thinai
+17,thina
+17,snol
+17,karralu
+17,kodo millet
+18,maida pindi
+18,maida mavu
+18,oat
+18,maida
+18,moida
+18,maido
+19,atta
+19,gahama atta
+19,samagra gha
+19,godhambu mavu
+19,mulu godumai maavu
+19,kaneek
+19,oat unno lota ghaun no lot
+19,sampurna godhi hittu
+19,ata
+19,sampurna godhuma pindi
+20,godhumalu
+20,ghehu
+20,gom
+20,godhi
+20,kanaka
+20,godhum
+20,godumai
+20,gehun
+20,kinek
+20,gahama
+20,ukew
+20,gau
+20,godhumbu
+20,ghaun
+20,gehu
+21,gau ko pitho
+21,bulgur ghaum
+21,bulgur gahu
+21,godumai ravai
+21,bulgur
+21,macaroni wheat
+21,bulgur godhi
+21,dalia
+21,groats
+21,durum wheat
+21,burghul
+21,kinek
+21,godhambu ravu
+21,kew
+21,pasta wheat
+22,gehun suji
+22,godhi rave
+22,macaroni wheat
+22,uppumavu
+22,sooj
+22,godhuma rava
+22,durum wheat
+22,ghaum soji
+22,suji
+22,godumai ravai
+22,gahu rava
+22,pasta wheat
+23,semiya
+23,shevige
+23,very thin pasta
+23,sewai lieh
+23,sewian
+23,sevian
+23,siwain
+23,semai
+23,ghaun ni sev
+23,simai
+23,sewai
+24,semiya
+24,shevige
+24,very thin pasta
+24,sewai saw
+24,gom sewai
+24,sewian
+24,siwain
+24,semai
+24,simai
+24,ghaun ni shekeli sev
+24,bhooni sevian
+25,sanaga papu
+25,harabara dal
+25,chanu dal
+25,chana ko dal
+25,channa dali
+25,cholar dal
+25,kadalaiparuppu
+25,kadale bele
+25,kadala parippu
+25,dai shana
+25,chan-ki-dal
+25,chana-ni-daad
+25,chana tangkhai
+25,sholedi dal
+25,split bengal gram
+25,boot dail
+25,chickpea
+25,chane ki dal
+26,chana
+26,sanagalu
+26,boot
+26,kadala
+26,chana mapum
+26,chanak
+26,chola
+26,chanu
+26,buta
+26,harbara
+26,kondaikadalai
+26,kabuli chana
+26,shole
+26,kala chana
+26,kadale
+26,shana kulai
+26,chickpea
+27,uddachi dal
+27,minapa pappu
+27,mash ki dal
+27,ulutham paruppu
+27,kaha
+27,aadad ni daad
+27,urad bean
+27,mungo bean
+27,uddhina bele
+27,maassa
+27,matir dail phola
+27,uzhunnu parippu
+27,black matpe bean
+27,urad dal
+27,maa ki daal
+27,sagol hawai tangkhai
+27,biulir dal
+27,birri dali
+27,biri dali
+27,maas ko dal
+28,dai iong
+28,adad
+28,uddachi dal
+28,birri
+28,urad bean
+28,mungo bean
+28,uddhina bele
+28,black matpe bean
+28,mashkolail
+28,uzhunu
+28,minumulu mapum
+28,ulundhu
+28,sagol hawai
+28,biri
+28,gota mati mah
+28,kaha
+28,chhilke wali urad dal
+28,sabut maa ki daal
+29,pong hawai
+29,bodi
+29,raajamaassa
+29,karamani
+29,bobbarlu
+29,alasande
+29,lobia
+29,jhudunga
+29,rymbai
+29,vella payaru
+29,barbati
+29,chorap
+29,lesera mahor guti
+29,chavli
+29,baunir
+29,black eyed peas
+29,lobia peas
+30,pong hawai
+30,bodi
+30,raajamaassa
+30,karamani
+30,bobbarlu
+30,alasande
+30,lobia
+30,jhudunga
+30,rymbai lieh
+30,barbati
+30,chorap
+30,lesera mahor guti
+30,vella payaru
+30,chavli
+30,black eyed peas
+30,baunir
+30,lobia peas
+31,avar
+31,shim
+31,baragudi
+31,chikkudu ginjalu
+31,common bean
+31,fieldbean
+31,sem dal
+31,avare
+31,moang
+31,valpapdi
+31,mochai
+31,urohi guti
+31,string bean
+31,broad bean
+31,papta
+31,sem
+31,symbai ri iong
+32,avar
+32,shim
+32,baragudi
+32,symbai ri saw
+32,common bean
+32,fieldbean
+32,chikkudu ginjalu
+32,avare
+32,moang
+32,valpapdi
+32,mochai
+32,urohi guti
+32,string bean
+32,broad bean
+32,papta
+32,sem
+33,avar
+33,shim
+33,symbai ri lieh
+33,baragudi
+33,common bean
+33,fieldbean
+33,chikkudu ginjalu
+33,avare
+33,moang
+33,valpapdi
+33,mochai
+33,urohi guti
+33,string bean
+33,broad bean
+33,papta
+33,sem
+34,cheru payar parippu
+34,mung hawai
+34,hesara bele
+34,payatham paruppu
+34,dhua mogu dail
+34,maash
+34,moong dal
+34,muga dali
+34,pesara pappu
+34,mung dal
+34,mug ni daad
+34,mung bean
+34,moong ko khoste
+34,mungi-di-dal
+34,moong
+34,u dai stem
+34,muang dal
+34,mug dal
+35,mung hawai
+35,u dai jyrngam
+35,muga
+35,mug
+35,maash
+35,hesare kalu
+35,cheru pararu
+35,mudra
+35,mung
+35,muang
+35,mung bean
+35,moog
+35,mun
+35,sabut moong dal
+35,moong
+35,gota mogu mah
+35,pesalu
+35,pasipayir
+36,bakulla
+36,hurule
+36,kulthi bean
+36,kulthi
+36,kurath
+36,kuleeth
+36,kulattha
+36,hurali
+36,kulotto- kalai
+36,kolatha
+36,ulavalu
+36,madras gram
+36,muthira
+36,kollu
+37,mosur dal
+37,u dai saw
+37,dhooli masari dal
+37,triputta
+37,hawai masuri
+37,lanka pappu
+37,vattu parippu
+37,masura dali
+37,laki bele
+37,khesari paruppu
+37,masoor ni daad
+37,masur dail
+37,masoor dal
+37,masoor
+37,lank dal
+38,musuroo
+38,gota masur mah
+38,saboot masari dal
+38,masura
+38,misur pappu
+38,masur dal
+38,mysore paruppu
+38,hawai masuri
+38,mosur
+38,masur parippu
+38,masoor
+38,masur bele
+39,masura musuroo
+39,u dai saw
+39,masoor rakhoda
+39,saboot masari dal
+39,masura
+39,misur pappu
+39,masur dal
+39,mysore paruppu
+39,hawai masuri
+39,mosur
+39,masur parippu
+39,masoor
+39,masur bele
+40,turkish gram
+40,mat bean
+40,kheri
+40,narippayir
+40,dew bean
+40,matki kal
+40,math
+40,moth dal
+40,rymbai
+40,bhiopnitam
+40,matki
+40,motha
+41,gota motor
+41,hawai mangal
+41,kara
+41,sukha vatana
+41,sukhi matar
+41,shana mator
+41,sukhe hare matar dal
+41,tel. batani
+41,batani
+41,pattani
+41,matara
+41,matar
+41,kaza
+42,phansi
+42,karamani payir
+42,shravangheveda
+42,barbati beej
+42,razma
+42,thugare bele
+42,makussttaka
+42,rajma heh
+42,rajma
+42,rajmah
+42,kale rajmah
+42,barigalu
+43,phansi
+43,karamani payir
+43,rajma lieh
+43,shravangheveda
+43,barbati beej
+43,razma
+43,thugare bele
+43,makussttaka
+43,rajma
+43,rajmah
+43,bhoore rajmah
+43,barigalu
+44,phansi
+44,rajma rit
+44,karamani payir
+44,shravangheveda
+44,barbati beej
+44,razma
+44,thugare bele
+44,lal rajmah
+44,makussttaka
+44,rajma
+44,rajmah
+44,barigalu
+45,arhar dal
+45,tuvar ki dal
+45,aaddhakii
+45,tuvaru parippu
+45,kash
+45,h. arhar dal
+45,mairongbi
+45,tuvaramparuppu
+45,tuver ni daad
+45,rahar ko dal
+45,kandi pappu
+45,dai shana
+45,rohor dail
+45,turdal
+45,pigeon pea
+45,thugare bele
+45,harada dal
+45,masur
+46,rymbai ja
+46,tuvarai
+46,tuvaru parippu
+46,mairongbi
+46,harada
+46,gota rohor
+46,tuver
+46,arhar sabud
+46,kandulu
+46,turdal
+46,pigeon pea
+46,arhar sabut dal
+46,tuvar
+46,masur
+47,rymbai ja
+47,shiltong
+47,kattuzhunnu
+47,galmoong
+47,chakwai
+47,meth
+48,bhatmas
+48,nunghawai
+48,soya bean
+48,soya bean dal
+48,muth
+48,toh rymbai
+48,soybean
+48,soya
+48,garikalai
+49,bhatmas
+49,nunghawai
+49,soya bean
+49,soya bean dal
+49,muth
+49,toh rymbai
+49,soybean
+49,soya
+49,garikalai
+50,bok phular paat
+50,agasthi
+50,agathi cheera
+50,agasthi ka sag
+50,avise akulu
+50,chu chu rangmei
+50,humming bird tree leaves
+50,agathio
+50,agase soppu
+50,agathi keerai
+50,agasti
+50,bak ful shak
+50,august tree leaves
+50,spinach
+51,chengkruk
+51,chaulai sag
+51,danthu
+51,notya shaakh
+51,thandu keerai
+51,mawal
+51,chaulai
+51,math
+51,taldalja ni bhaaji
+51,moricha sak
+51,cheera
+51,latte to saag
+51,maarissa
+51,neutia sag
+51,thotakoora
+51,cholai
+52,moricha
+52,chengkruk
+52,danthu
+52,lal shaakh
+52,lal chaulai sag
+52,thandu keerai
+52,mawal
+52,chaulai
+52,math
+52,cheera
+52,latte to saag
+52,maarissa
+52,neutia sag
+52,lal tandaljo
+52,thotakoora
+52,cholai
+53,moricha
+53,chengkruk
+53,chaulai sag
+53,danthu
+53,notya shaakh
+53,thandu keerai
+53,tandaljo
+53,mawal
+53,chaulai
+53,math
+53,cheera
+53,latte to saag
+53,maarissa
+53,neutia sag
+53,thotakoora
+53,cholai
+54,chengkruk
+54,kantewali chaulai
+54,kantewali-notya
+54,mulla thotakura
+54,mawal
+54,mullancheru- cheera
+54,kantemanth
+54,moricha sak
+54,kanta notay shak
+54,kanta-notya
+54,kanta vado tandaljo
+54,mulla danthu
+54,mulaikeerai
+55,chengkruk
+55,kantewali chaulai
+55,kantewali-notya
+55,mulla thotakura
+55,mulakeerai
+55,mawal
+55,kantemanth
+55,kanta neutia sag
+55,kanta vado tandaljo
+55,sla longmar
+55,mullancheru-cheera
+55,mulla danthu
+55,kanta-notya shaak
+56,puroi sak
+56,pui shaak
+56,paalak
+56,bachhali
+56,vallicheera
+56,poi ni bhaji
+56,basale soppu
+56,mayalu
+56,palak
+56,malabar spinach
+56,poi saaga
+56,sla palong dkhar
+56,kodippasali
+57,sakothina soppu
+57,bethe ko saag
+57,bathu sag
+57,chilni bhaji
+57,beto sak
+57,ushtahak
+57,monsaobi
+57,pappukura
+57,bathua sagu
+57,bathua sag
+57,parippuchira
+57,sla jada
+57,paruppukkeerai
+57,jilmil sak
+57,chakavath
+58,beetar sak
+58,beet root soppu
+58,chukandhar da sag
+58,chukandhar sag
+58,sla bit
+58,beet patta
+58,beet ni bhaji
+58,beet root ka sag
+58,beet root keerai
+58,chogander munji
+58,bengali palungo ko saag
+58,beet root
+58,beet root cheera
+59,nagarvelna pan
+59,thamala paku
+59,vetrilai
+59,kwa mana
+59,pan ka patha
+59,kadale soppu
+59,paan
+59,vettiiai
+59,pan-ka-patta
+59,pan-da-patta
+59,paan ka patta
+59,tympew dkhar
+59,pan
+59,pana
+60,nagarvelna pan
+60,thamala paku
+60,vetrilai
+60,tympew
+60,pan ka patha
+60,kadale soppu
+60,paan
+60,vettiiai
+60,pan-ka-patta
+60,pan-da-patta
+60,paan ka patta
+60,kwa mana
+60,pan
+60,pana
+61,choti bund gobh
+61,kalaikose
+61,biliti bandhakopi
+61,chinna cabbage
+61,haakh
+61,chota bandha
+61,choote gobi
+61,chotee gobi
+61,mara kosu
+61,chooti band gobi
+61,kalakose
+61,nani kobi
+62,bandh
+62,china lai
+62,salat chaina
+62,chinese kobi
+63,sla kubi
+63,bandh
+63,kobi na pan
+63,seemai parattai keerai
+64,lili kobi
+64,badha kopi
+64,bandha kobi
+64,shaakaprabhedah
+64,banda kovi
+64,kobi
+64,gos koora
+64,kosu
+64,bandh gobi
+64,kubi
+64,muttu gose
+64,patta gobhi
+64,kobi mana
+64,muttaikose
+64,gobhi
+64,bondhakobi
+65,badha kopi
+65,gobhi
+65,bandha kopee
+65,bondhakobi
+65,banda kovi
+65,red cabbage
+65,bandh gobi
+65,patta gobhi
+65,red kraut
+65,purple cabbage
+65,blur kraut
+65,kobi
+65,gos koora
+65,kosu
+65,muttu gose
+65,muttaikose
+65,kubi saw
+65,shaakaprabhedah
+65,lal kobi
+66,cauliflower
+66,kauli
+66,gojihvaa
+66,kobithamchetmai mana
+66,pookosu keerai
+66,phul gobi
+66,phula kobi patra
+66,phul gobi patta
+66,phul kobir pat
+66,fulawar na pan
+66,go puvvu
+66,sla phul
+66,phul gopi pata
+66,phool gobi di patte
+66,hukosu
+66,phoolgobi panwathir
+67,chembu ilagal
+67,shamangadda yele
+67,sla wang
+67,arvi ka sag
+67,arbi-di-patte
+67,seppam ilaigal
+67,chama akulu
+67,karkalo
+67,alu pan
+67,advi na pan
+67,kasu sak
+67,kochu pata
+67,paan mana
+67,arvi ka patta
+67,saru saga
+68,sajana mana
+68,soanjhna da patta
+68,sajna sag
+68,sajina paat
+68,shevaga pan
+68,mulaga akulu
+68,sujineki palli
+68,murungai keerai
+68,horseradish leaves
+68,nuggeyele
+68,benzoil leaves
+68,saragwa na pan
+68,saijan patta
+68,muringa ela
+68,sajna pata
+69,methi paat
+69,methi pandada
+69,methi man
+69,menthikoora
+69,methi sag
+69,uluva ila
+69,vendhaiya keerai
+69,kasori methi
+69,sla methi
+69,methi shak
+69,methi pata
+69,methi
+69,methi di patte
+69,menthya soppu
+70,adityala akulu
+70,halyun
+70,halim sag
+70,chamsoor ko saag
+70,bor manimuni
+70,ahiva ka patta
+70,khliang syiar
+70,halim-da-sag
+70,allibija soppu
+70,asadio na pan
+70,halim ka patta
+70,alivirai keerai
+70,alivirai cheera
+70,kakharu saga
+71,pundi
+71,pitwa
+71,sougri mana
+71,nalite saga
+71,pitwa sag
+71,ambada ki bhaji
+71,roselle leaves
+71,mestapat
+71,pulichchai keerai
+71,tengamora
+71,gongura
+71,sla jajew jyrngam
+71,pulichai cheera
+71,ambadi
+72,pundi
+72,pitwa
+72,sougri mana
+72,nalite saga
+72,pitwa sag
+72,ambada ki bhaji
+72,roselle leaves
+72,mestapat
+72,pulichchai keerai
+72,tengamora
+72,sla jajew saw
+72,gongura
+72,pulichai cheera
+72,ambadi
+73,knol-khol akulu
+73,gath kobi na pan
+73,kobi maru kabi
+73,hakh monji
+73,salgam ko saag
+73,ool kobi
+73,knol-khol cheera
+73,ganth gobi sag
+73,olkopi sag
+73,ulgobi saga
+73,wild cabbage greens
+73,phan kubi
+73,kohlrabi
+73,knol knol
+73,knol-khol keerai
+73,nol khol ka patta
+73,ganth gobi ka sag
+73,gedde kosu
+74,lettuce ka patta
+74,lettuce soppu
+74,lettuce cheera
+74,hakh
+74,ilaikosu
+74,salada sag
+74,salad ka patta
+74,kismisaag
+74,saalad ko paat
+74,salad paat
+74,salat dkhar
+74,lettuce na pan
+74,kavu akulu
+75,tyrso
+75,sorisa sag
+75,sarson ka saga
+75,hangaam
+75,saro da sag
+75,sarson ki patta
+75,hakh
+75,mochari-chi pan
+75,sasuve yele
+75,sarson ka sag
+75,ava akulu
+75,horiyo paat
+75,sarasava pandada
+75,kadugu ilai
+75,mustard greens
+75,raayo ko saag
+75,kadugu ila
+76,white mustard cabbage
+76,bok choy
+76,horse`s ear
+76,chinese celery cabbage
+76,pak choi na pan
+77,kothimbir/dhane
+77,sugandhi lota
+77,seema malli
+77,leela dhana
+77,garden parsley
+77,auchumooda
+77,verkosu
+77,ajmod
+78,ponnaganni keerai
+78,ponnaganni cheera
+78,kunte ki bhaji
+78,saranthi sag
+78,khanchari
+78,honagone soppu
+78,ponnaganti koora
+78,phakchet
+78,saranthi na pan
+78,madarangh
+78,matikaduri
+79,aal kaniji
+79,kumra shak
+79,bhopla chipan
+79,manthan elakai
+79,kolam na pan
+79,sla pathaw
+79,gummadi akulu
+79,khakaru saga
+79,petha de pate
+79,kaddu ka patta
+79,rongalao paat
+79,parangi ilai
+79,mairen mana
+79,kumhra sag
+79,kumbale soppu
+80,mulo shak
+80,muli di patte
+80,muli ka patta
+80,mullangi ilaigal
+80,mullangi soppu
+80,moolaa ko saag
+80,hangham mula
+80,mullangi akulu
+80,mula ka sag
+80,muda na pan
+80,mooji hakh
+80,mullangi ilai
+80,muli ka sag
+80,sla muli
+80,dherua
+81,chukki soppu
+81,tukhm hummaz
+81,amlavetasa
+81,suka sak
+81,ambada
+81,bun palung
+82,paalungo ko saag
+82,palakoora
+82,paalakya
+82,spinak soppu
+82,palong heh
+82,palong shak
+82,basala cheera
+82,paleng
+82,palak
+82,palak ni bhaji
+82,pasalai keerai
+82,palang sag
+83,chinchecha pala
+83,mange mana
+83,sla sohkyntoi
+83,chinta chiguru
+83,tentuli
+83,p. imli patte
+83,k. hunise chiguru
+83,tam. puliam ilaigal
+83,amli na pan
+83,teteli paat
+83,tetul pata
+84,tallow gourd
+84,chinese preserving melon
+84,kubhindo
+84,boodida gummadi
+84,kumbalanga
+84,torbot
+84,venpoosani
+84,kohala
+84,aal
+84,pathaw iiwbih
+84,budagumbala
+84,petha
+84,peta
+84,winter gourd
+84,panikakharu
+84,winter melon
+84,wax gourd
+84,ash pumpkin
+84,chalkumra
+84,white gourd
+84,bhuru kodu
+84,kumura
+85,kalkipan
+85,bhet ki lakdi
+85,kanile
+85,mulankoombu
+85,veduru chiguru
+85,lilo vans
+85,bansber ankur
+85,baans
+85,soidon
+85,moongil kuruthu
+85,bamboo sprouts
+85,ka lung siej
+85,baimbale
+85,bahgaj
+86,chodi
+86,hawai ashaangbi
+86,u buri
+86,lesera mah
+86,hyambi
+86,sem fali
+86,runner bean
+86,scarlet runner bean
+86,multiflora bean
+86,sem
+87,karon akhabi
+87,tite karela
+87,kakara kaya
+87,paavakkai
+87,korola
+87,kaippakka
+87,karle
+87,hagal kai
+87,kerela heh
+87,kalara
+87,bitter squash
+87,kerela
+87,bitter melon
+87,balsam pear
+87,tillikaa
+87,karela
+88,karon akhabi
+88,tite karela
+88,kerela rit
+88,kakara kaya
+88,paavakkai
+88,karle
+88,marela
+88,kaippakka
+88,hagal kai
+88,kalara
+88,tillikaa
+88,bitter squash
+88,kerela
+88,balsam pear
+88,bitter melon
+88,uchhe
+88,karela
+89,karon akhabi
+89,tite karela
+89,kakara kaya
+89,paavakkai
+89,korola
+89,kaippakka
+89,karle
+89,hagal kai
+89,kalara
+89,tillikaa
+89,bitter squash
+89,kerela
+89,bitter melon
+89,balsam pear
+89,karela
+90,kaarabellam
+90,suraikkai
+90,dudhi
+90,sorekai
+90,lauka
+90,zeeth aal
+90,white flowered gourd
+90,lau
+90,lowki
+90,u klong
+90,pandhara
+90,kadu
+90,cheranga
+90,calabash
+90,jatilao
+90,sorrakaya
+90,khongdrum
+91,kaarabellam
+91,suraikkai
+91,khongdrum
+91,dudhi
+91,kdu
+91,sorekai
+91,lauka
+91,gool aal
+91,white flowered gourd
+91,lau
+91,lowki
+91,pandhara
+91,cheranga
+91,calabash
+91,jatilao
+91,sorrakaya
+91,u klong heh
+92,kaarabellam
+92,suraikkai
+92,dudhi
+92,sorekai
+92,klong jrong
+92,lauka
+92,white flowered gourd
+92,lau
+92,lowki
+92,pandhara
+92,kadu
+92,cheranga
+92,calabash
+92,jatilao
+92,sorrakaya
+92,zeth aal
+92,khongdrum
+93,vruntaakam
+93,baingan
+93,wagun
+93,bengena
+93,aubergine
+93,vange
+93,bhantaa
+93,baigan
+93,badane
+93,eggplant
+93,begun
+93,ringna
+93,vazhuthiniga
+93,vankaya
+93,lam khamen
+93,kathirikkai
+93,sohbaingon jyrngam
+94,vruntaakam
+94,baingan
+94,wagun
+94,bengena
+94,aubergine
+94,vange
+94,bhantaa
+94,baigan
+94,badane
+94,eggplant
+94,begun
+94,ringna
+94,vazhuthiniga
+94,vankaya
+94,lam khamen
+94,kathirikkai
+94,sohbaingon jyrngam
+95,vruntaakam
+95,baingan
+95,wagun
+95,bengena
+95,aubergine
+95,vange
+95,bhantaa
+95,baigan
+95,badane
+95,eggplant
+95,begun
+95,ringna
+95,vazhuthiniga
+95,vankaya
+95,lam khamen
+95,kathirikkai
+95,sohbaingon jyrngam
+96,vruntaakam
+96,baingan
+96,wagun
+96,bengena
+96,aubergine
+96,vange
+96,bhantaa
+96,baigan
+96,badane
+96,eggplant
+96,begun
+96,ringna
+96,vazhuthiniga
+96,vankaya
+96,lam khamen
+96,kathirikkai
+96,sohbaingon jyrngam
+97,vruntaakam
+97,baingan
+97,wagun
+97,bengena
+97,aubergine
+97,vange
+97,bhantaa
+97,baigan
+97,badane
+97,eggplant
+97,begun
+97,ringna
+97,vazhuthiniga
+97,vankaya
+97,lam khamen
+97,kathirikkai
+97,sohbaingon jyrngam
+98,vruntaakam
+98,baingan
+98,wagun
+98,bengena
+98,aubergine
+98,vange
+98,bhantaa
+98,baigan
+98,badane
+98,eggplant
+98,begun
+98,ringna
+98,vazhuthiniga
+98,vankaya
+98,lam khamen
+98,kathirikkai
+98,sohbaingon jyrngam
+99,vruntaakam
+99,baingan
+99,wagun
+99,bengena
+99,aubergine
+99,vange
+99,bhantaa
+99,baigan
+99,badane
+99,eggplant
+99,begun
+99,ringna
+99,vazhuthiniga
+99,vankaya
+99,lam khamen
+99,kathirikkai
+99,sohbaingon jyrngam
+100,vruntaakam
+100,baingan
+100,wagun
+100,bengena
+100,aubergine
+100,vange
+100,bhantaa
+100,baigan
+100,badane
+100,eggplant
+100,begun
+100,ringna
+100,vazhuthiniga
+100,vankaya
+100,lam khamen
+100,kathirikkai
+100,sohbaingon jyrngam
+101,vruntaakam
+101,baingan
+101,wagun
+101,bengena
+101,aubergine
+101,vange
+101,bhantaa
+101,baigan
+101,badane
+101,eggplant
+101,begun
+101,ringna
+101,vazhuthiniga
+101,vankaya
+101,lam khamen
+101,kathirikkai
+101,sohbaingon jyrngam
+102,vruntaakam
+102,baingan
+102,wagun
+102,bengena
+102,aubergine
+102,vange
+102,bhantaa
+102,baigan
+102,badane
+102,eggplant
+102,begun
+102,ringna
+102,vazhuthiniga
+102,vankaya
+102,lam khamen
+102,kathirikkai
+102,sohbaingon jyrngam
+103,vruntaakam
+103,baingan
+103,wagun
+103,bengena
+103,aubergine
+103,vange
+103,bhantaa
+103,baigan
+103,badane
+103,eggplant
+103,begun
+103,ringna
+103,vazhuthiniga
+103,vankaya
+103,lam khamen
+103,kathirikkai
+103,sohbaingon jyrngam
+104,vruntaakam
+104,baingan
+104,wagun
+104,bengena
+104,aubergine
+104,vange
+104,bhantaa
+104,baigan
+104,badane
+104,eggplant
+104,begun
+104,ringna
+104,vazhuthiniga
+104,vankaya
+104,lam khamen
+104,kathirikkai
+104,sohbaingon jyrngam
+105,vruntaakam
+105,baingan
+105,wagun
+105,bengena
+105,aubergine
+105,vange
+105,bhantaa
+105,baigan
+105,badane
+105,eggplant
+105,begun
+105,ringna
+105,vazhuthiniga
+105,vankaya
+105,lam khamen
+105,kathirikkai
+105,sohbaingon jyrngam
+106,vruntaakam
+106,baingan
+106,wagun
+106,bengena
+106,aubergine
+106,vange
+106,bhantaa
+106,baigan
+106,badane
+106,eggplant
+106,begun
+106,ringna
+106,vazhuthiniga
+106,vankaya
+106,lam khamen
+106,kathirikkai
+106,sohbaingon jyrngam
+107,vruntaakam
+107,baingan
+107,wagun
+107,bengena
+107,aubergine
+107,vange
+107,bhantaa
+107,baigan
+107,badane
+107,eggplant
+107,begun
+107,ringna
+107,vazhuthiniga
+107,vankaya
+107,lam khamen
+107,kathirikkai
+107,sohbaingon jyrngam
+108,vruntaakam
+108,baingan
+108,wagun
+108,bengena
+108,aubergine
+108,vange
+108,bhantaa
+108,baigan
+108,badane
+108,eggplant
+108,begun
+108,ringna
+108,vazhuthiniga
+108,vankaya
+108,lam khamen
+108,kathirikkai
+108,sohbaingon jyrngam
+109,vruntaakam
+109,baingan
+109,wagun
+109,bengena
+109,aubergine
+109,vange
+109,bhantaa
+109,baigan
+109,badane
+109,eggplant
+109,begun
+109,ringna
+109,vazhuthiniga
+109,vankaya
+109,lam khamen
+109,kathirikkai
+109,sohbaingon jyrngam
+110,vruntaakam
+110,baingan
+110,wagun
+110,bengena
+110,aubergine
+110,vange
+110,bhantaa
+110,baigan
+110,badane
+110,eggplant
+110,begun
+110,ringna
+110,vazhuthiniga
+110,vankaya
+110,lam khamen
+110,kathirikkai
+110,sohbaingon jyrngam
+111,vruntaakam
+111,baingan
+111,wagun
+111,bengena
+111,aubergine
+111,vange
+111,bhantaa
+111,baigan
+111,badane
+111,eggplant
+111,begun
+111,ringna
+111,vazhuthiniga
+111,vankaya
+111,lam khamen
+111,kathirikkai
+111,sohbaingon jyrngam
+112,vruntaakam
+112,baingan
+112,wagun
+112,bengena
+112,aubergine
+112,vange
+112,bhantaa
+112,baigan
+112,badane
+112,eggplant
+112,begun
+112,ringna
+112,vazhuthiniga
+112,vankaya
+112,lam khamen
+112,kathirikkai
+112,sohbaingon jyrngam
+113,vruntaakam
+113,baingan
+113,wagun
+113,bengena
+113,aubergine
+113,vange
+113,bhantaa
+113,baigan
+113,badane
+113,eggplant
+113,begun
+113,ringna
+113,vazhuthiniga
+113,vankaya
+113,lam khamen
+113,kathirikkai
+113,sohbaingon jyrngam
+114,vruntaakam
+114,baingan
+114,wagun
+114,bengena
+114,aubergine
+114,vange
+114,bhantaa
+114,baigan
+114,badane
+114,eggplant
+114,begun
+114,ringna
+114,vazhuthiniga
+114,vankaya
+114,lam khamen
+114,kathirikkai
+114,sohbaingon jyrngam
+115,simba
+115,field bean
+115,bell bean
+115,avarai
+115,chkaooaradavare
+115,thool haymbe
+115,tic bean
+115,ri majai
+115,amarakka
+115,fava bean
+115,pedda chikkudu
+115,urahi
+115,fafda papdi
+115,ghewda
+115,makhon shim
+115,faba bean
+115,bakla
+116,bhuler marcha
+116,lanka
+116,shimla mirch
+116,shimla mirchi
+116,sohmynken jhur jyrngam
+116,shimla lanka
+116,shimle-di-mirchi
+116,donnmena-sinakayi
+116,koda milagai
+116,bhoplimirchi
+116,shimla marchwangan
+116,kashmiri jalakia
+116,undamulagu
+117,bhuler marcha
+117,lanka
+117,shimla mirch
+117,shimla mirchi
+117,sohmynken jhur jyrngam
+117,shimla lanka
+117,shimle-di-mirchi
+117,koda milagai
+117,bhoplimirchi
+117,shimla marchwangan
+117,kashmiri jalakia
+117,donnmena- sinakayi
+117,undamulagu
+118,bhuler marcha
+118,lanka
+118,shimla mirch
+118,shimla mirchi
+118,shimla lanka
+118,shimle-di-mirchi
+118,sohmynken jhur stem
+118,donnmena-sinakayi
+118,koda milagai
+118,bhoplimirchi
+118,shimla marchwangan
+118,kashmiri jalakia
+118,undamulagu
+119,pookosu
+119,fulawar
+119,kauli
+119,gojihvaa
+119,phul gobi
+119,phul kopi
+119,phul kubi
+119,phul kobi
+119,go puvvu
+119,phoolgobi
+119,kobithamchetmai
+119,hukosu
+120,dieng seleri
+120,ajmud
+120,randhuni
+120,sivarikkeerai
+120,celery daandi
+121,chow-chow
+121,dasakusa
+121,biskot
+121,chayote
+121,cho cho marrow
+121,cho cho sara
+121,phuti kakudi
+121,squash
+122,guanra chhuin
+122,kothavaranga
+122,guar
+122,gaur-ki-phalli
+122,mah
+122,guarae-di-faliya
+122,kothavara
+122,gori koyi
+122,gavar ki palli
+122,goruchikkudu
+122,hyambi
+122,govar
+122,govari
+122,jhar sim
+123,arwi ke kade
+123,arbi de dande
+123,kosu thari
+123,kochur loti
+123,sarunada
+123,arwi-ki-dandi
+123,chembin thandu
+123,kesu danthu
+123,paan makhok
+123,kawang iong
+123,alu-che-dath
+123,seppanthandu
+123,chama kada
+124,arbi de dande
+124,kosu thari
+124,kochur loti
+124,paan makhok
+124,sarunada
+124,arwi-ki-dandi
+124,ka wang jyrngam
+124,kesu danthu
+124,chembin thandu
+124,seppanthandu
+124,alu-che-dath
+124,chama kada
+124,arwi ke kade
+125,makai
+125,shoti shalli
+125,riewhadem lung
+125,chujaak
+126,sosha
+126,kakadi
+126,kachumbar
+126,kakdi
+126,kheera
+126,tiyoh
+126,kakudi
+126,patolah
+126,kakro
+126,khira
+126,vellarikkai
+126,dosa kaya
+126,thabi
+126,southe kayi
+126,sohkhia
+126,laar
+126,vellarikka
+127,sosha
+127,kakadi
+127,kachumbar
+127,kakdi
+127,kheera
+127,tiyoh
+127,kakudi
+127,patolah
+127,kakro
+127,khira
+127,vellarikkai
+127,dosa kaya
+127,thabi
+127,southe kayi
+127,sohkhia
+127,laar
+127,vellarikka
+128,sosha
+128,kakadi
+128,patolah
+128,kakdi
+128,kakudi
+128,tiyoh
+128,sohkhia pyllon
+128,vellarikkai
+128,kakro
+128,khira
+128,dosa kaya
+128,kheera
+128,southe kayi
+128,laar
+128,vellarikka
+129,sajna danta
+129,horseradish
+129,murungakkai
+129,saijan-ki-phalli
+129,shevanga sheng
+129,sajana
+129,dieng sajana
+129,suhanjana di phalliya
+129,mulakaada
+129,sajina
+129,benzoil
+129,muringakkai
+129,sajana chhuin
+129,saragavo
+129,nugga kayi
+129,sujne ki palli
+130,avar
+130,shim
+130,baragudi
+130,chikkudu ginjalu
+130,common bean
+130,fieldbean
+130,urohi
+130,sem ki palli
+130,ri majai
+130,avare
+130,valpapdi
+130,string bean
+130,papta
+130,broad bean
+130,vidaiavarai
+130,hyambi
+130,sem
+131,avar
+131,shim
+131,baragudi
+131,chikkudu ginjalu
+131,common bean
+131,fieldbean
+131,urohi
+131,sem ki palli
+131,ri majai
+131,avare
+131,valpapdi
+131,string bean
+131,papta
+131,broad bean
+131,vidaiavarai
+131,hyambi
+131,sem
+132,green beans
+132,ghiu simi
+132,sannachikkudu
+132,beans
+132,pharasebee
+132,huruli kayi
+132,fras bean
+132,french bean
+132,presbin phyrngop
+132,vidaiavarai
+132,hyambi
+132,fansi
+132,bakla
+133,green beans
+133,ghiu simi
+133,sannachikkudu
+133,beans
+133,pharasebee
+133,presbin
+133,huruli kayi
+133,fras bean
+133,french bean
+133,vidaiavarai
+133,hyambi
+133,fansi
+133,bakla
+134,kathal ki beej
+134,kathal
+134,bindu
+134,soh phan
+134,theibong
+134,panasa
+134,kathahal
+134,kothal
+134,phanas
+134,kanthal
+134,chakka
+134,jackfruit
+134,palapazham
+134,halasu
+134,katahar
+135,theibong maru
+135,kathal
+135,bindu
+135,kothal guti
+135,shyieng soh phan
+135,panasa
+135,kathahal
+135,phanas
+135,kanthal
+135,chakka
+135,jackfruit
+135,palakkottai
+135,halasu
+135,katahar
+136,nol-kol
+136,ganth gobi
+136,kobi maru kabi
+136,oolkobi
+136,monjh haak
+136,knoolkol
+136,wild cabbage
+136,phan kubi
+136,ulkobi
+136,gyathkopi
+136,olkopi
+136,kohl-rabi
+136,noolkol
+137,kova kai
+137,ivy gourd
+137,scarlet gourd
+137,kunduli
+137,konduri
+137,ghole gluru
+137,kowai
+137,tindli
+137,telakucha
+137,jhur thliem
+137,donda kaya
+137,tondekayi
+137,tondale
+137,kunduru
+138,kova kai
+138,ivy gourd
+138,scarlet gourd
+138,kunduli
+138,konduri
+138,ghole gluru
+138,kowai
+138,tindli
+138,telakucha
+138,jhur thliem
+138,donda kaya
+138,tondekayi
+138,tondale
+138,kunduru
+139,bendakaya
+139,bhendi
+139,vendaikkai
+139,vendakkai
+139,okro
+139,bindi
+139,ramtoriya
+139,bhindikaa
+139,dherosh
+139,belandri
+139,bhinda
+139,bhindi
+139,okra
+139,ochro
+139,bende
+140,ambo
+140,ambu
+140,heinou ashangba
+140,kaccha aam
+140,katcha aam
+140,aam
+140,mamidikaya
+140,keasa aam
+140,mavinakayi
+140,soh pieng im
+140,mangai
+140,kach aamb
+140,manga
+140,amba
+141,hare pyaaz
+141,dunglina dakkadi
+141,pichiganda
+141,ulli thandu
+141,piaja sandha
+141,ulli kadalu
+141,hari pyaaz
+141,erulli soppu
+141,sla piat
+141,vengaya thaal
+141,chhayapi ko saag
+141,piyaj paat
+141,spring onion
+141,pati
+141,onion greens
+141,pyaz
+141,tilhou mana
+141,piyaz kali
+142,pempe
+142,pawpaw
+142,papita
+142,kon. dudde
+142,papaya
+142,papayi
+142,soh kymphor im
+142,parangi
+142,papaw
+142,boppayi kaya
+142,katcha pepita
+142,amrutabhanda
+142,pappalikkaai
+142,omakaya
+142,awathabi ashangba
+142,kesa omita
+143,patol rit
+143,kovakkai
+143,padval
+143,potala
+143,pointed gourd
+143,kommu potla
+143,mara thonde
+143,parwal
+143,potol
+144,mar. vatana
+144,motor shuti
+144,hawai tharaak
+144,matar mah
+144,hare matar
+144,tam. paccha pattani
+144,tel. batani
+144,matara
+144,kaza
+144,matar
+144,mator
+145,bale motho
+145,mocha
+145,kele-ka phool
+145,banana flower
+145,kel phool
+145,arati puvvu
+145,kadali bhanda
+145,lafu tharo
+145,kela ka phool
+145,koldil
+145,kele-da-phool
+145,pashor kait
+145,vazhapoo
+146,bale kayi
+146,rambhaa
+146,cooking banana
+146,kele
+146,kela
+146,bantala kadali
+146,vazhakkaai
+146,kaccha kela
+146,laphoi ashangba
+146,bungo
+146,arati kayi
+146,kel
+146,kaskol/purakol
+146,vazhakkai
+146,kait im
+146,kham kael
+147,thor
+147,posola
+147,kelicha khunt
+147,nud kait
+147,bele dindu
+147,kelanu thed
+147,kele-ka-tana
+147,kele da tana
+147,vazhai thandu
+147,kadali manja
+147,lafu
+147,unnipindi
+147,banana stem
+147,arati doota
+148,lal bhopla
+148,gummadi kaya
+148,paarimal
+148,kummaandah
+148,mairen
+148,kakharu
+148,pathaw
+148,mathan
+148,parangikkai
+148,rongalao
+148,kumbala kash
+148,kumro
+148,farsi
+148,kaddu
+148,kohlu
+149,lal bhopla
+149,pathaw saw
+149,paarimal
+149,kummaandah
+149,mairen
+149,kakharu
+149,mathan
+149,parangikkai
+149,rongalao
+149,kumbala kash
+149,kumro
+149,farsi
+149,kaddu
+149,kohlu
+149,gummadi
+150,arhar ki fali
+150,thuvarai
+150,hara tuvar
+150,pigeon pea
+150,pacchi kandulu
+151,turai
+151,beera kaya
+151,torai
+151,kali tori
+151,peerkankai
+151,janhi
+151,peechinga
+151,kon. gurdudde
+151,sebot
+151,jhinge
+151,heeraikai
+151,turrel
+151,luffa
+151,jingka
+151,jikaa
+151,dodka
+151,loofah
+151,turia
+152,turai
+152,beera kaya
+152,bhol
+152,torai
+152,kali tori
+152,peerkankai
+152,peechinga
+152,janchi
+152,kon. gurdudde
+152,sebot
+152,jhinge
+152,heeraikai
+152,turrel
+152,luffa
+152,jingka
+152,dodka
+152,loofah
+152,turia
+153,galartori
+153,padavalanga
+153,padwal
+153,pudalangai
+153,podavala
+153,chichinga
+153,chachinda
+153,cicinndda
+153,dhunduli
+153,chichinda
+153,pandola
+153,jingka
+153,potla kaya
+153,chichindo
+154,galartori
+154,padavalanga
+154,padwal
+154,pudalangai
+154,podavala
+154,chichinga
+154,chachinda
+154,cicinndda
+154,dhunduli
+154,chichinda
+154,pandola
+154,jingka
+154,potla kaya
+154,chichindo
+155,galartori
+155,padavalanga
+155,padwal
+155,pudalangai
+155,podavala
+155,chichinga
+155,chachinda
+155,cicinndda
+155,dhunduli
+155,chichinda
+155,pandola
+155,jingka
+155,potla kaya
+155,chichindo
+156,thondekkai
+156,round melon
+156,tadabuch
+156,tinda
+156,indian squash
+156,indian round gourd
+156,indian baby pumpkin
+156,dhemase
+156,apple gourd
+156,tinde
+157,soh saw jyrngam
+157,bilati baigan
+157,kesa bilahi
+157,ramamulagakaya
+157,kacha tomato
+157,hara velvangi
+157,thakkali kai
+157,kaccha tamatar
+157,khamen ashinba
+157,kaccha tamator
+157,goore hannu
+157,rowagun
+157,takkali
+157,tamator
+158,soh saw dkhar
+158,bilati baigan
+158,ramamulagakaya
+158,tameta
+158,velvangi
+158,pakke tamator
+158,gholobheda
+158,rowangun
+158,khamen ashinba
+158,takkali pazham
+158,poka bilahi
+158,rakta phalam
+158,goore hannu
+158,tomato
+158,pakka tamatar
+158,tamator
+159,bilati baigan
+159,ramamulagakaya
+159,tameta
+159,soh saw khasii
+159,velvangi
+159,pakke tamator
+159,gholobheda
+159,rowangun
+159,khamen ashinba
+159,takkali pazham
+159,poka bilahi
+159,rakta phalam
+159,goore hannu
+159,tomato
+159,pakka tamatar
+159,tamator
+160,dhudul
+160,sabed kaddu
+160,dilpasand
+160,seemai suraikayi
+160,kaashiral
+160,courgette
+160,summer squash
+160,kashi bhopla
+160,golu phubi kakuri
+161,dhudul
+161,sabed kaddu
+161,dilpasand
+161,seemai suraikayi
+161,kaashiral
+161,courgette
+161,summer squash
+161,kashi bhopla
+161,golu phubi kakuri
+162,safar chand
+162,tam. apple pazham
+162,sev
+162,safarjan
+162,soh apple saw
+162,apel
+162,sepu/sema regu
+162,tsoonth
+162,sem
+162,saib
+162,seva
+162,sebu
+162,shau
+162,seb
+163,safar chand
+163,lila safarjan
+163,apple pazham
+163,shau
+163,sev
+163,apel
+163,sepu/sema regu
+163,tsoonth
+163,sem
+163,saib
+163,seva
+163,sebu
+163,soh apple jyrngam
+163,seb
+164,safar chand
+164,apple pazham
+164,sev
+164,safarjan
+164,soh apple saw
+164,apel
+164,sepu/sema regu
+164,tsoonth
+164,sem
+164,saib
+164,seva
+164,sebu
+164,shau
+164,seb
+165,safar chand
+165,apple pazham
+165,sev
+165,safarjan
+165,soh apple saw
+165,apel
+165,sepu/sema regu
+165,tsoonth
+165,saib
+165,seva
+165,sem
+165,shau
+165,seb
+166,jaldaru hannu
+166,sakkarai badhami
+166,seema badam/ jallaru pandu
+166,khoomani
+166,suska khubani
+166,jardaalu
+166,khattu
+166,kharamani
+166,jardaloo
+166,sheema bedhaam pazham
+166,malhoi
+166,khubaani
+166,malhei
+166,tser
+167,jaldaru hannu
+167,sakkarai badhami
+167,seema badam/ jallaru pandu
+167,khoomani
+167,suska khubani
+167,jardaalu
+167,khattu
+167,kharamani
+167,jardaloo
+167,sheema bedhaam pazham
+167,malhoi
+167,khubaani
+167,malhei
+167,tser
+168,aathachakka/ venna-pazham
+168,makhan phal
+168,bennephala/bennehannu
+168,goshtub tang
+168,vennaipazham
+168,makhanphal
+168,kulunashpati
+169,indian bael
+169,bel
+169,marendu pandu
+169,wood apple
+169,vilwa pazham
+169,stone apple
+169,japanese bitter orange
+169,bila
+169,heiri khagok
+169,bhel
+169,bengal quince
+169,soh bel
+169,golden apple
+170,poka kol
+170,kera
+170,kola
+170,kela
+170,kele
+170,vazha pazham
+170,kella
+170,bale hannu
+170,arati pandu
+170,laphoi
+170,champa kadali
+170,kait syiem
+170,paka keda
+170,kadalii
+171,poka kol
+171,kera
+171,kola
+171,kela
+171,kele
+171,kait mon/ ja
+171,kella
+171,bale hannu
+171,arati pandu
+171,laphoi
+171,champa kadali
+171,vazha pazham
+171,paka keda
+171,kadalii
+172,poka kol
+172,kera
+172,sevvazhaipazham
+172,kola
+172,kela
+172,kele
+172,lal paka keda
+172,kella
+172,bale hannu
+172,arati pandu
+172,laphoi
+172,champa kadali
+172,vazha pazham
+172,kait saw
+172,kadalii
+173,poka kol
+173,kera
+173,keda
+173,kola
+173,kela
+173,kele
+173,kait jaji
+173,kella
+173,bale hannu
+173,vazhaipazham
+173,arati pandu
+173,laphoi
+173,champa kadali
+173,vazha pazham
+173,kadalii
+174,jambu
+174,soh jam/ soh jamun
+174,kalojam
+174,neredupandu
+174,kala jamun
+174,naval pazham
+174,kola jamu
+174,jambhool
+174,jaam
+174,blackberry
+174,jamukoli
+174,neralai
+174,nagapazham
+174,jamun
+175,cherrypazham
+175,cherry pazham
+175,gilas
+175,soh sherri
+175,cherri pandu
+175,cherry phal
+175,cherry
+175,kadugempu
+176,soh kismis iong
+176,kismis
+176,munakka
+176,kadi draksh
+176,nerale hannu
+176,najavalppazham
+176,corinthian raisins
+176,kala kishmish
+176,kala pravaha
+176,corinth raisins
+176,zante currants
+176,nalla kishmish
+176,karunthiratcha
+177,sugar apple
+177,sitaphalam
+177,sitapad
+177,sweetsop
+177,seethapazham
+177,ata
+177,sitaphal
+177,sharifa
+177,mar. sitaphal
+178,khajur
+178,kharek
+178,thangtup
+178,kharjoora
+178,khajura
+178,khajuri
+178,pericham pazham
+178,eethapazham
+178,chawara
+178,soh khajur
+178,kharjura
+178,khajoora pandu
+178,date palm
+178,chuhara
+179,khajur
+179,thangtup
+179,kharjoora
+179,khajura
+179,khajuri
+179,pericham pazham
+179,eethapazham
+179,chawara
+179,soh khajur
+179,kharjura
+179,khajoora pandu
+179,date palm
+179,chuhara
+180,khajur
+180,thangtup
+180,soh khajur im
+180,khajura
+180,khajuri
+180,pericham pazham
+180,eethapazham
+180,khajoora pandu
+180,kharjura
+180,date palm
+180,kharjoora
+181,anjir
+181,dimoru
+181,common fig
+181,dumura
+181,atti pandu
+181,anjeer
+181,anjurada hannugalu
+181,athipazham
+181,dimiri
+181,anjiira
+181,heirit
+181,soh dimbur
+182,heikru
+182,soh mylleng
+182,olle
+182,betta nelli
+182,aanla
+182,nellikka
+182,usirikaya
+182,nellikkai
+182,amla
+182,amlakhi
+182,indian gooseberry
+183,draksha
+183,draakssaa
+183,mundiringa
+183,soh grape iong
+183,draksha padu
+183,panneer dratchai
+183,angoor
+183,dach
+183,kadi draksha
+184,draksha
+184,draakssaa
+184,mundiringa
+184,draksha padu
+184,lili draksha
+184,dratchai
+184,angoor
+184,soh grape jyrngam
+184,dach
+185,draksha
+185,draakssaa
+185,mundiringa
+185,lal draksha
+185,draksha padu
+185,soh grape saw
+185,dratchai
+185,angoor
+185,dach
+186,draksha
+186,draakssaa
+186,mundiringa
+186,soh grape iong
+186,draksha padu
+186,dratchai
+186,angoor
+186,dach
+187,draksha
+187,draakssaa
+187,mundiringa
+187,draksha padu
+187,dratchai
+187,angoor
+187,soh grape jyrngam
+187,dach
+188,draksha
+188,draakssaa
+188,mundiringa
+188,soh grape iong
+188,draksha padu
+188,dratchai
+188,angoor
+188,dach
+188,kadi draksha
+189,perakka
+189,aamba
+189,koiyapazham
+189,madhurium
+189,pijuli
+189,seebe
+189,amrodh
+189,peru
+189,jama pandu
+189,peruka
+189,amrud
+189,pungton
+189,amrood
+189,jamphad
+189,peyara
+189,soh pyriam
+190,perakka
+190,aamba
+190,koiyapazham
+190,madhurium
+190,pijuli
+190,bilaiti pungton
+190,seebe
+190,peru
+190,amrodh
+190,jama pandu
+190,lal jamphad
+190,amrud
+190,peruka
+190,peyara
+190,soh pyriam
+191,chakka
+191,kathal
+191,panasa
+191,bindu
+191,theibong
+191,jak
+191,kathahal
+191,kothal
+191,phanas
+191,jakfruit
+191,kanthal
+191,soh phan
+191,palapazham
+191,halasu
+191,katahar
+192,jaamrool
+192,neredupandu
+192,neralai
+192,java apple
+192,naval pazham
+192,jambhool
+192,jamukoli
+192,jamu
+192,semarang rose apple
+192,nagapazham
+192,wax jambu
+192,jamun
+193,koromcha
+193,kalakkay/ parungala
+193,dindimi
+193,karamda
+193,karakka
+193,karekayi
+193,kalive
+193,karonda
+193,karamazda
+193,korja tenga
+193,sushena
+193,karvand
+193,balalak
+194,neembu
+194,nyomb
+194,kaagati
+194,nimbhu
+194,lehin
+194,nibu
+194,nemu
+194,soh jew
+194,pati lebu
+194,limbu
+194,nimapandu
+194,kagaji limbu
+194,champra mahi
+195,mosambi
+195,mosami
+195,mosumi
+195,gaja nimma pandu
+195,mitha lebu
+195,soh balensha
+195,gaja nimbe
+195,limbu goda
+195,kolinchi pazham
+196,lichu
+196,lichi
+196,letchu
+196,lychee
+196,soh manir
+197,mampazham
+197,keri
+197,pakka aam
+197,aamb
+197,soh pieng
+197,aam
+197,mamidi pandu
+197,mam pazham
+197,aamra
+197,ampa
+197,amba
+197,mvina hannu
+197,heinou amunba
+198,mampazham
+198,pakka aam
+198,aamb
+198,soh pieng
+198,aam
+198,pakeli kedi
+198,mamidi pandu
+198,mam pazham
+198,aamra
+198,ampa
+198,amba
+198,mvina hannu
+198,heinou amunba
+199,mampazham
+199,keri
+199,pakka aam
+199,aamb
+199,soh pieng
+199,aam
+199,mamidi pandu
+199,mam pazham
+199,aamra
+199,ampa
+199,amba
+199,mvina hannu
+199,heinou amunba
+200,mampazham
+200,pakka aam
+200,aamb
+200,kesar kedi
+200,soh pieng
+200,aam
+200,mamidi pandu
+200,mam pazham
+200,aamra
+200,ampa
+200,amba
+200,mvina hannu
+200,heinou amunba
+201,mampazham
+201,pakka aam
+201,mam  pazham
+201,aamb
+201,soh pieng
+201,aam
+201,mamidi pandu
+201,aamra
+201,ampa
+201,nilam kedi
+201,amba
+201,mvina hannu
+201,heinou amunba
+202,mampazham
+202,keri
+202,pakka aam
+202,aamb
+202,soh pieng
+202,aam
+202,mamidi pandu
+202,mam pazham
+202,aamra
+202,ampa
+202,amba
+202,mvina hannu
+202,heinou amunba
+203,mampazham
+203,totapuri kedi
+203,pakka aam
+203,aamb
+203,soh pieng
+203,aam
+203,mamidi pandu
+203,mam pazham
+203,aamra
+203,ampa
+203,amba
+203,mvina hannu
+203,heinou amunba
+204,purple mangosteen
+204,sulambali
+204,mangustan
+204,kodam puli
+205,jilapi
+205,seema chintakaya
+205,jangjalebi
+205,ganga imli/ jangal jalebi
+205,bakhai ambli/vilayabi ambli
+205,seema/ dora hunase
+205,mange
+205,soh kyntoi im
+205,vilayatichinch
+205,kodukkapuli
+206,kharamuja
+206,mulam pazham
+206,muskmelon
+206,kharbuuja
+206,kharbooja
+206,kharbuz
+206,siral
+206,kherbuz
+206,kharbujo
+207,kharamuja
+207,mulam pazham
+207,muskmelon
+207,kharbuuja
+207,kharbooja
+207,kharbuz
+207,siral
+207,kherbuz
+207,kharbujo
+208,kamala lebu
+208,kithilai
+208,santre
+208,santra
+208,komla
+208,saathukudi
+208,komola
+208,naarangga
+208,kamala padu
+208,soh niamtra
+208,sangtar
+208,suntala
+208,madhura naranga
+208,kamala
+209,pnamnungu
+209,tala saja
+209,doub palm
+209,toddy palm
+209,tala palm
+209,wine palm
+209,thati munjalu
+209,panai nungu
+209,thati mangu
+209,ice apple
+209,palmyra palm
+209,tar
+210,pawpaw
+210,papita
+210,pappayi hannu
+210,omakai
+210,soh kymphor
+210,popai
+210,pappali
+210,mewa
+210,papaw
+210,amita
+210,kon. papayi
+210,papayu
+210,amrutbhanda
+210,awathabi amunba
+210,boppayi pandu
+210,pepe
+211,soh phareng
+211,aer
+211,ahom bogori
+211,chumbrei
+211,aroo
+211,nectarine
+212,sabarjil
+212,berikai
+212,berikaya
+212,tang
+212,nashpatino
+212,naspoti
+212,nashpati
+212,soh phoh
+212,naspati
+212,berikkai
+213,falsa
+213,soh broi rit
+213,mirgichara
+213,phalsa hannu
+213,falsa pandu
+213,palisa
+213,pharaskol
+214,sapuri
+214,anarasa
+214,kihom ananas
+214,anenas
+214,kon. anas
+214,ananas
+214,punchitipul
+214,soh trun
+214,ahnaros
+214,annasi pazham
+214,anasa pandu
+214,kayirha chakka
+215,onagida draakshi
+215,aloobhukhara
+215,soh plum dorris/ norris
+215,heikha
+215,aaddu
+215,alubokhara
+215,aeir
+215,alapagoda
+216,danimma pandu
+216,anaar
+216,dalimb
+216,anar
+216,kon. dalimb
+216,dalim
+216,dadam
+216,kamphoi
+216,dalimba
+216,daaddima
+216,soh pomegranate
+216,daan
+216,madhulam pazham
+216,dalimbari
+216,mathalam pazhham
+216,bedana
+217,chakkota
+217,bombilimas
+217,nobab
+217,pampara panasa
+217,soh bah
+217,rabab tenga
+217,papnuse
+217,batabilembu
+217,chakotra
+217,papnus
+217,pomelo
+217,batapilembu
+218,kismis
+218,dried grape
+218,kismis iong
+218,songi
+218,mundiringa
+218,endu draksha
+218,ular dhirachai
+218,drashi
+218,kishmish
+218,kadi draksha
+219,kismis
+219,dried grape
+219,songi
+219,mundiringa
+219,endu draksha
+219,pidi draksha
+219,ular dhirachai
+219,kismis saw
+219,drashi
+219,kishmish
+219,kon. suke dhrakshi
+221,sapodilla
+221,chiku
+222,shul-ram fal
+222,lakshamana phalamu
+222,mullatha
+222,malai seethapalam/ paanghi pazham
+222,lakshmanaphala/mulluramphala
+223,caturappuli
+223,amrakh
+223,carambola
+223,soh pyrshong
+223,kordoi
+223,karambal
+223,heinoujom
+223,tamarattai
+223,kamrakh
+223,kazmal/kamrakh
+223,kamaraka/ kapazakshi hannu
+223,starfruit
+223,karamanga
+224,strawberry/ soh stap
+224,istaber
+224,nela milli hannu
+224,stroberry
+224,lachi
+225,chintha pandu
+225,puli
+225,imali
+225,hunise hannu
+225,imli
+225,soh kyntoi
+225,amli
+225,chinch
+225,tentuli
+225,sucukrika
+225,tambari
+225,teteli
+225,mange
+225,tetul
+226,kon. bacchanga
+226,darbusani
+226,dawana
+226,thannir mathan
+226,puchakaya
+226,kallangadi
+226,soh watermelon
+226,tarvuja
+226,tormuj
+226,tarbuja
+226,tarbuj
+226,tadbuj
+226,tarmuj
+226,kharbuja
+226,watermelon
+226,hend wend
+226,kalingad
+227,kon. bacchanga
+227,darbusani
+227,dawana
+227,thannir mathan
+227,puchakaya
+227,kallangadi
+227,soh watermelon
+227,tarvuja
+227,tormuj
+227,tarbuja
+227,tarbuj
+227,tadbuj
+227,tarmuj
+227,kharbuja
+227,watermelon
+227,hend wend
+227,kalingad
+228,bel
+228,kaitha
+228,bum choont
+228,bele
+228,bilvaon
+228,kaith
+228,beal
+228,chaktora
+228,koyeth bael
+228,kavath
+228,elephant apple
+228,velega pandu
+228,vilam pazham
+228,kothu
+229,brey
+229,ber
+229,kula
+229,kon. bor
+229,ziziphus
+229,elanth pazham
+229,jujube
+229,badarii
+229,elanthai pazham
+229,boroi
+229,yelachi
+229,soh broi heh
+229,beri
+229,bogori
+229,barakoli
+229,regu pandu
+229,bor
+230,chukandar
+230,chokhandar
+230,u bit
+230,beetroot
+230,garden beet
+230,bita
+230,golden beet
+230,paalangashaakah
+230,beet
+230,red beet
+230,chogander munji
+230,table beet
+231,u kajor
+231,ghahzir
+231,gajjare
+231,gajjara gadda
+231,grunjanam
+231,gajara
+231,gajar
+231,carrot
+231,gajor
+232,ghahzir
+232,gajjare
+232,gajjara gadda
+232,grunjanam
+232,gajara
+232,gajar
+232,kajor
+232,carrot
+232,gajor
+233,taro
+233,faram
+233,seppankizhangu
+233,kochu
+233,chama dumpa
+233,samagadde
+233,kosu
+233,alu kanda
+233,advi
+233,arwi
+233,paan
+233,ka shriew
+233,chembu
+233,saru
+234,kamal gatta
+234,thamara kada
+234,kamal kakdi
+234,thamara thandu
+234,nader
+234,thamaraithandu
+234,kamal zahr
+234,tavare dantu
+234,thambou
+234,kanwal kakri
+234,padma nad
+234,kamad kakdi
+234,thied lotus
+234,kamalkaakdi
+234,podum thari
+235,u phan
+235,batata
+235,kon. alu
+235,gal alu
+235,urula kizhangu
+235,bangala dumpa
+235,simolu aloo
+235,aloo
+235,urulai kizhangu
+235,bateka
+235,oalu
+235,aalukah
+235,alugadda
+235,alu
+236,batata
+236,u. alu
+236,kon. alu
+236,phan rit
+236,urulaikizhangu
+236,gal alu
+236,bangala dumpa
+236,simolu aloo
+236,aloo
+236,bateka
+236,oalu
+236,aalukah
+236,alugadda
+236,alu
+237,batata
+237,kon. alu
+237,phan saw
+237,urulaikizhangu
+237,gal alu
+237,urula kizhangu
+237,bangala dumpa
+237,aloo
+237,bateka
+237,oalu
+237,aalukah
+237,alugadda
+237,alu
+238,mula
+238,muli saw
+238,mooli
+238,muda
+238,moolikaa
+238,muli
+238,gonglu
+238,mullangi
+239,mula
+239,muli lieh
+239,mooli
+239,muda
+239,moolikaa
+239,muli
+239,gonglu
+239,mullangi
+240,mula
+240,muli pyllon
+240,mooli
+240,muda
+240,moolikaa
+240,muli
+240,gonglu
+240,mullangi
+241,mula
+241,muli pyllon
+241,mooli
+241,muda
+241,moolikaa
+241,muli
+241,gonglu
+241,mullangi
+242,phankaro iong
+242,sakkaria
+242,shakarkand
+242,sakkarvalli kazhangu
+242,meetha aloo
+242,ranga alu
+242,chilagada dumpa
+242,manghra
+242,sakhar khand
+242,kandamula
+242,genasu
+242,sakkarvalli kizhangu
+242,sakkargandi
+242,ratalu
+243,sakkaria
+243,shakarkand
+243,sakkarvalli kazhangu
+243,meetha aloo
+243,ranga alu
+243,chilagada dumpa
+243,manghra
+243,phankaro saw
+243,sakhar khand
+243,kandamula
+243,genasu
+243,sakkarvalli kizhangu
+243,sakkargandi
+243,ratalu
+244,sagi
+244,u manghra
+244,mra genasu
+244,simla  batata
+244,krrapendalamu
+244,maravalli kizhangu
+244,tarul
+244,phan dieng
+244,mrachini
+244,kathakonda
+244,simla alu
+244,aararoot
+244,kasawa soji
+245,karimpolam
+245,kaothum
+245,pani singora
+245,pani singhara
+245,kubyakam
+245,singhara
+245,pani phal
+245,mar. shingara
+245,shingada
+245,goer
+245,shingoda
+246,elephant foot yam
+246,ol kachu
+246,shriew hati
+246,whitespot giant arum
+246,zimikandha
+246,zimikand
+246,suvarna gadda
+246,suran
+246,haa
+246,kandha dumpa
+246,chena
+246,karunai kizhangu
+247,sooran
+247,pidaloo
+247,aalu
+247,winged yam
+247,ratadu
+247,khamba alu
+247,durdakandagadda
+247,shriew jrong
+247,suvarna gadda
+247,purple yam
+247,haa
+247,gherkochoo
+247,water yam
+247,chena
+247,white yam
+247,goradu
+247,karunai kizhangu
+247,kath aloo
+248,kattuchena
+248,ranga alu
+248,ratadu
+248,kodi kizhangu
+248,hegganasu
+248,suaralu
+248,chedu paddu dumpa
+248,haa
+248,suran
+248,jongoli kosu
+248,shriew lieh
+249,morok
+249,sohmynken heh
+249,hara mirchi
+249,kancha lanka
+249,kesa jalakia
+249,hariyo khursani
+249,hasi menasinakayi
+249,pacchi mirapakaya
+249,pachhai milagai
+249,chili pepper
+249,mulaku
+249,marach wangun
+249,lila marcha
+249,marichika
+250,morok
+250,kancha lanka
+250,hara mirchi
+250,kesa jalakia
+250,soh mynken dkhar
+250,hariyo khursani
+250,hasi menasinakayi
+250,pacchi mirapakaya
+250,pachhai milagai
+250,chili pepper
+250,mulaku
+250,marach wangun
+250,lila marcha
+250,marichika
+251,morok
+251,kancha lanka
+251,hara mirchi
+251,kesa jalakia
+251,soh mynken dkhar
+251,hariyo khursani
+251,hasi menasinakayi
+251,pacchi mirapakaya
+251,pachhai milagai
+251,chili pepper
+251,mulaku
+251,marach wangun
+251,lila marcha
+251,marichika
+252,morok
+252,kancha lanka
+252,hara mirchi
+252,kesa jalakia
+252,soh mynken dkhar
+252,hariyo khursani
+252,hasi menasinakayi
+252,pacchi mirapakaya
+252,pachhai milagai
+252,chili pepper
+252,mulaku
+252,marach wangun
+252,marichika
+253,vadhvani marcha
+253,morok
+253,hara mirchi
+253,kancha lanka
+253,kesa jalakia
+253,soh mynken dkhar
+253,hariyo khursani
+253,hasi menasinakayi
+253,pacchi mirapakaya
+253,pachhai milagai
+253,chili pepper
+253,mulaku
+253,marach wangun
+253,marichika
+254,morok
+254,kancha lanka
+254,hara mirchi
+254,kesa jalakia
+254,soh mynken dkhar
+254,hariyo khursani
+254,hasi menasinakayi
+254,pacchi mirapakaya
+254,pachhai milagai
+254,chili pepper
+254,mulaku
+254,marach wangun
+254,lila marcha
+254,marichika
+255,morok
+255,kancha lanka
+255,hara mirchi
+255,kesa jalakia
+255,soh mynken beb
+255,hariyo khursani
+255,hasi menasinakayi
+255,pacchi mirapakaya
+255,pachhai milagai
+255,chili pepper
+255,gola marcha
+255,mulaku
+255,marach wangun
+255,marichika
+256,morok
+256,kancha lanka
+256,hara mirchi
+256,kesa jalakia
+256,soh mynken dkhar
+256,hariyo khursani
+256,hasi menasinakayi
+256,pacchi mirapakaya
+256,pachhai milagai
+256,chili pepper
+256,mulaku
+256,marach wangun
+256,marichika
+257,hara dhaniya patta
+257,hara dhania
+257,daaniwal
+257,hara dhaniya
+257,kothambari
+257,dhana pandada
+257,cilantro
+257,dhonia dkhar
+257,fadhighom mana
+257,chinese parsley
+257,dhone pata
+257,kothimbir
+257,hario dhaniya
+257,kothamalli
+257,kothimiri
+257,dhania patra
+257,dhania paat
+258,bhursanga patra
+258,karibevu
+258,gandhela
+258,karhi-pat
+258,sla kori
+258,narasingha paat
+258,curry pata
+258,kadhi patta
+258,girinimba
+258,karivepaku
+258,kariveppilai
+258,kadi umdo
+258,sweet neem leaves
+258,curry patta
+258,kadi ka patta
+258,kary patta
+259,rynsun heh/ rynsun dkhar
+259,bellulli
+259,lasun
+259,lashoonam
+259,laisan
+259,nohoru
+259,lasan
+259,lehsan
+259,rashun
+259,ruhan
+259,vellulli
+259,lasoon
+259,poondu
+259,rasuna
+259,chanam
+260,lasun
+260,bellulli
+260,lashoonam
+260,rynsun rit
+260,laisan
+260,nohoru
+260,lasan
+260,lehsan
+260,rashun
+260,ruhan
+260,vellulli
+260,lasoon
+260,poondu
+260,rasuna
+260,chanam
+261,lasun
+261,bellulli
+261,lashoonam
+261,laisan
+261,nohoru
+261,lasan
+261,lehsan
+261,ek koya rashun
+261,ruhan
+261,rynsun
+261,vellulli
+261,lasoon
+261,rasuna
+261,chanam
+261,ottrai poondu
+262,ada
+262,aduwa
+262,ale
+262,adu
+262,ada kesa
+262,shunti
+262,inji
+262,sying bah
+262,sing
+262,aadrak
+262,allam
+262,adrak
+263,sying makhir
+263,mavina hasi sunthi
+263,amba hardar
+263,amba haldi
+263,mainji
+263,amada
+263,mamidiallam
+263,aam adhrak
+263,aam adrak
+263,mangainji
+263,aam ada
+263,adrak
+264,pudina patra
+264,pudina
+264,mentha
+264,baabari
+264,phudino
+264,nungsihidak
+264,pudinth
+264,podina
+265,palaanduh
+265,bulb onion
+265,pyaaz
+265,tilhou
+265,kanda
+265,pyaz
+265,common onion
+265,gandha
+265,gandhe
+265,piaja
+265,piyanj
+265,piat
+265,peyaj
+265,kando
+265,neerulli/ullipaya
+265,pyaj
+265,vengayam
+265,eerulli
+265,ulli
+266,xoru piyanj
+266,gundhun
+266,pyaaz kali
+266,praan
+266,chayapi
+266,bulb onion
+266,pyaaz
+266,common onion
+266,piat rit
+266,cheriya ulli
+266,tilhou
+266,chinna ullipaya
+266,kanda
+266,gandhe
+266,chikk eerulli
+266,dungri
+266,chinna vengayam
+267,yangu
+267,hingu
+267,hengu
+267,u hing
+267,perungayam
+267,hing
+267,badhika
+267,jowani badian
+267,perugayam
+267,kayam
+267,ingu
+267,inguva
+267,food of the gods
+267,ting
+268,elaichi
+268,alaichi
+268,elaishi
+268,elakkai
+268,ela
+268,ilasi
+268,true cardamom
+268,elaychi
+268,aa’l budu’a aa’ l
+268,elach
+268,alechi
+268,veldoda
+268,shoti elaychi
+268,yelakki
+269,baddi elaychi
+269,boro elach
+269,ela
+269,greater cardamom
+269,winged cardamom
+269,hill cardamom
+269,nepal cardamom
+269,elathari
+269,bengal cardamom
+269,brown cardamom
+269,moti alechi
+269,elakkai
+269,indian cardamom
+269,ilasi
+269,aa’l budu’a aa’ l
+269,badi elaychi
+269,veldoda
+269,yelakki
+269,elaichi
+269,alaichi
+270,lanka
+270,mirapakaya
+270,shuckhuo lonka
+270,sohmynken trykhong
+270,morok akangba
+270,lal mircha
+270,ona menasinakayi
+270,mirchi
+270,lal marcha
+270,red chilli pepper
+270,mulaku
+270,lal mirchi
+270,sukan jolokia
+270,rato khursani
+270,varamilagai
+271,lavangu
+271,ruang
+271,lobong
+271,labang
+271,u long
+271,long
+271,luwang
+271,krambu
+271,lavang
+271,lavanga
+272,dhania
+272,dhaniyalu
+272,daaniwal
+272,dhoniya
+272,kothambari
+272,symbai dhania
+272,fadhighom maru
+272,kothamalli vidhai
+272,dhanyaka
+272,sukha dhana
+272,cilantro seeds
+272,kothambalari
+272,dhone
+272,dhaniya
+272,dhane
+272,chinese parsley seeds
+273,jeera
+273,jire
+273,u jeera
+273,jiraka
+273,jeerage
+273,jeelakarra
+273,jiru
+273,jira
+273,jeerakam
+273,zyur
+274,methi dana
+274,menthulu
+274,meeth
+274,menthe
+274,symbai methi
+274,methe
+274,venthayam
+274,methi
+274,uluva
+275,jaypatri
+275,japathri
+275,avithri
+275,jayitri
+275,nutmeg
+275,jathipatri
+275,jalwatur
+275,jaipatri
+275,javantri
+276,jaiphal
+276,jajikaya
+276,fragrant nutmeg
+276,jaifal
+276,jathikai
+276,jatiphala
+276,true nutmeg
+276,jayaphala
+276,jayikayi mara
+276,zaaphal
+276,jayaphad
+276,jayphal
+277,oma
+277,ajowan caraway
+277,ajamoda
+277,ajwain
+277,ajwan
+277,vamu
+277,ajowan
+277,joan
+277,jawind
+277,carom
+277,paspron
+277,bishop`s weed
+277,onva
+277,ajmo
+277,ayamothakam
+277,juani
+277,ajman
+278,khus khus
+278,pippallu
+278,long pepper
+278,kandan lippili
+278,tippili
+278,javantri
+278,pipul
+278,pipli
+278,tippali
+278,indian long pepper
+278,sohmarit khlaw
+278,pimpli
+278,sarupippali
+279,marich
+279,kalimirchi
+279,marich ushna
+279,soh marit
+279,mari
+279,golmarichi
+279,peppercorn
+279,marutus
+279,kurumlaku
+279,mire
+279,golomarcho
+279,milagu
+279,mirayalu
+279,hapusha
+279,kaali mirch
+279,kari menasu
+279,kola jaluk
+280,khus khus
+280,aphina
+280,khasa
+280,afim
+280,afiam
+280,posta
+280,khash khash
+280,khas khas
+280,khasakhasa
+280,postak
+280,gasagasalu
+280,khaskhash
+280,postdana
+280,afoo guti
+280,khaskhas
+281,haddar
+281,holud
+281,lader
+281,anashina
+281,manjal
+281,yaingang
+281,haladi
+281,besar
+281,pasupu
+281,halodhi
+281,halad
+281,shynrai
+281,haldi
+282,badam paruppu
+282,vatam kottai
+282,almon
+282,badam
+282,kagji badam
+282,badam pappu
+282,china badam
+283,betel nut
+283,adike
+283,vakka
+283,sopari
+283,sufari
+283,gua
+283,adakka
+283,kwa maru
+283,kottai paakku
+283,areca nut
+283,supari
+283,kwai tyrkhong
+283,puuga
+284,kwai supari
+284,betel nut
+284,adike
+284,vakka
+284,sopari
+284,sufari
+284,gua
+284,paakku
+284,adakka
+284,kwa maru
+284,areca nut
+284,supari
+284,supaari
+284,puuga
+285,betel nut
+285,adike
+285,vakka
+285,sopari
+285,gua
+285,paakku
+285,kwai im
+285,adakka
+285,kwa maru
+285,areca nut
+285,supari
+285,supaari
+285,puuga
+285,kesa tamul
+286,hijli badam
+286,lanka ambu
+286,geru beeja
+286,soh kashu
+286,kaju badam
+286,kaju
+286,jeedi pappu
+286,mundiri paruppu
+286,kasu andi
+287,kopra ni kachli
+287,thenga
+287,snep kor trykhong
+287,kopparai
+287,nadia
+287,narjil
+287,yubi akangba
+287,nariyal
+287,thengini kai
+287,gola
+287,endu kobbari
+287,dab narikol
+287,narkel
+287,khopra
+287,narel
+288,yubi
+288,thengina kayi
+288,narikol
+288,nariyel
+288,naarikela
+288,nariyal
+288,kobbari
+288,naribel
+288,paida
+288,karikku
+288,snep kor im
+288,narkel
+288,narjeel
+288,thenkai
+288,nariyad
+288,narel
+289,allibija
+289,adityala
+289,asadiyo
+289,ahiva
+289,halim
+289,alivirai
+289,soru manimunni
+290,nuvvulu
+290,kada tal
+290,kola til
+290,rasi
+290,sesame seeds
+290,til
+290,thoiding amuba
+290,nei iong
+290,teel
+290,acchellu
+290,ellu
+291,matia rangar til
+291,nei
+291,nuvvulu
+291,rasi
+291,sesame seeds
+291,tal
+291,til
+291,thoiding
+291,teel
+291,acchellu
+291,ellu
+292,nei
+292,nuvvulu
+292,safed tal
+292,rasi
+292,sesame seeds
+292,thoiding angouba
+292,til
+292,boga til
+292,teel
+292,acchellu
+292,ellu
+293,goober
+293,kadale kayi
+293,moong phalli
+293,singdana
+293,leibak hawai
+293,verkadalai
+293,moog phali
+293,peanut
+293,badam
+293,nilakkadalai
+293,bhui mug
+293,verusenaga
+293,china badam
+293,groundnut
+294,sasuve
+294,rai
+294,kadugu
+294,assur
+294,mohori
+294,rayo
+294,sarssapa
+294,sorse
+294,symbai syrso
+294,avalu
+294,soriyah
+294,sorisa
+294,hangham maru
+295,ali vidai
+295,alsi
+295,ailsh
+295,pesi
+295,cheruchana vithu
+295,adsi
+295,tishi
+295,flax seeds
+295,atasii
+295,jawas
+295,common flax
+295,agasi
+295,avise ginzalu
+296,ram til
+296,kada tal
+296,sorguja
+296,gurellu
+296,karim jeerakam
+296,kala til
+296,karale
+296,kattelu
+296,valasulu
+296,bazar-bhang
+297,ram til
+297,sorguja
+297,gurellu
+297,karim jeerakam
+297,kala til
+297,karale
+297,kattelu
+297,valasulu
+297,tal
+297,bazar-bhang
+298,chilgoza
+298,rhi
+298,pine nut
+298,symbai soh kseh
+298,jhurane biya
+299,pesta
+299,pista
+300,kusuma ginzalu
+300,kusambe
+300,sendurkan vidhai
+300,kusum
+300,karadi
+300,symbai tiew sngi
+300,kusumbo
+300,kardi
+301,beli phular guti
+301,suraj mukhi na bee
+301,suraj mukhi
+301,surjya mukhi manji
+301,numitlei maru
+301,suryakanthi
+301,podduthirugidi puvvu ginzalu
+301,suryakanthi vidhai
+301,symbai tiew sngi
+301,sryakanti bijagalu
+301,surya mukhi
+302,akhoot
+302,dhoon
+302,akrot kaya
+302,akrottandi
+302,akhrot
+302,okhar
+302,akhrut
+302,akrodu
+302,akhrod
+302,heijukha
+303,gur
+303,mithai gur
+303,gud
+303,kon. godd
+303,vellam
+303,chini anganba
+303,mandavellam
+303,gul
+303,gurh
+303,guda
+303,bellam
+303,god
+303,bella
+303,gor
+304,aakhu dorua
+304,kunhiyar
+304,ganne rus
+304,usacha rasa
+304,sherdino ras
+304,ganne-da-ras
+304,karumbin neeru
+304,karumbu charu
+304,cheruku rasam
+304,ganne-ke-ras
+304,akher rosh
+304,ganne-ka-ras
+304,chuhing
+304,kabbina halu
+304,soh pai
+305,banger chata
+305,biladi no top
+305,kaalaan
+305,khoomba
+305,hadder
+305,mushroom
+305,aanabay/aanabe
+305,common mushroom
+305,putta godugu
+305,chenghum
+305,chatu
+305,portobello mushroom
+305,tit budam
+305,bhoochhtra
+305,kun koon
+306,tit tyndong
+306,banger chata
+306,biladi no top
+306,kaalaan
+306,khoomba
+306,hadder
+306,mushroom
+306,aanabay/aanabe
+306,putta godugu
+306,chenghum
+306,chatu
+306,bhoochhtra
+306,kun koon
+307,banger chata
+307,biladi no top
+307,kaalaan
+307,khoomba
+307,hadder
+307,mushroom
+307,aanabay/aanabe
+307,uyen
+307,putta godugu
+307,chatu
+307,bhoochhtra
+307,kun koon
+308,banger chata
+308,kaalaan
+308,khoomba
+308,hadder
+308,putta godugu
+308,aanabay/aanabe
+308,chenghum
+308,chatu
+308,bhoochhtra
+308,biladino top
+308,kun koon
+309,tadi
+309,kiad lieh
+309,tarai
+309,palm wine
+309,tam
+309,todhi
+309,tari
+309,tel. kallu
+309,henda
+309,o. tadi
+310,dab narikolor pani
+310,kobbari neeru
+310,nariyal ka pani
+310,yubi mahi
+310,nariyad nu pani
+310,thenga neeru
+310,paida pani
+310,ilaneer
+310,gola da pani
+310,thenga vellam
+310,naral pani
+310,um snepkor
+310,narji pooen
+310,daberjal
+311,dudha
+311,mainsi dudha
+311,maz da doodh
+311,uemma halu
+311,gedha/barre palu
+311,eroi sanghom
+311,erumaipal
+311,doodh
+311,mohor gakhir
+311,dud muid
+311,bhains ka dhood
+311,bhes nu dhudh
+311,kerbau paal
+312,gow kshiram
+312,hasuvina halu
+312,san sanghom
+312,gai nu dhudh
+312,garoor gakhir
+312,gai dudha
+312,dud masi
+312,gaan da doodh
+312,doodh
+312,gai ka doodh
+312,aavu paalu
+312,pasumpaal
+313,palkatti
+313,chaman
+313,channa
+313,paladai
+313,paalavirugudu
+313,chhena
+313,tali
+313,chena
+313,cottage cheese
+314,tel. khoa
+314,khua
+314,thirattupal
+314,khoya
+314,mavo
+314,kan
+314,malai khowa
+314,mal
+412,ladyfish
+412,valli poomeen
+412,jinnagow
+412,vallipoomeen
+412,jallagu
+412,tenpounder
+412,chirya
+412,mooran kendai
+412,poomeen
+412,shonas
+412,ullahti
+412,indo pacific tarpon
+412,dandeli
+412,manna
+412,naum
+412,[place of collection: chennai]
+413,adadio
+413,halwa
+413,karuvolli
+413,chanduva
+413,pomfret
+413,vellaivaval
+413,vellavoli
+413,[place of collection: vizag
+413,thondrotte
+413,karauthakoli
+413,nallachanduva
+413,black pomfret
+413,thellachanduva
+413,vavval
+413,avoli
+413,karuvaval
+413,goa and mumbai]
+413,brown pomfret
+413,kon. halwa
+414,indian anchovy
+414,dindus
+414,conetholi
+414,hardenberg`s anchovy
+414,tamil nethilli
+414,[place of collection: chennai and kochi]
+414,nattoo
+415,[place of collection: kochi]
+415,green jobfish
+416,fitadar
+416,durruah
+416,painnee meen
+416,narimeen
+416,nari meen
+416,giant sea perch
+416,nuddee meen
+416,barramundi
+416,[place of collection: kolkata]
+416,keliji
+416,koduva
+416,koliji
+416,asian sea bass
+416,dadhara
+416,pandu menu
+416,khajura
+416,khajuri
+416,nair meen
+416,bekti
+416,bhekti
+416,bekkut
+416,cock up
+416,gariyu
+416,jiteda
+416,giant seaperch
+416,cockup
+416,pandu kopah
+416,keduwa
+417,[place of collection: kolkata]
+418,common. lizardfish
+418,vangaravasi
+418,nehare
+418,coco mottah
+418,[place of collection: mumbai and kolkata]
+418,bummalo
+418,bumla
+418,cucah sawahri
+418,gulchi
+418,bamaloh
+418,bunmalo
+418,lutia
+418,bombil
+419,[place of collection: chennai
+419,daggertooth pike conger
+419,common. eel
+419,dagger tooth pike conger
+419,goa and vizag]
+420,[place of collection: chennai]
+421,kadal viral
+421,lemonfish
+421,goa
+421,mandapam and chennai]
+421,black kingfish
+421,black salmon
+421,sakla
+421,black king fish
+421,vizag
+421,black bonito
+421,ling
+421,neimeen
+421,crabeater
+421,madusa
+421,[place of collection: mumbai
+421,sakala
+421,prodigal son
+421,peddah mottah
+421,muddus
+421,cuddul verarl
+421,cobia
+421,modasa
+421,butterfish
+421,common. perciform marine fish
+422,common. filefish
+422,[place of collection: goa]
+422,unicorn leatherjacket
+423,spanish jack
+423,[place of collection: vizag and chennai]
+423,rainbow runner
+423,hawaiian salmon
+423,chameen
+423,poomeen
+423,rainbow yellowtail
+423,common. pelagic marine fish
+423,kulkul
+424,fivelines seaperch
+424,common. snapper
+424,gold striped sea-perch
+424,five lined snapper
+424,fivelined snapper
+424,blue striped snapper
+424,[place of collection: kochi]
+424,five line snapper
+425,hawaiian pink snapper
+425,common. snapper
+425,crimson snapper
+425,opakapaka
+425,crimson jobfish
+425,[place of collection: kochi]
+426,hekaru
+426,common. serranid fish
+426,[place of collection: mumbai and goa]
+426,coral trout
+426,kalawa
+426,seabass
+426,kalava
+426,kon. gobri
+426,thornycheek grouper
+426,six barred reef cod
+426,coral cod
+426,varayan kalawa
+426,grouper
+426,guri
+426,gobra
+426,spinycheek grouper
+427,[place of collection: chennai]
+428,karuva ullam
+428,river shad
+428,palia
+428,mullasu
+428,dolum
+428,indian shad
+428,palasa
+428,common. herring
+428,chaksi
+428,ullam
+428,ilish
+428,paliya
+428,ilisha
+428,polasa
+428,hilsa shad
+428,valava
+428,elish
+428,palla
+428,chakshi
+428,oolum
+428,ilishmach
+428,palasah
+428,hilsha
+428,paluva
+428,sevva
+428,paliyah
+428,pala
+428,chaski
+428,jodi
+428,[place of collection: kochi]
+428,palva
+429,common. catfish
+429,arius
+429,[place of collection: vizag]
+430,karua
+430,valamin
+430,pig face bream
+430,silver spotted sea bream
+430,kadu
+430,common. emperor fish
+430,[place of collection: mumbai and mandapam]
+430,bridled pigface bream
+430,pullivelameen
+431,common. lizardfish
+431,[place of collection: kochi]
+431,indian lizardfish
+432,redfilament threadfin bream
+432,[place of collection: chennai]
+433,vellaikala
+433,thread fin
+433,norakudiyan
+433,kondiangalai
+433,baameen
+433,indian threadfin
+433,ramas
+433,budathamaga
+433,row ball
+433,thamuthi
+433,wahmeen
+433,valanakala
+433,yeta
+433,boddumaga
+433,kala
+433,bahmin
+433,tahlunkala
+433,battihiravalai
+433,giant threadfin
+433,podikimaga
+433,thellamaga
+433,chelna
+433,darha
+433,panigala
+433,dadha
+433,[place of collection: goa and vizag]
+433,common. coastal fish
+433,indian salmon
+433,threadfin
+433,maga-booshee
+433,bastard mullets
+433,thiravalai
+433,dara
+433,vahmeenu
+433,sahala
+433,monk fish
+433,kattikalai
+433,seenakalai
+433,bamin
+434,orange spotted grouper
+434,[place of collection: mandapam]
+434,estuary cod
+435,kathupiriyan
+435,common. snapper
+435,maori snapper
+435,cuttu pirium
+435,[place of collection: chennai and vizag]
+435,blubberlip snapper
+435,multi coloured snapper
+436,indian threadfish
+436,chennai and mandapam]
+436,diamond trevally
+436,mirror fish
+436,indian threadfin
+436,[place of collection: mumbai
+436,plumed trevally
+436,common. coastal marine fish
+437,cundahle
+437,karassar
+437,striped chromide
+437,palincha
+437,panishettai
+437,pearlspot cichlid
+437,pearl spot
+437,sethakandai
+437,banded etroplus
+437,duvvenachepa
+437,kon. kalunder
+437,seththa kendai
+437,irimeen
+437,sethakendai
+437,cashimara
+437,common. cichlid fish
+437,cashi mara
+437,erumeen
+437,udupatti
+437,green chromide
+437,[place of collection: kochi]
+437,banded pearlspot
+437,pitul
+437,elimeenu
+438,broad striped anchovy
+438,[place of collection: vizag]
+439,gedara
+439,kuppa
+439,yellowfin tuna
+439,bugudi
+439,common. tuna
+439,gedar
+439,kon. bokado
+439,yellow fin tuna
+439,poovan choora
+439,pimp
+439,soccer
+439,[place of collection: chennai]
+440,para
+440,komaraparai
+440,vennai parai
+440,semaparai
+440,pulli parai
+440,omaka
+440,thenga parai
+440,yellowtail scad
+440,northern yellowtail scad
+440,kilisai
+440,common. small inshore marine fish
+440,one finlet scad
+440,manjal parai
+440,deep trevally
+440,warri parah
+440,gondlu
+440,parai
+440,[place of collection: kochi]
+440,horse mackerel
+441,[place of collection: kochi]
+441,common. ray
+441,shortfin devil ray
+442,garangeta
+442,kilipothu
+442,marakkeri
+442,samudrakili
+442,crescent bass
+442,pootankeeli
+442,mattakkeechan
+442,target fish
+442,kallakeedam
+442,kovakeechan
+442,palin keetchan
+442,boorgooni
+442,naveri hajam
+442,tiger bass
+442,jeerpye
+442,kotha
+442,gahnu
+442,common. grunter
+442,crescent grunter
+442,keeri
+442,gore
+442,squeaking perch
+442,chavathinnikeeli
+442,ganam
+442,palinkeechan
+442,jarbua terapon
+442,baikeeli
+442,keeli
+442,keechan
+442,naida
+442,galikooru
+442,tiger perch
+442,naveri
+442,[place of collection: kochi]
+442,crescent perch
+443,common. large inshore marine fish
+443,yellowspotted kingfish
+443,tarrum
+443,goldspotted trevally
+443,[place of collection: chennai]
+443,yellowspotted trevally
+444,[place of collection: vizag]
+444,common. marine fish
+444,striped threadfin
+445,karan kita
+445,kumala
+445,kanagurta
+445,kanangeluthi
+445,kon. bangada
+445,[place of collection: chennai
+445,indian mackerel
+445,mumbai and goa]
+445,kannangadatha
+445,ayla
+445,bangadei
+445,ayala
+445,kaulagedar
+445,bangada
+445,rake gillat mackerel
+445,common. mackerel
+445,augalai
+445,ayila
+445,bangda
+445,kumla
+445,kaula gedar
+445,kamangadachalu
+446,reticulated unicornfish
+446,[place of collection: mandapam]
+447,blue lined surgeonfish
+447,pala
+447,[place of collection: chennai and vizag]
+447,elongate surgeonfish
+447,common. marine tropical fish
+448,thullu
+448,milkfish
+448,tulu candul
+448,white mullet
+448,polah bontah
+448,hoo meenu
+448,pallabontha
+448,poomeen
+448,humeen
+448,[place of collection: mandapam]
+448,hoomeenu
+448,pal kendai
+448,palmeen
+448,palai meen
+449,common. perch fish
+449,amattikatti
+449,[place of collection: mumbai]
+449,hakkimeen
+449,ambattan parah
+449,ambutan parah
+449,vaniani
+449,moonfish
+450,boi
+450,ain
+450,kathi parenga
+450,bol
+450,sherto
+450,tiruta
+450,gandhia
+450,thirutha
+450,pilsa
+450,flathead greymullet
+450,tirutha
+450,pilas
+450,manla
+450,boita
+450,kochi and chennai]
+450,kathiparega
+450,[place of collection: mumbai
+450,madavai
+450,common. food fish
+450,bhomat
+450,mangan
+450,flathead grey mullet
+450,kasmeen
+450,mala
+451,tol
+451,houndfish
+451,keran
+451,crocodile needlefish
+451,wahlah kuddera
+451,pahmum kolah
+451,common. game fish
+451,[place of collection: mandapam]
+451,giant longtom
+451,oola
+452,peacock fish
+452,[place of collection: chennai and mandapam]
+452,tadmachhi
+452,olameen
+452,tadmasa
+452,sail fish
+452,indo pacific sailfish
+452,sailfish
+452,kunga
+452,common. sailfish
+452,ola meen
+452,indian sail fish
+453,bontha
+453,giant rock cod
+453,hekaru
+453,malabar reefcod
+453,speckled grouper
+453,wekhanu
+453,kalawa
+453,brown-spotted grouper
+453,kodi punju
+453,malabar cod
+453,bontoo
+453,wekhali
+453,grouper
+453,malabar rock cod
+453,punni calawah
+453,[place of collection: vizag]
+453,estuary cod
+453,malabar reef cod
+453,hekru
+453,blackspot cod
+453,malabar grouper
+453,gobra
+453,wekhru
+453,blackspotted rockcod
+453,kalava
+453,malabar rockcod
+453,blacksaddle grouper
+453,greasy grouper
+453,kon. gobri
+453,gopra
+453,morgan`s cod
+453,bhala
+453,muni meenu
+453,common. large serranid fish
+453,estuary rock cod
+454,great trevally
+454,kuluvel
+454,dusk jack
+454,six banded trevally
+454,bigeye trevally
+454,bangada
+454,kala bangada
+454,gondlu
+454,[place of collection: vizag and mumbai]
+454,dusky jack
+454,bigeye jack
+454,tille jack
+454,common. large marine fish
+454,varayan para
+454,maduthala
+455,blacktip trevally
+455,blacktip kingfish
+455,common. large marine fish
+455,yellowtail kingfish
+455,[place of collection: chennnai]
+456,rough triggerfish
+456,common. triggerfish
+456,spotted oceanic triggerfish
+456,[place of collection: kochi]
+457,[place of collection: kochi]
+457,panna croaker
+458,karupputhalayan
+458,kothisavallu
+458,wagti
+458,small headed hairtail
+458,savala
+458,olavalai
+458,peddasavallu
+458,yellasavallu
+458,savalai hairtail
+458,bala
+458,mattachavalai
+458,vellathalayan
+458,savalai
+458,vellasavala
+458,kon. bale
+458,vellithalayan
+458,karthigaivalai
+458,karuppusavala
+458,small head hairtail
+458,small headed ribbon fish
+458,baia
+458,pambole
+458,small headed ribbonfish
+458,hair tail
+458,chavalai
+458,thalayan
+458,common. snapper
+458,patti
+458,silver ribbon fish
+458,nadippussavallu
+458,ribbon fish
+458,[place of collection: chennai and kochi]
+459,[place of collection: vizag]
+459,common. croaker
+459,larimichthys polyactis
+459,redlip croaker
+459,yellow corvina
+459,little yellow croaker
+459,small yellow croaker
+460,false trevally
+460,sudumbala
+460,katli
+460,suthumbu
+460,guthippu
+460,sudumbu
+460,adavu
+460,big jawed jumber
+460,saundala
+460,dhangari
+460,adai minu
+460,dangri
+460,pervi
+460,kuthuppu
+460,[place of collection: kochi]
+460,big jawed jumper
+460,chapla
+461,dataro
+461,noree nalaka
+461,zhipali
+461,bhakas
+461,[place of collection: mumbai]
+461,common. large primitive flatfish
+461,indian halibut
+461,hario
+461,indian turbot
+461,erumei nakku
+461,kon. box lep
+462,yellow scale parrotfish
+462,globe headed parrotfish
+462,bluechin parrotfish
+462,chandi
+462,cream parrotfish
+462,blue trim parrotfish
+462,[place of collection: mandapam]
+462,green blotched parrotfish
+462,common. marine fish
+462,blue barred parrotfish
+463,common. snapper
+463,pinjalo snapper
+463,mette mirrei
+463,polei oolavai
+463,[place of collection: chennai]
+464,badahlan
+464,vizag and mumbai]
+464,adadio
+464,halwa
+464,abanoos
+464,baal
+464,[place of collection: chennai
+464,chanduva
+464,common dolphin fish
+464,pomfret
+464,vellaivaval
+464,vellavoli
+464,common. surface dwelling ray finned fish
+464,kochi
+464,koppurai kula
+464,thondrotte
+464,nallachanduva
+464,himra machhi
+464,affunose
+464,thellachanduva
+464,vavval
+464,avoli
+464,karuvaval
+464,himra masa
+464,mahi mahi
+464,karuvoli
+464,vanna
+464,common dolphinfish
+465,[place of collection: kochi]
+466,mandapam
+466,adadio
+466,halwa
+466,vizag and goa]
+466,karuvolli
+466,chanduva
+466,vellaivaval
+466,vellavoli
+466,mumbai
+466,thondrotte
+466,karauthakoli
+466,nallachanduva
+466,black pomfret
+466,thellachanduva
+466,vavval
+466,avoli
+466,karuvaval
+466,[place of collection: kochi
+466,common. pomfret
+466,chennai
+466,brown pomfret
+466,kon. halwa
+467,common. coastal fish
+467,snubnose pampano
+467,ladagoo
+467,peeyada
+467,kootili
+467,[place of collection: mumbai]
+467,katattitaka
+468,chandee
+468,vichuda
+468,karuvolli
+468,thondrette
+468,white pomfret
+468,ghia
+468,chanduva
+468,common. butterfish
+468,silver pomfret
+468,pomfret
+468,velutha-avoli
+468,vellaivaval
+468,vellavoli
+468,paplet
+468,saranga
+468,thondrotte
+468,nallachanduva
+468,chandi
+468,kon. surangat
+468,thellachanduva
+468,chandava
+468,vavval
+468,avoli
+468,vella vavval
+468,karuvaval
+468,[place of collection: mumbai and goa]
+468,manji
+469,deepbody mojarra
+469,paiya
+469,common. mojarras
+469,charbat
+469,whipfin silver biddy
+469,oodan
+469,[place of collection: kochi]
+469,pranjin
+470,pilli parah
+470,poloosoo parah
+470,para
+470,komaraparai
+470,vennai parai
+470,semaparai
+470,pulli parai
+470,thenga parai
+470,kilisai
+470,king trevally
+470,common. large marine fish
+470,banded trevally
+470,[place of collection: chennai]
+470,manjal parai
+470,pathi parah
+470,golden kingfish
+470,gondlu
+470,golden trevally
+470,parai
+470,horse mackerel
+470,golden toothless trevally
+471,common. coastal fish
+471,[place of collection: chennai
+471,pasupara
+471,sag
+471,palameen
+471,palaimeenu
+471,diana
+471,katta
+471,kochi and goa]
+471,toal parah
+471,dagol
+471,talang queenfish
+471,doubledotted queenfish
+472,tripple tail
+472,atlantic tripletail
+472,brown tripletail
+472,musalli
+472,parrandee
+472,chota bekkut
+472,[place of collection: chennai and vizag]
+472,katkola
+472,common. warm water marine fish
+473,common. grouper fish
+473,souman
+473,hekaru
+473,brown spotted reef cod
+473,[place of collection: vizag]
+473,vekharu
+473,kalava
+473,vekhala
+473,kon. gobri
+473,hekru
+473,brown spotted grouper
+473,brownspotted rockcod
+473,guri
+473,pulli kalawa
+473,brownspotted grouper
+474,common. freshwater gamefish
+474,mumbai
+474,chennai
+474,[place of collection: goa
+474,vizag and mandapam]
+474,kochi
+475,mun ultava
+475,bowmouthed guitarfish
+475,nella dindi
+475,shark ray
+475,sakshi
+475,lanj
+475,mud skate
+475,pottila sora
+475,[place of collection: kochi]
+475,common. ray
+475,bowmouth guitarfish
+476,adallu
+476,stuart evader
+476,nethiprion
+476,chemballi
+476,purple seaperch
+476,mangrove jack
+476,paruthivala meen
+476,red reef bream
+476,cheppili
+476,paruthikanni
+476,ratado
+476,gray snapper
+476,[place of collection: vizag]
+476,silver spotted grey snapper
+476,dog bream
+476,red bass
+476,chenganni
+476,thokkal
+476,patani-keeli
+476,mangrove red snapper
+476,karuvalai
+476,rangoo
+476,tambusa
+476,chembali
+476,red bream
+476,malabar red snapper
+476,pahari
+476,kaliviyya
+476,karva
+476,murumeen
+476,antaleyan
+476,yellow snapper
+476,rock barramundi
+476,vekkattai
+476,common. snapper
+476,creek red bream
+476,river roman
+476,red perch
+476,purple sea perch
+476,rangu
+476,thundava
+477,[place of collection: goa]
+477,tambi
+477,goggle eye
+477,disco meenu
+477,spot-finned bull`s eye
+477,lunar-tailed bullseye
+477,goggle-eye
+477,common. marine fish
+477,lunar tailed bigeye
+477,ratado
+477,red big eye
+477,lunar-tailed bigeye
+477,alta-punti
+477,red bullseye
+477,bigeye snapper
+477,bochelu
+477,moontail bullseye
+477,lunar-tailed glasseye
+477,black-spot big-eye
+477,kakkasi
+477,dorali
+477,crescent tail bigeye
+477,dusky-finned bullseye
+477,duskyfin bulleye
+477,bullsai
+477,paswa
+478,round batfish
+478,orbiculate batfish
+478,circular batfish
+478,orbicular batfish
+478,orbic batfish
+478,common. aquarium fish
+478,[place of collection: chennai]
+479,[place of collection: goa]
+479,atlantic salmon
+479,common. ray-finned fish
+480,japanese threadfin bream
+480,common. marine fish
+480,[place of collection: chennai]
+481,kuluvel
+481,giant trevally
+481,jarradandree-parah
+481,giant kingfish
+481,yellowfin jack
+481,common. large marine fish
+481,barrier trevally
+481,ulua
+481,lowly trevally
+481,[place of collection: chennai]
+482,indian oil sardine
+482,tarli-multhi
+482,nallamathi
+482,malabar sardine
+482,kanat
+482,[place of collection: kolkata]
+482,nalla mathi
+482,tarali
+482,baige
+482,haird
+482,paycharlay
+482,charlay
+482,boothai
+482,noona-kavallu
+482,paichalai
+482,buthai
+482,tarli
+482,haid
+482,common. ray-finned fish
+482,nonalai
+483,spot-tail shark
+483,common. requiem shark
+483,shirat
+483,[place of collection: goa and mandapam]
+483,pisori
+483,katta-sorrah
+483,balda
+483,sorrah shark
+484,[place of collection: kolkata]
+484,common. hammerhead shark
+484,great hammerhead
+485,pollee-makum
+485,potrava
+485,pollee makum
+485,komarasi-sorrah
+485,komarasi
+485,orookoolti-sorrah
+485,poochasurav
+485,zebra shark
+485,corootoolti-sorrah
+485,magara
+485,shinavla
+485,korangum sorrah
+485,coruhgun-sorrah
+485,shinvala
+485,zebra sravu
+485,shinawala
+485,komrasi
+485,musia
+485,common. carpet shark
+485,mushi
+485,[place of collection: kochi]
+486,[place of collection: chennai
+486,kandai
+486,bhungar
+486,ghalse
+486,sea pike
+486,jellow
+486,badri
+486,pickhandle barracuda
+486,badvi
+486,goa
+486,cheelahoo
+486,jaban-tal
+486,vizag and kochi]
+486,banded barracuda
+487,silong catfish
+487,dhain
+487,silondia vacha
+487,koch
+487,[place of collection: kolkata]
+487,common. schilbid catfish
+487,silond
+487,utti
+487,silond catfish
+488,longfinned beryx
+488,red bream
+488,common. deep oceanic fish
+488,alfonsino
+488,imperador
+488,[place of collection: kochi]
+488,alfonsin
+489,asian carp
+489,[place of collection: kolkata]
+489,common. freshwater cyprinid fish
+489,belli-gende
+490,largescale tongue-sole
+490,[place of collection: vizag]
+490,lep
+490,common. tonguefish
+491,common stingray
+491,blue stingray
+491,common. stingray
+491,thirukay
+491,[place of collection: kolkata]
+492,painthi
+492,chand
+492,thetti
+492,spotted sicklefish
+492,therattai
+492,[place of collection: chennai and vizag]
+492,spotted bat-fish
+492,moon-fish
+492,spotted drepane
+492,thotha
+493,[place of collection: chennai and mandapam]
+493,common. gamefish
+493,grey sweetlip
+493,harvil
+493,minstrel sweetlips
+494,elapi
+494,[place of collection: kolkata]
+494,common. tilapia
+494,nile tilapia
+494,cichlid fish
+494,japani kawoi
+495,chuki
+495,[place of collection: chennai
+495,mackerel tuna
+495,common. ray-finned bony fish
+495,kuppa
+495,bugudi
+495,vizag
+495,gedar
+495,little tuna
+495,kon. bokado
+495,ohaman
+495,choori-min
+495,choora
+495,goa
+495,suraly
+495,mandapam and kochi]
+495,kawakawa
+496,skipjack tuna
+496,aku
+496,oceanic skipjack
+496,kuppa
+496,bugudi
+496,striped tuna
+496,oceanic bonito
+496,victor fish
+496,gedar
+496,kon. bokado
+496,common. medium-sized perciform fish
+496,choora
+496,[place of collection: kochi]
+496,arctic bonito
+496,mushmouth
+497,kiru-wahlah
+497,common. herring
+497,[place of collection: vizag]
+497,tenpounder
+497,whitefin wolf-herring
+497,wahlah
+498,varimeen
+498,towar
+498,thavar
+498,[place of collection: chennai and goa]
+498,konam
+498,anjari
+498,ayaokaro
+498,yellari
+498,ayakora
+498,narrow-barred spanish mackerel
+498,chumbum
+498,mah-wu-leachi
+498,vanjiram
+498,mah-wu-laachi
+498,surmai
+498,common. mackerel
+498,barred seer fish
+498,vanjiramu
+498,chhapri
+498,mavulasi
+498,seela
+498,king seer
+498,anjai
+498,ah-ku-lah
+498,konema
+498,vellikannan
+498,velra
+499,common. snapper
+499,[place of collection: mandapam]
+499,green jobfish
+500,ottah
+500,kunar
+500,warahwah
+500,common. rabbitfish
+500,[place of collection: chennai and mandapam]
+500,streaked spinefoot
+501,vulluvan-sorrah
+501,pilithatte
+501,kalla-sravu
+501,kurangu-sorrah
+501,[place of collection: mandapam]
+501,valiasurav
+501,kettalam sorrah
+501,pulli sravu
+501,kethalam-sorrah
+501,kellan
+501,common. requiem shark
+501,valiyasurav
+501,bhoovar
+501,bhoavar
+501,kethalan
+501,waghbeer
+501,vorimiyaru
+501,tiger shark
+501,kalvari
+501,kethulam
+501,pattari
+501,wulluven sorrah
+501,pullia
+502,sword fish
+502,predatory fish
+502,kuthirameen
+502,swordfish
+502,tadmasa
+502,common. billfish
+502,kunga
+502,broadbills
+502,tadmachhi
+502,[place of collection: mandapam]
+502,gamefish
+503,butter catfish
+503,[place of collection: kolkata]
+503,common. sheatfish
+504,florida stone crab
+504,[place of collection: kolkata]
+505,blood-spotted swimming crab
+505,three-spot swimming crab
+505,common. large crab
+505,red-spotted swimming crab
+505,[place of collection: chennai]
+506,common. slipper lobster
+506,flathead lobster
+506,moreton bay bug
+506,[place of collection: chennai]
+506,bay lobster
+507,common. slipper lobster
+507,[place of collection: chennai
+507,flathead lobster
+507,mumbai
+507,mandapam and goa]
+507,kochi
+507,moreton bay bug
+507,vizag
+507,bay lobster
+508,[place of collection: goa]
+508,mangrove crab
+509,indian backwater oyster
+509,[place of collection: goa]
+509,patti
+509,muru
+509,muringa
+509,kalungu
+509,ali
+510,common. marine crustacean
+510,[place of collection: chennai]
+511,asian tiger shrimp
+511,[place of collection: kochi]
+511,common. marine crustacean
+511,giant tiger prawn
+512,[place of collection: goa]
+512,kallumalkai
+512,kadukka
+512,asian green mussel
+512,bivalve
+512,green-lipped mussel
+512,common. mussel
+513,asiatic hard clam
+513,[place of collection: goa]
+514,common octopus
+514,[place of collection: mumbai]
+515,[place of collection: kolkata]
+516,common. large cuttlefish
+516,[place of collection: goa]
+516,pharaoh cuttlefish
+517,[place of collection: chennai and goa]
+518,indian ocean squid
+518,[place of collection: mumbai]
+518,indian squid
+519,tandan
+519,eel-tailed catfish
+519,freshwater catfish
+519,dewfish
+519,common. catfish
+519,[place of collection: kolkata]
+519,jewfish
+520,theppu meenu
+520,common. asian freshwater fish
+520,baudhekera
+520,thambra
+520,thoppa
+520,bhakur
+520,koora kendai
+520,[place of collection: kolkata]
+520,theppu-meenu
+520,krishnabotcha
+520,baudhekra
+520,bacha
+520,botcha
+520,meen
+520,bocha
+520,koora-kendai
+520,thoppa-meen
+520,pla kra ho
+520,barkur
+520,thaila
+520,yamaneri kendai
+520,thoppameenu
+520,japan kendai
+520,boassa
+520,kanavi
+520,japankendai
+520,tambra
+520,katala
+520,theil
+520,theila
+520,major carp
+520,botchee
+520,bawas
+520,karakatla
+520,bhakua
+520,katla
+520,bahkur
+520,thoppu meen
+520,chepti
+521,common. eel
+521,catadromous fish
+521,european eel
+521,[place of collection: kolkata]
+522,goldfish
+522,common. freshwater fish
+522,aquarium fish
+522,[place of collection: kolkata and bangaluru]
+523,iridescent shark
+523,[place of collection: kolkata]
+523,common. shark catfish
+524,dumra
+524,bocha-gandumeenu
+524,rui
+524,[place of collection: kolkata]
+524,tambada masa
+524,rohi
+524,rohiti
+524,rau
+524,roho labeo
+524,row
+524,dhambra
+524,rahu
+524,bhobhari
+524,tambada-massa
+524,rou
+524,kennadi kendai
+524,ruee
+524,kannadi kendai
+524,rohitii
+524,tambada massa
+524,ruhu
+524,tapra
+524,common. carp fish
+524,rohitham
+525,common. small shore crab
+525,[place of collection: kolkata]
+526,shrimp
+526,giant river prawn
+526,[place of collection: bengaluru]
+526,common. palaemonid freshwater prawn
+526,giant freshwater prawn
+527,common. shrimp
+527,[place of collection: mumbai]
+528,common. shrimp
+528,[place of collection: kolkata]

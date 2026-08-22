@@ -1,0 +1,51 @@
+food_id,source_ref,name,issue,ifct_kcal,atwater_kcal,pct_diff
+65,C016,"Cabbage, violet",energy_atwater_mismatch,23.2,17.2,25.9
+115,D032,Broad beans,energy_atwater_mismatch,29.4,42.2,-43.7
+123,D040,"Colocasia, stem, black",energy_atwater_mismatch,23.9,16.4,31.2
+125,D042,"Corn, Baby",energy_atwater_mismatch,73.1,53.4,27.1
+126,D043,"Cucumber, green, elongate",energy_atwater_mismatch,19.6,11.6,40.8
+127,D044,"Cucumber, green, short",energy_atwater_mismatch,17.4,12.4,29.2
+128,D045,"Cucumber, orange, round",energy_atwater_mismatch,19.6,14.0,28.6
+130,D047,"Field beans, tender, broad",energy_atwater_mismatch,30.8,39.8,-29.1
+134,D051,"Jack fruit, raw",energy_atwater_mismatch,26.3,34.6,-31.6
+145,D062,"Plantain, flower",energy_atwater_mismatch,21.3,30.2,-41.8
+147,D064,"Plantain, stem",energy_atwater_mismatch,39.4,27.7,29.8
+154,D071,"Snake gourd, long, dark green",energy_atwater_mismatch,12.0,15.1,-26.4
+157,D074,"Tomato, green",energy_atwater_mismatch,20.8,15.4,26.0
+165,E004,"Apple, small, Kashmir",energy_atwater_mismatch,64.3,47.2,26.6
+181,E020,Fig,energy_atwater_mismatch,81.5,59.9,26.5
+182,E021,Goosberry,energy_atwater_mismatch,23.7,34.1,-44.1
+186,E025,"Grapes, seedless, oval, black",energy_atwater_mismatch,94.4,49.8,47.2
+188,E027,"Grapes, seedless, round, black",energy_atwater_mismatch,89.4,53.9,39.7
+189,E028,"Guava, white flesh",energy_atwater_mismatch,32.3,44.8,-38.8
+193,E032,Karonda fruit,energy_atwater_mismatch,33.7,44.3,-31.5
+194,E033,"Lemon, juice",energy_atwater_mismatch,36.6,18.8,48.7
+207,E046,"Musk melon, yellow flesh",energy_atwater_mismatch,27.7,16.9,39.1
+209,E048,"Palm fruit, tender",energy_atwater_mismatch,24.1,12.0,50.3
+217,E056,Pummelo,energy_atwater_mismatch,50.2,27.5,45.2
+238,F009,"Radish, elongate, red skin",energy_atwater_mismatch,32.0,15.0,53.1
+239,F010,"Radish, elongate, white skin",energy_atwater_mismatch,32.3,15.9,50.8
+240,F011,"Radish, round, red skin",energy_atwater_mismatch,31.1,15.6,49.9
+241,F012,"Radish, round, white skin",energy_atwater_mismatch,30.8,15.0,51.2
+252,G004,"Chillies, green-4",energy_atwater_mismatch,45.4,33.4,26.5
+253,G005,"Chillies, green-5",energy_atwater_mismatch,43.0,31.0,28.0
+258,G010,Curry leaves,energy_atwater_mismatch,63.6,87.5,-37.6
+266,G018,"Onion, small",energy_atwater_mismatch,56.6,36.5,35.5
+267,G019,Asafoetida,energy_atwater_mismatch,331.5,198.0,40.3
+279,G031,"Pepper, black",energy_atwater_mismatch,217.5,274.1,-26.0
+330,N001,"Chicken, poultry, leg, skinless",energy_atwater_mismatch,383.6,191.5,50.1
+504,Q001,Crab,energy_atwater_mismatch,82.0,53.6,34.6
+529,T001,Coconut oil,energy_missing_in_source,0,900.0,
+530,T002,Corn oil,energy_missing_in_source,0,900.1,
+531,T003,Cotton seed oil,energy_missing_in_source,0,899.9,
+532,T004,Gingelly oil,energy_missing_in_source,0,900.0,
+533,T005,Groundnut oil,energy_missing_in_source,0,900.0,
+534,T006,Mustard oil,energy_missing_in_source,0,900.0,
+535,T007,Palm oil,energy_missing_in_source,0,900.0,
+536,T008,Rice bran oil,energy_missing_in_source,0,900.0,
+537,T009,Safflower oil,energy_missing_in_source,0,900.1,
+538,T010,Safflower oil (blended),energy_missing_in_source,0,900.0,
+539,T011,Soyabean oil,energy_missing_in_source,0,900.0,
+540,T012,Sunflower oil,energy_missing_in_source,0,900.0,
+541,T013,Ghee,energy_missing_in_source,0,900.0,
+542,T014,Vanaspati,energy_missing_in_source,0,900.0,
