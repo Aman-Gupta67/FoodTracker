@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -13,8 +14,17 @@ import { createClient } from "@/lib/supabase/server";
 // shown to the user; it only exists because Supabase Auth needs *some*
 // identifier to generate a link against.
 
-function normalizePhone(raw: string): string {
-  return raw.replace(/[^\d+]/g, "");
+// A naive digits-only regex normalization caused a real bug: the same
+// physical number typed once with a country code and once without (or
+// with a leading 0) produced different keys, silently creating a second
+// account for the same person. Real parsing to canonical E.164 form fixes
+// that. Default region 'IN' since the catalog/app is India-focused —
+// numbers typed with an explicit country code still parse correctly
+// regardless of this default.
+function normalizePhone(raw: string): string | null {
+  const parsed = parsePhoneNumberFromString(raw, "IN");
+  if (!parsed || !parsed.isValid()) return null;
+  return parsed.number; // E.164, e.g. "+919876543210"
 }
 
 function syntheticEmailFor(normalizedPhone: string): string {
@@ -29,7 +39,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  if (typeof phone !== "string" || normalizePhone(phone).length < 6) {
+  if (typeof phone !== "string") {
     return NextResponse.json(
       { error: "Enter a valid phone number." },
       { status: 400 },
@@ -37,6 +47,13 @@ export async function POST(request: Request) {
   }
 
   const normalized = normalizePhone(phone);
+  if (!normalized) {
+    return NextResponse.json(
+      { error: "Enter a valid phone number." },
+      { status: 400 },
+    );
+  }
+
   const syntheticEmail = syntheticEmailFor(normalized);
   const admin = createAdminClient();
 
@@ -73,7 +90,26 @@ export async function POST(request: Request) {
       .insert({ phone_number: normalized, user_id: userId });
 
     if (mapError) {
-      return NextResponse.json({ error: mapError.message }, { status: 500 });
+      // 23505 = unique_violation: another concurrent request for the same
+      // number won the race and inserted first. Use its mapping instead of
+      // erroring, and clean up the orphaned user we just created so it
+      // doesn't linger unused.
+      if (mapError.code === "23505") {
+        const { data: raceWinner } = await admin
+          .from("phone_login")
+          .select("user_id")
+          .eq("phone_number", normalized)
+          .maybeSingle();
+
+        if (raceWinner?.user_id) {
+          await admin.auth.admin.deleteUser(userId).catch(() => {});
+          userId = raceWinner.user_id;
+        } else {
+          return NextResponse.json({ error: mapError.message }, { status: 500 });
+        }
+      } else {
+        return NextResponse.json({ error: mapError.message }, { status: 500 });
+      }
     }
   }
 
