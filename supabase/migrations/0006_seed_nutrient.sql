@@ -1,0 +1,35 @@
+-- Nutrient dictionary, from out/seed_nutrient.sql (import_ifct.py output)
+-- verbatim — do not hand-edit; rerun the importer if this needs to change.
+
+insert into nutrient (id, key, display_name, unit, category, sort_order) values
+  (1, 'energy', 'Energy', 'kcal', 'macro', 1),
+  (2, 'protein', 'Protein', 'g', 'macro', 2),
+  (3, 'fat', 'Total Fat', 'g', 'macro', 3),
+  (4, 'carb', 'Carbohydrate', 'g', 'macro', 4),
+  (5, 'fiber', 'Dietary Fibre', 'g', 'macro', 5),
+  (6, 'fiberSoluble', 'Soluble Fibre', 'g', 'macro', 6),
+  (7, 'sugarFree', 'Free Sugars', 'g', 'macro', 7),
+  (8, 'starch', 'Starch', 'g', 'macro', 8),
+  (9, 'fatSat', 'Saturated Fat', 'g', 'lipid', 9),
+  (10, 'fatMono', 'Monounsaturated Fat', 'g', 'lipid', 10),
+  (11, 'fatPoly', 'Polyunsaturated Fat', 'g', 'lipid', 11),
+  (12, 'fatTrans', 'Trans Fat', 'g', 'lipid', 12),
+  (13, 'omega3', 'Omega-3', 'mg', 'lipid', 13),
+  (14, 'omega6', 'Omega-6', 'mg', 'lipid', 14),
+  (15, 'cholesterol', 'Cholesterol', 'mg', 'lipid', 15),
+  (16, 'sodium', 'Sodium', 'mg', 'mineral', 16),
+  (17, 'potassium', 'Potassium', 'mg', 'mineral', 17),
+  (18, 'calcium', 'Calcium', 'mg', 'mineral', 18),
+  (19, 'iron', 'Iron', 'mg', 'mineral', 19),
+  (20, 'magnesium', 'Magnesium', 'mg', 'mineral', 20),
+  (21, 'zinc', 'Zinc', 'mg', 'mineral', 21),
+  (22, 'phosphorus', 'Phosphorus', 'mg', 'mineral', 22),
+  (23, 'selenium', 'Selenium', 'ug', 'mineral', 23),
+  (24, 'vitA', 'Vitamin A (RAE)', 'ug', 'vitamin', 24),
+  (25, 'vitC', 'Vitamin C', 'mg', 'vitamin', 25),
+  (26, 'vitD', 'Vitamin D', 'ug', 'vitamin', 26),
+  (27, 'vitE', 'Vitamin E', 'mg', 'vitamin', 27),
+  (28, 'vitK', 'Vitamin K', 'ug', 'vitamin', 28),
+  (29, 'folate', 'Folate (B9)', 'ug', 'vitamin', 29),
+  (30, 'vitB12', 'Vitamin B12', 'ug', 'vitamin', 30)
+on conflict (id) do nothing;

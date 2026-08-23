@@ -27,11 +27,25 @@ If the build plan and the schema doc disagree on DDL, the schema doc wins and th
 
 ## Stack
 
-Next.js 15 (App Router) · TypeScript strict · Tailwind + shadcn/ui · TanStack Query · Dexie (IndexedDB) · Serwist PWA · Supabase (Postgres, magic-link auth, RLS) · Vercel.
+Next.js 15 (App Router) · TypeScript strict · Tailwind + shadcn/ui · TanStack Query · Dexie (IndexedDB) · Serwist PWA · Supabase (Postgres, RLS) · Vercel.
 
 Charts are hand-rolled SVG. No chart library in the MVP.
 
 Keep the dependency list short. Every package is a thing that breaks on the next Next.js major.
+
+---
+
+## Auth — phone number, no verification (changed 2026-08-23)
+
+Magic-link email auth was replaced with phone-number login: type a number, you're in, no code or confirmation of any kind. This was a deliberate choice, not a shortcut — accepted specifically because this is a single-user/personal app, not a public product.
+
+**The real tradeoff:** anyone who types a given phone number gets that account. There is zero proof of ownership. Do not expose this deployment somewhere a stranger could stumble onto it and guess a number.
+
+How it works (`src/app/api/auth/phone-login/route.ts`): a server route using the Supabase **service_role key** looks up or creates a Supabase Auth user for the number (mapped via the `phone_login` table, which has RLS with no policies at all — only the service role can touch it), then mints a real session server-side via `admin.generateLink()` + `verifyOtp()`. No email or SMS is ever actually sent — the synthetic `phone-<digits>@phone.local` address only exists because Supabase Auth needs some identifier to hang a link off of.
+
+`SUPABASE_SERVICE_ROLE_KEY` must be set server-side only (`.env.local`, Vercel env vars) and must **never** be prefixed `NEXT_PUBLIC_` or imported into a client component — `src/lib/supabase/admin.ts` guards this with the `server-only` package, which turns an accidental client import into a build failure. It bypasses RLS entirely; treat it like a root password.
+
+Sign-out exists (Profile page) and is a plain `supabase.auth.signOut()` — that part didn't change.
 
 ---
 
@@ -69,11 +83,11 @@ Every `food` row carries `fetched_via`, `fetch_confidence`, `fetch_payload`, `co
 
 ## Provider architecture — don't shortcut it
 
-All food lookup goes through the `FoodProvider` interface returning `FoodCandidate`. The MVP registers exactly one provider (`LocalCatalogProvider`). Open Food Facts, FDC, and LLM dish decomposition are **planned and out of scope** — the abstraction exists so adding them later is a registration, not a refactor.
+All food lookup goes through the `FoodProvider` interface returning `FoodCandidate`. The MVP originally registered exactly one provider (`LocalCatalogProvider`); **Open Food Facts (barcode lookup) is now in scope and being registered as a second provider** — this is a deliberate scope change made mid-build (2026-08-23), not an oversight. FDC and LLM dish decomposition remain **planned and out of scope**.
 
 No provider-specific shape may leak into UI or state. If you find yourself writing `if (source === 'ifct2017')` in a component, the abstraction has already failed.
 
-Do not pull OFF forward into the MVP, however much you want packaged goods. It is item 5 in the known-limitations list for a reason.
+Anything OFF returns is a *candidate*, not a catalog write — the provenance rule below (`needsConfirmation: true` routes through a review sheet) applies to it in full. OFF is crowd-sourced and frequently wrong; never let it auto-promote to canonical the way MyFitnessPal did.
 
 ---
 
@@ -83,7 +97,7 @@ Do not pull OFF forward into the MVP, however much you want packaged goods. It i
 - **36 foods disagree with Atwater by >25%**, clustering near a factor of exactly 2 (radish, lemon juice, skinless chicken leg). Listed in `out/warnings.csv`. **Deliberately not auto-corrected.** Heuristically overwriting measured data produces a database nobody can reason about. Correct them by hand against FDC, one at a time, with `is_curated = true`.
 - **Yield factors are estimates, not measurements**, seeded `is_calibrated = false`. Any entry that went through a conversion must carry an "estimated" marker in the UI.
 - **Nutrient retention through cooking is not modelled.** Mass yield only. Water-soluble vitamins are overstated by 20–50% on boiled foods. Macros are unaffected, which is why this is acceptable for the MVP — say so where micros are displayed.
-- **No packaged goods, no restaurant food, no oats.** The catalog is 542 raw Indian ingredients.
+- **The seeded local catalog is 542 raw Indian ingredients — no packaged goods, no restaurant food, no oats.** OFF lookups can now surface packaged goods live via barcode (see Provider architecture above), but they land as unconfirmed candidates, not pre-seeded rows — the 542-row IFCT catalog itself doesn't grow from this.
 
 ---
 

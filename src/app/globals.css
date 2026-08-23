@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — mvp-build-plan.md §3.1.
+ *
+ * primary-500 (#fc8c2f) is ~2.2:1 against white and fails WCAG AA for text.
+ * Use it for fills only (buttons, rings, selected backgrounds).
+ * Body text on white must be primary-700 or darker; white text on an
+ * orange background needs primary-600 or darker underneath it.
+ */
+:root {
+  --color-primary-50: #fdf5ec;
+  --color-primary-100: #feebda;
+  --color-primary-200: #fdd7b5;
+  --color-primary-300: #fdb77e;
+  --color-primary-400: #fc9e56;
+  --color-primary-500: #fc8c2f; /* brand fill — never body text on white */
+  --color-primary-600: #de761e; /* button pressed / min. bg for white text */
+  --color-primary-700: #ba6216; /* min. orange for text on white */
+  --color-primary-800: #8f4b11;
+
+  /* Macro colours — must not collide with brand orange */
+  --color-protein: #2563eb;
+  --color-carbs: #0d9488;
+  --color-fat: #7c3aed;
+  --color-calories: var(--color-primary-500);
+
+  --background: #ffffff;
+  --foreground: var(--color-stone-900);
+}
+
+@theme inline {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+
+  --color-protein: var(--color-protein);
+  --color-carbs: var(--color-carbs);
+  --color-fat: var(--color-fat);
+  --color-calories: var(--color-calories);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/*
+ * The app content column is capped at 480px (mvp-build-plan.md §3.2) and
+ * centred — on anything wider than that (desktop, a resized PWA window),
+ * the body shows as a neutral backdrop behind it so the column reads as a
+ * deliberate app shell, not a narrow website that forgot to fill the page.
+ */
+body {
+  background: var(--color-stone-100);
+  color: var(--foreground);
+}
+
+/* Style only — height/width stay as Tailwind utilities per call site, since
+   inputs range from full-width search boxes to small inline grams fields. */
+@utility field-input {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-stone-300);
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-stone-900);
+  outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.field-input::placeholder {
+  color: var(--color-stone-400);
+}
+.field-input:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
