@@ -31,6 +31,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* Manual <head> tags, not the Metadata API: on dynamically-rendered
+          routes (any page reading cookies/searchParams, i.e. most of this
+          app) Next.js streams Metadata-API tags into the end of <body> and
+          only relocates icon links into <head> — apple-mobile-web-app-capable
+          and the manifest link get stranded where iOS Safari won't see them. */}
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+      </head>
       {/* suppressHydrationWarning: browser extensions (Grammarly, etc.)
           inject attributes onto <body> before React hydrates */}
       <body className="antialiased" suppressHydrationWarning>
