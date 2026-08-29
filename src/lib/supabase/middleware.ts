@@ -1,9 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// /api/auth/phone-login must stay public — the whole point is that it's
-// called before the user has a session, to create one.
-const PUBLIC_PATHS = ["/login", "/api/auth"];
+// API routes are excluded from the redirect-to-/login behavior entirely —
+// an API consumer expects a JSON error response, not a 307 to an HTML
+// page. Each API route is responsible for its own auth check and error
+// shape (phone-login has none by design; parse-meal returns a 401 JSON).
+const PUBLIC_PATHS = ["/login", "/api/"];
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });

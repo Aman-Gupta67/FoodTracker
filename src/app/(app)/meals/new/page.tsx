@@ -22,7 +22,7 @@ export default function NewMealPage() {
 
   return (
     <main className="flex-1 space-y-4 px-4 py-4">
-      <h1 className="text-lg font-medium">New meal</h1>
+      <p className="text-xl font-extrabold tracking-tight">New meal</p>
       <DishForm
         initial={{ name: "", servings: 1, ingredients: [] }}
         submitLabel="Create"

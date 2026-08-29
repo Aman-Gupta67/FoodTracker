@@ -5,12 +5,12 @@ import { MEAL_SLOTS } from "@/lib/log/types";
 export default async function AddPage({
   searchParams,
 }: {
-  searchParams: Promise<{ slot?: string }>;
+  searchParams: Promise<{ slot?: string; scan?: string }>;
 }) {
-  const { slot } = await searchParams;
+  const { slot, scan } = await searchParams;
   const initialSlot = MEAL_SLOTS.includes(slot as MealSlot)
     ? (slot as MealSlot)
     : null;
 
-  return <AddFoodClient initialSlot={initialSlot} />;
+  return <AddFoodClient initialSlot={initialSlot} autoOpenScanner={scan === "1"} />;
 }

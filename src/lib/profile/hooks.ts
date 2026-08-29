@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchDailyTargets, fetchProfile, saveProfileAndTargets } from "./queries";
+import {
+  fetchDailyTargets,
+  fetchProfile,
+  fetchWeightLog,
+  saveProfileAndTargets,
+} from "./queries";
 import type { ProfileInput } from "./types";
 
 export function useProfile() {
@@ -8,6 +13,13 @@ export function useProfile() {
 
 export function useDailyTargets() {
   return useQuery({ queryKey: ["daily-targets"], queryFn: fetchDailyTargets });
+}
+
+export function useWeightLog(startDate: string, endDate: string) {
+  return useQuery({
+    queryKey: ["weight-log", startDate, endDate],
+    queryFn: () => fetchWeightLog(startDate, endDate),
+  });
 }
 
 export function useSaveProfile() {

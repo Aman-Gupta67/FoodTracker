@@ -4,6 +4,7 @@ import { use } from "react";
 import { useRouter } from "next/navigation";
 import { DishForm, type DishFormValue } from "@/components/meals/dish-form";
 import { useDeleteDish, useDish, useUpdateDish } from "@/lib/meals/hooks";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditDishPage({
   params,
@@ -39,8 +40,11 @@ export default function EditDishPage({
 
   if (isLoading) {
     return (
-      <main className="flex-1 px-4 py-4">
-        <p className="text-sm text-stone-500">Loading…</p>
+      <main className="flex-1 space-y-3 px-4 py-4">
+        <Skeleton className="h-8 w-32" />
+        <Skeleton className="h-14 w-full rounded-2xl" />
+        <Skeleton className="h-14 w-full rounded-2xl" />
+        <Skeleton className="h-32 w-full rounded-2xl" />
       </main>
     );
   }
@@ -55,7 +59,7 @@ export default function EditDishPage({
 
   return (
     <main className="flex-1 space-y-4 px-4 py-4">
-      <h1 className="text-lg font-medium">Edit meal</h1>
+      <p className="text-xl font-extrabold tracking-tight">Edit meal</p>
       <DishForm
         initial={{
           name: dish.name,

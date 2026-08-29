@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { useConfirmOffFood } from "@/lib/providers/off-mutations";
 import type { FoodCandidate, NutrientKey } from "@/lib/providers/types";
@@ -45,21 +46,28 @@ export function OffConfirmSheet({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30">
-      <div className="w-full max-w-[480px] rounded-t-2xl bg-white p-6 shadow-2xl">
-        <h2 className="mb-1 text-lg font-medium">{candidate.name}</h2>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45">
+      <motion.div
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", stiffness: 320, damping: 32 }}
+        className="w-full max-w-[480px] rounded-t-[28px] bg-white p-5 pb-6 shadow-2xl"
+      >
+        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-stone-200" />
+        <h2 className="mb-1 text-lg font-extrabold">{candidate.name}</h2>
         <p className="mb-4 text-xs text-stone-500">
           via Open Food Facts &middot; label data &middot; not yet in your
           catalog
         </p>
 
-        <dl className="mb-4 grid grid-cols-2 gap-y-2 rounded-md bg-stone-100 p-3 text-sm">
+        <dl className="mb-4 grid grid-cols-2 gap-y-2 rounded-2xl bg-stone-50 p-3.5 text-sm">
           {DISPLAY_FIELDS.map(({ key, label, unit }) => {
             const amount = candidate.nutrients[key];
             return (
               <div key={key} className="flex items-baseline justify-between pr-2">
                 <dt className="text-stone-600">{label}</dt>
-                <dd className={amount === undefined ? "text-stone-400" : "font-medium"}>
+                <dd className={amount === undefined ? "text-stone-400" : "font-semibold"}>
                   {amount === undefined ? "not reported" : `${amount} ${unit}`}
                 </dd>
               </div>
@@ -75,18 +83,18 @@ export function OffConfirmSheet({
         {error ? <p className="mb-3 text-sm text-red-600">{error}</p> : null}
 
         <div className="flex gap-3">
-          <Button variant="outline" className="flex-1" onClick={onCancel}>
+          <Button variant="outline" className="flex-1 rounded-2xl" onClick={onCancel}>
             Cancel
           </Button>
           <Button
-            className="flex-1"
+            className="flex-1 rounded-2xl shadow-glow"
             onClick={handleConfirm}
             disabled={confirmOffFood.isPending}
           >
             {confirmOffFood.isPending ? "Adding…" : "Add to Eat List"}
           </Button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -29,9 +29,11 @@ If the build plan and the schema doc disagree on DDL, the schema doc wins and th
 
 Next.js 15 (App Router) · TypeScript strict · Tailwind + shadcn/ui · TanStack Query · Dexie (IndexedDB) · Serwist PWA · Supabase (Postgres, RLS) · Vercel.
 
-Charts are hand-rolled SVG. No chart library in the MVP.
+**Post-MVP note:** the app moved from MVP-bare-bones to a real consumer-product visual direction (design canvas: https://claude.ai/code/artifact/7aa806ee-b57c-4739-9f7c-5f78d9ba6e38). Two libraries were deliberately added for this, on top of the "keep it short" rule below:
+- `motion` — page/sheet/list transitions, button press feedback, the calorie ring's fill animation.
+- `recharts` — scoped *only* to the Dashboard screen's trend graphs (calories/macros/weight vs. day, with a target reference line). Every other chart (the Home calorie ring, macro bars) stays hand-rolled SVG — recharts is not a blanket replacement.
 
-Keep the dependency list short. Every package is a thing that breaks on the next Next.js major.
+Keep the dependency list short otherwise. Every package is a thing that breaks on the next Next.js major.
 
 ---
 

@@ -222,7 +222,7 @@ export function BarcodeScannerSheet({
 
       <form
         onSubmit={handleManualSubmit}
-        className="flex gap-2 border-t border-stone-800 bg-white p-4"
+        className="flex gap-2 rounded-t-[24px] bg-white p-4"
       >
         <input
           type="text"
@@ -230,9 +230,9 @@ export function BarcodeScannerSheet({
           placeholder="Enter barcode manually"
           value={manualBarcode}
           onChange={(e) => setManualBarcode(e.target.value)}
-          className="h-10 flex-1 field-input"
+          className="h-11 flex-1 rounded-2xl field-input"
         />
-        <Button type="submit" disabled={status === "looking-up"}>
+        <Button className="rounded-2xl shadow-glow" type="submit" disabled={status === "looking-up"}>
           Look up
         </Button>
       </form>

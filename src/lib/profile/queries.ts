@@ -1,5 +1,6 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getAuthedClient, type AuthedClient } from "@/lib/supabase/client";
 import { computeTargets } from "@/lib/targets/compute";
+import { getTodayDateString } from "@/lib/date";
 import type { DailyTargets, Profile, ProfileInput } from "./types";
 
 const NUTRIENT_ID = { energy: 1, protein: 2, fat: 3, carb: 4 } as const;
@@ -83,6 +84,18 @@ export async function saveProfileAndTargets(input: ProfileInput) {
   });
   if (profileError) throw profileError;
 
+  // Builds weight history automatically from ordinary profile saves — no
+  // separate "log your weight" screen needed for the Dashboard's trend chart.
+  const { error: weightLogError } = await supabase.from("weight_log").upsert(
+    {
+      user_id: user.id,
+      logged_date: getTodayDateString(),
+      weight_kg: input.weightKg,
+    },
+    { onConflict: "user_id,logged_date" },
+  );
+  if (weightLogError) throw weightLogError;
+
   const rows = [
     { nutrient_id: NUTRIENT_ID.energy, value: targets.calorieTarget },
     { nutrient_id: NUTRIENT_ID.protein, value: targets.proteinG },
@@ -128,4 +141,27 @@ export async function fetchDailyTargets(): Promise<DailyTargets | null> {
     carbG: byNutrient.get(NUTRIENT_ID.carb) ?? 0,
     fatG: byNutrient.get(NUTRIENT_ID.fat) ?? 0,
   };
+}
+
+// Day-by-day weight for the Dashboard's weight trend chart.
+export async function fetchWeightLog(
+  startDate: string,
+  endDate: string,
+  preAuthed?: AuthedClient,
+): Promise<{ date: string; weightKg: number }[]> {
+  const authed = preAuthed ?? (await getAuthedClient());
+  if (!authed) return [];
+
+  const { data, error } = await authed.supabase
+    .from("weight_log")
+    .select("logged_date, weight_kg")
+    .gte("logged_date", startDate)
+    .lte("logged_date", endDate)
+    .order("logged_date", { ascending: true });
+
+  if (error) throw error;
+  return (data as { logged_date: string; weight_kg: number }[]).map((r) => ({
+    date: r.logged_date,
+    weightKg: r.weight_kg,
+  }));
 }

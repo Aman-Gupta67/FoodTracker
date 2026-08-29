@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FoodTile } from "@/components/ui/food-tile";
 import { resolveFoodCandidates } from "@/lib/providers/resolve";
 import type { FoodCandidate } from "@/lib/providers/types";
 import { useIngredientMacros } from "@/lib/meals/hooks";
@@ -113,63 +115,72 @@ export function DishForm({
   }
 
   return (
-    <div className="space-y-4">
-      <div>
-        <label className="mb-1 block text-xs font-medium text-stone-600">
-          Name
-        </label>
-        <input
-          type="text"
-          placeholder="e.g. Overnight oats"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="h-10 w-full field-input"
-        />
+    <div className="space-y-3.5">
+      <div className="rounded-2xl bg-white p-4 shadow-sm">
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-stone-500">
+              Name
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. Overnight oats"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="h-11 w-full rounded-2xl field-input"
+            />
+          </div>
+          <div className="w-24 flex-shrink-0">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-stone-500">
+              Servings
+            </label>
+            <input
+              type="number"
+              min={1}
+              step="any"
+              value={servings}
+              onChange={(e) => setServings(Number(e.target.value) || 1)}
+              className="h-11 w-full rounded-2xl field-input"
+            />
+          </div>
+        </div>
       </div>
 
-      <div>
-        <label className="mb-1 block text-xs font-medium text-stone-600">
-          Servings (this recipe as a whole yields this many)
-        </label>
-        <input
-          type="number"
-          min={1}
-          step="any"
-          value={servings}
-          onChange={(e) => setServings(Number(e.target.value) || 1)}
-          className="h-10 w-32 field-input"
-        />
-      </div>
-
-      <div>
-        <p className="mb-1 text-xs font-medium text-stone-600">Ingredients</p>
+      <div className="rounded-2xl bg-white p-4 shadow-sm">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
+          Ingredients
+        </p>
         {ingredients.length === 0 ? (
           <p className="text-sm text-stone-400">
             No ingredients yet — search below to add one.
           </p>
         ) : (
-          <ul>
+          <ul className="mb-1">
             {ingredients.map((ing, i) => (
               <li
                 key={`${ing.foodId}-${i}`}
-                className="flex items-center gap-2 border-b border-stone-100 py-2"
+                className="flex items-center gap-2.5 border-t border-stone-100 py-2 first:border-t-0"
               >
-                <span className="flex-1 text-sm">{ing.foodName}</span>
+                <FoodTile size={32} />
+                <span className="flex-1 truncate text-[13.5px] font-semibold">
+                  {ing.foodName}
+                </span>
                 <input
                   type="number"
                   min={0}
                   step="any"
                   value={ing.grams}
                   onChange={(e) => updateGrams(i, Number(e.target.value) || 0)}
-                  className="h-8 w-20 field-input"
+                  className="h-8 w-16 rounded-xl field-input text-center"
                 />
-                <span className="text-xs text-stone-500">g</span>
+                <span className="text-xs font-medium text-stone-500">g</span>
                 <button
                   type="button"
-                  className="text-xs text-red-600"
+                  aria-label="Remove"
+                  className="rounded-lg p-1 text-stone-400 active:scale-90"
                   onClick={() => removeIngredient(i)}
                 >
-                  Remove
+                  <X size={14} />
                 </button>
               </li>
             ))}
@@ -181,17 +192,18 @@ export function DishForm({
           placeholder="Search foods to add…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="mt-3 h-10 w-full field-input"
+          className="mt-2 h-11 w-full rounded-2xl field-input"
         />
         {searchResults.length > 0 ? (
-          <ul className="mt-1 rounded-md border border-stone-200">
+          <ul className="mt-1.5 overflow-hidden rounded-2xl bg-stone-50">
             {searchResults.map((food) => (
               <li key={food.id}>
                 <button
                   type="button"
                   onClick={() => addIngredient(food)}
-                  className="block w-full px-3 py-2 text-left text-sm hover:bg-stone-50"
+                  className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[13.5px] font-medium hover:bg-stone-100"
                 >
+                  <FoodTile size={28} />
                   {food.name}
                 </button>
               </li>
@@ -201,26 +213,28 @@ export function DishForm({
       </div>
 
       {totalMacros ? (
-        <div className="rounded-md bg-stone-100 p-3 text-sm">
-          <p className="mb-1 text-xs font-medium uppercase tracking-wide text-stone-500">
+        <div className="rounded-2xl bg-white p-4 shadow-sm">
+          <p className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
             Total ({ingredients.length} ingredient
             {ingredients.length !== 1 ? "s" : ""})
           </p>
-          <p>{Math.round(totalMacros.calories)} kcal</p>
-          <p className="text-xs text-stone-600">
-            P {totalMacros.protein.toFixed(1)}g · C {totalMacros.carb.toFixed(1)}g · F{" "}
-            {totalMacros.fat.toFixed(1)}g
-          </p>
+          <MacroTileGrid
+            calories={totalMacros.calories}
+            protein={totalMacros.protein}
+            carb={totalMacros.carb}
+            fat={totalMacros.fat}
+          />
           {perServing && servings !== 1 ? (
             <>
-              <p className="mt-2 mb-1 text-xs font-medium uppercase tracking-wide text-stone-500">
+              <p className="mt-3 mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
                 Per serving
               </p>
-              <p>{Math.round(perServing.calories)} kcal</p>
-              <p className="text-xs text-stone-600">
-                P {perServing.protein.toFixed(1)}g · C {perServing.carb.toFixed(1)}g · F{" "}
-                {perServing.fat.toFixed(1)}g
-              </p>
+              <MacroTileGrid
+                calories={perServing.calories}
+                protein={perServing.protein}
+                carb={perServing.carb}
+                fat={perServing.fat}
+              />
             </>
           ) : null}
         </div>
@@ -228,22 +242,64 @@ export function DishForm({
 
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
-      <div className="flex gap-3">
-        <Button onClick={handleSubmit} disabled={isSubmitting}>
+      <div className="flex items-center gap-3">
+        <Button className="rounded-2xl shadow-glow" onClick={handleSubmit} disabled={isSubmitting}>
           {isSubmitting ? "Saving…" : submitLabel}
         </Button>
-        <Button variant="outline" onClick={onCancel}>
+        <Button variant="outline" className="rounded-2xl" onClick={onCancel}>
           Cancel
         </Button>
         {onDelete ? (
           <button
             type="button"
-            className="ml-auto text-sm text-red-600"
+            className="ml-auto text-sm font-semibold text-red-600"
             onClick={onDelete}
           >
             Delete meal
           </button>
         ) : null}
+      </div>
+    </div>
+  );
+}
+
+// Same 4-tile tinted grid as the quantity sheet / Add screen's totals bar —
+// the dish form's summary should read as the same "macro preview" pattern
+// wherever it appears, not a bespoke one-off.
+function MacroTileGrid({
+  calories,
+  protein,
+  carb,
+  fat,
+}: {
+  calories: number;
+  protein: number;
+  carb: number;
+  fat: number;
+}) {
+  return (
+    <div className="grid grid-cols-4 gap-2 text-center text-xs">
+      <div className="rounded-2xl bg-primary-50 py-2.5">
+        <div className="text-base font-extrabold text-primary-700">{Math.round(calories)}</div>
+        <div className="text-[9.5px] font-semibold text-stone-500">kcal</div>
+      </div>
+      <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-protein-bg)" }}>
+        <div className="text-base font-extrabold" style={{ color: "var(--color-protein)" }}>
+          {protein.toFixed(1)}
+        </div>
+        <div className="text-[9.5px] font-semibold text-stone-500">protein</div>
+      </div>
+      <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-carbs-bg)" }}>
+        <div className="text-base font-extrabold" style={{ color: "var(--color-carbs)" }}>
+          {carb.toFixed(1)}
+        </div>
+        <div className="text-[9.5px] font-semibold text-stone-500">carb</div>
+      </div>
+      <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-fat-bg)" }}>
+        <div className="text-base font-extrabold" style={{ color: "var(--color-fat)" }}>
+          {fat.toFixed(1)}
+        </div>
+        <div className="text-[9.5px] font-semibold text-stone-500">fat</div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getAuthedClient, type AuthedClient } from "@/lib/supabase/client";
 import type {
   CreateLogEntryInput,
   LogEntry,
@@ -12,7 +12,7 @@ import type {
 const NUTRIENT_ID = { energy: 1, protein: 2, fat: 3, carb: 4 } as const;
 
 const LOG_ENTRY_SELECT =
-  "*, food:food_id(name, source_ref, energy_source), dish:dish_id(name), log_entry_nutrient(nutrient_id, amount)";
+  "*, food:food_id(name, source_ref, energy_source, fetch_confidence), dish:dish_id(name), log_entry_nutrient(nutrient_id, amount)";
 
 interface RawLogEntryRow {
   id: number;
@@ -33,6 +33,7 @@ interface RawLogEntryRow {
     name: string;
     source_ref: string | null;
     energy_source: string;
+    fetch_confidence: string | null;
   } | null;
   dish: { name: string } | null;
   log_entry_nutrient: { nutrient_id: number; amount: number }[];
@@ -69,15 +70,17 @@ function mapRow(r: RawLogEntryRow): LogEntry {
     fat: findNutrient(r.log_entry_nutrient, NUTRIENT_ID.fat),
     isEstimated:
       r.entered_state === "cooked" ||
-      r.food?.energy_source === "derived_atwater",
+      r.food?.energy_source === "derived_atwater" ||
+      r.food?.fetch_confidence === "estimated",
   };
 }
 
 export async function fetchLogEntriesForDate(
   consumedDate: string,
 ): Promise<LogEntry[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return [];
+  const { data, error } = await authed.supabase
     .from("log_entry")
     .select(LOG_ENTRY_SELECT)
     .eq("consumed_date", consumedDate)
@@ -94,8 +97,9 @@ export async function fetchDailyCalorieTotals(
   startDate: string,
   endDate: string,
 ): Promise<Record<string, number>> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return {};
+  const { data, error } = await authed.supabase
     .from("log_entry")
     .select("consumed_date, log_entry_nutrient(nutrient_id, amount)")
     .gte("consumed_date", startDate)
@@ -110,6 +114,55 @@ export async function fetchDailyCalorieTotals(
   }[]) {
     const energy = findNutrient(row.log_entry_nutrient, NUTRIENT_ID.energy);
     totals[row.consumed_date] = (totals[row.consumed_date] ?? 0) + energy;
+  }
+  return totals;
+}
+
+export interface DailyMacroTotal {
+  calories: number;
+  protein: number;
+  carb: number;
+  fat: number;
+}
+
+// Day-by-day calories + macros for the Dashboard's KPI trend charts — same
+// query shape as fetchDailyCalorieTotals, generalized to all four nutrients
+// instead of just energy.
+export async function fetchDailyMacroTotals(
+  startDate: string,
+  endDate: string,
+  // Callers that fire several reads together (the Dashboard) pass an
+  // already-resolved client to share one auth check instead of paying its
+  // round-trip again here.
+  preAuthed?: AuthedClient,
+): Promise<Record<string, DailyMacroTotal>> {
+  const authed = preAuthed ?? (await getAuthedClient());
+  if (!authed) return {};
+  const { data, error } = await authed.supabase
+    .from("log_entry")
+    .select("consumed_date, log_entry_nutrient(nutrient_id, amount)")
+    .gte("consumed_date", startDate)
+    .lte("consumed_date", endDate);
+
+  if (error) throw error;
+
+  const totals: Record<string, DailyMacroTotal> = {};
+  for (const row of data as unknown as {
+    consumed_date: string;
+    log_entry_nutrient: { nutrient_id: number; amount: number }[];
+  }[]) {
+    const existing = totals[row.consumed_date] ?? {
+      calories: 0,
+      protein: 0,
+      carb: 0,
+      fat: 0,
+    };
+    totals[row.consumed_date] = {
+      calories: existing.calories + findNutrient(row.log_entry_nutrient, NUTRIENT_ID.energy),
+      protein: existing.protein + findNutrient(row.log_entry_nutrient, NUTRIENT_ID.protein),
+      carb: existing.carb + findNutrient(row.log_entry_nutrient, NUTRIENT_ID.carb),
+      fat: existing.fat + findNutrient(row.log_entry_nutrient, NUTRIENT_ID.fat),
+    };
   }
   return totals;
 }
@@ -129,8 +182,9 @@ const SHORTCUT_WINDOW = 500;
 async function fetchFoodEntriesForSlot(
   meal: MealSlot,
 ): Promise<{ foodId: number; name: string; sourceRef: string | null; consumedAt: string }[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return [];
+  const { data, error } = await authed.supabase
     .from("log_entry")
     .select("food_id, consumed_at, food:food_id(name, source_ref)")
     .eq("meal", meal)
@@ -194,6 +248,50 @@ export async function fetchFrequentFoods(
     .map((c) => c.shortcut);
 }
 
+// Candidate pool for goal-aware meal suggestions — top logged foods across
+// all meal slots, not scoped to one. Same bounded-window-and-count-in-JS
+// approach as fetchFrequentFoods, just without the meal filter.
+export async function fetchTopLoggedFoodsAllMeals(
+  limit = 30,
+): Promise<FoodShortcut[]> {
+  const authed = await getAuthedClient();
+  if (!authed) return [];
+  const { data, error } = await authed.supabase
+    .from("log_entry")
+    .select("food_id, food:food_id(name, source_ref)")
+    .eq("ref_type", "food")
+    .order("consumed_at", { ascending: false })
+    .limit(SHORTCUT_WINDOW);
+
+  if (error) throw error;
+
+  const counts = new Map<number, { count: number; shortcut: FoodShortcut }>();
+  for (const r of data as unknown as {
+    food_id: number;
+    food: { name: string; source_ref: string | null } | null;
+  }[]) {
+    if (!r.food) continue;
+    const existing = counts.get(r.food_id);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      counts.set(r.food_id, {
+        count: 1,
+        shortcut: {
+          foodId: r.food_id,
+          name: r.food.name,
+          sourceRef: r.food.source_ref,
+        },
+      });
+    }
+  }
+
+  return [...counts.values()]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+    .map((c) => c.shortcut);
+}
+
 // "Pre-fill with the last-used portion and quantity for this food" —
 // mvp-build-plan.md §6.3.
 export async function fetchLastLogForFood(foodId: number): Promise<{
@@ -202,8 +300,9 @@ export async function fetchLastLogForFood(foodId: number): Promise<{
   enteredState: "raw" | "cooked";
   enteredGrams: number;
 } | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return null;
+  const { data, error } = await authed.supabase
     .from("log_entry")
     .select("portion_id, quantity, entered_state, entered_grams")
     .eq("food_id", foodId)

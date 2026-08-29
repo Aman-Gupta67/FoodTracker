@@ -18,6 +18,11 @@ export async function getFoodNutrientsByKey(
   return result;
 }
 
+export async function getFoodAliases(foodId: number): Promise<string[]> {
+  const rows = await catalogDb.foodAlias.where("foodId").equals(foodId).toArray();
+  return rows.map((r) => r.alias);
+}
+
 export async function getFoodPortions(
   foodId: number,
 ): Promise<{ label: string; grams: number }[]> {

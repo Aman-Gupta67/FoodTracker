@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { RegisterServiceWorker } from "@/components/register-sw";
 import { QueryProvider } from "@/components/query-provider";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-plus-jakarta",
+});
 
 export const metadata: Metadata = {
   title: "Food Tracker",
@@ -42,7 +49,10 @@ export default function RootLayout({
       </head>
       {/* suppressHydrationWarning: browser extensions (Grammarly, etc.)
           inject attributes onto <body> before React hydrates */}
-      <body className="antialiased" suppressHydrationWarning>
+      <body
+        className={`${plusJakartaSans.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <QueryProvider>
           {children}
           <RegisterServiceWorker />

@@ -47,6 +47,11 @@ export interface LogEntry {
   // CLAUDE.md provenance rules: estimated values must be visually
   // distinguished and counted in the day's coverage line.
   isEstimated: boolean;
+  // Optimistic-UI placeholder: true only for the brief window between
+  // tapping Log and the server confirming — never persisted, never read
+  // from the DB. The row renders a shimmer instead of (possibly wrong)
+  // numbers, rather than guessing at nutrient values client-side.
+  isPending?: boolean;
 }
 
 export interface CreateLogEntryInput {

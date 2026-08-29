@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getAuthedClient } from "@/lib/supabase/client";
 import { getFoodNutrientsByKey } from "@/lib/catalog/food-detail";
 import type { Dish, DishIngredient, DishNutrients, MacroSet } from "./types";
 
@@ -41,8 +41,9 @@ function mapDish(r: RawDishRow): Dish {
 }
 
 export async function fetchDishes(): Promise<Dish[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return [];
+  const { data, error } = await authed.supabase
     .from("my_dish")
     .select(
       "id, name, servings, yield_grams, notes, my_dish_ingredient(id, food_id, grams, sort_order, food:food_id(name))",
@@ -54,8 +55,9 @@ export async function fetchDishes(): Promise<Dish[]> {
 }
 
 export async function fetchDish(dishId: number): Promise<Dish | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase
+  const authed = await getAuthedClient();
+  if (!authed) return null;
+  const { data, error } = await authed.supabase
     .from("my_dish")
     .select(
       "id, name, servings, yield_grams, notes, my_dish_ingredient(id, food_id, grams, sort_order, food:food_id(name))",

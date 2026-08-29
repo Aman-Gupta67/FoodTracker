@@ -20,13 +20,22 @@ function toNumber(value: unknown): number | undefined {
   return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
+// OFF-derived values (unit conversions, regex-parsed pack sizes) go through
+// real division/multiplication, unlike a straight catalog pass-through —
+// float arithmetic on them produces tails like 116.00000000000001. Round
+// once here, at the one place these numbers are computed, so every
+// downstream display and DB write already sees a clean value.
+function round2(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
 function mapNutrients(nutriments: OffProduct["nutriments"]): Partial<Record<NutrientKey, number>> {
   const nutrients: Partial<Record<NutrientKey, number>> = {};
   if (!nutriments) return nutrients;
 
   for (const [key, field] of NUTRIENT_FIELD_MAP) {
     const amount = toNumber(nutriments[field]);
-    if (amount !== undefined) nutrients[key] = amount;
+    if (amount !== undefined) nutrients[key] = round2(amount);
   }
 
   // sodium: OFF reports sodium/salt in grams; nutrient.unit for sodium is mg.
@@ -35,7 +44,7 @@ function mapNutrients(nutriments: OffProduct["nutriments"]): Partial<Record<Nutr
   const saltG = toNumber(nutriments["salt_100g"]);
   const sodiumFromSalt = saltG !== undefined ? saltG / 2.5 : undefined;
   const resolvedSodiumG = sodiumG ?? sodiumFromSalt;
-  if (resolvedSodiumG !== undefined) nutrients.sodium = resolvedSodiumG * 1000;
+  if (resolvedSodiumG !== undefined) nutrients.sodium = round2(resolvedSodiumG * 1000);
 
   return nutrients;
 }
@@ -43,7 +52,7 @@ function mapNutrients(nutriments: OffProduct["nutriments"]): Partial<Record<Nutr
 function mapPortions(product: OffProduct): { label: string; grams: number }[] {
   const match = product.quantity?.match(/([\d.]+)\s*g\b/i);
   if (!match) return [];
-  const grams = Number(match[1]);
+  const grams = round2(Number(match[1]));
   if (!Number.isFinite(grams) || grams <= 0) return [];
   return [{ label: `1 pack (${product.quantity})`, grams }];
 }

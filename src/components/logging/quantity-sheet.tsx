@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "motion/react";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { resolveYield } from "@/lib/catalog/yield";
 import { getFoodPortionsWithId } from "@/lib/catalog/food-detail";
@@ -10,11 +12,16 @@ import type { MealSlot } from "@/lib/log/types";
 import type { FoodCandidate } from "@/lib/providers/types";
 import { getNowIso } from "@/lib/date";
 import { getErrorMessage } from "@/lib/error";
+import { useConfirmLlmFood } from "@/lib/ai/confirm-llm-food";
 
 interface QuantitySheetProps {
   food: FoodCandidate;
   meal: MealSlot;
   date: string;
+  // Natural-language logging already knows an estimated gram amount —
+  // pre-filling it is the same "don't retype what's already known"
+  // principle as pre-filling from the last log.
+  initialGrams?: number;
   onClose: () => void;
   onLogged: () => void;
 }
@@ -23,6 +30,7 @@ export function QuantitySheet({
   food,
   meal,
   date,
+  initialGrams,
   onClose,
   onLogged,
 }: QuantitySheetProps) {
@@ -40,12 +48,19 @@ export function QuantitySheet({
   });
   const { data: lastLog } = useLastLogForFood(foodId);
   const createLogEntry = useCreateLogEntry(date);
+  const confirmLlmFood = useConfirmLlmFood();
 
   const [selectedPortionId, setSelectedPortionId] = useState<number | null>(
     null,
   );
   const [initializedPortion, setInitializedPortion] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  // Blank rather than defaulting to 1: a first-time food has no sensible
+  // default grams, and typing over a stale "1" is worse than typing into an
+  // empty field. AI items still prefill (initialGrams), and repeat manual
+  // foods still prefill from lastLog below — this only affects the
+  // no-history, no-AI-estimate case.
+  const [quantity, setQuantity] = useState<number | "">(initialGrams ?? "");
+  const numericQuantity = quantity === "" ? 0 : quantity;
   const [enteredState, setEnteredState] = useState<"raw" | "cooked">("raw");
   const [error, setError] = useState<string | null>(null);
 
@@ -59,22 +74,25 @@ export function QuantitySheet({
   }, [portions, initializedPortion]);
 
   // Pre-fill from the last time this food was logged — mvp-build-plan.md
-  // §6.3: "most of the difference between 10 seconds and 40."
+  // §6.3: "most of the difference between 10 seconds and 40." Skipped when
+  // initialGrams was explicitly provided (an AI-parsed/suggested item):
+  // that estimate is already the more relevant default for THIS meal, and
+  // must win over a possibly-unrelated older log of the same food.
   useEffect(() => {
-    if (!lastLog) return;
+    if (!lastLog || initialGrams !== undefined) return;
     setQuantity(lastLog.quantity);
     setEnteredState(lastLog.enteredState);
     setSelectedPortionId(lastLog.portionId);
     setInitializedPortion(true);
-  }, [lastLog]);
+  }, [lastLog, initialGrams]);
 
   const selectedPortion =
     selectedPortionId !== null
       ? (portions.find((p) => p.id === selectedPortionId) ?? null)
       : null;
   const enteredGrams = selectedPortion
-    ? selectedPortion.grams * quantity
-    : quantity;
+    ? selectedPortion.grams * numericQuantity
+    : numericQuantity;
 
   const showCookedToggle = (yieldFactor ?? 1) !== 1;
   const rawEquivalentGrams =
@@ -92,17 +110,37 @@ export function QuantitySheet({
     };
   }, [food.nutrients, rawEquivalentGrams]);
 
+  function stepQuantity(sign: 1 | -1) {
+    const step = selectedPortion ? 0.5 : 10;
+    setQuantity((prev) => {
+      const current = prev === "" ? 0 : prev;
+      const next = Math.max(0, Math.round((current + sign * step) * 100) / 100);
+      return next;
+    });
+  }
+
   async function handleLog() {
-    if (foodId === null) return;
     setError(null);
     try {
+      let resolvedFoodId = foodId;
+      if (resolvedFoodId === null) {
+        if (!food.needsConfirmation) {
+          throw new Error("This food isn't in the catalog yet.");
+        }
+        // First time this exact AI-sourced food is logged: write it into
+        // the catalog (review-sheet-before-write, per CLAUDE.md's
+        // provenance rule) so it's a real, searchable food from now on —
+        // the LLM only ever has to be asked once per genuinely new food.
+        resolvedFoodId = await confirmLlmFood.mutateAsync(food);
+      }
+
       await createLogEntry.mutateAsync({
         consumedAt: getNowIso(),
         consumedDate: date,
         meal,
-        foodId,
+        foodId: resolvedFoodId,
         portionId: selectedPortionId,
-        quantity,
+        quantity: numericQuantity,
         enteredState,
         enteredGrams,
       });
@@ -112,13 +150,19 @@ export function QuantitySheet({
     }
   }
 
+  const isSubmitting = createLogEntry.isPending || confirmLlmFood.isPending;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30">
-      <div className="w-full max-w-[480px] rounded-t-2xl bg-white p-6 shadow-2xl">
-        <h2 className="mb-1 text-lg font-medium">{food.name}</h2>
-        <p className="mb-4 text-xs text-stone-500">
-          {food.provenance.source} · {food.provenance.confidence}
-        </p>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45">
+      <motion.div
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", stiffness: 320, damping: 32 }}
+        className="w-full max-w-[480px] rounded-t-[28px] bg-white p-5 pb-6 shadow-2xl"
+      >
+        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-stone-200" />
+        <h2 className="mb-4 text-lg font-extrabold">{food.name}</h2>
 
         {portions.length > 0 ? (
           <div className="mb-4 flex flex-wrap gap-2">
@@ -128,10 +172,10 @@ export function QuantitySheet({
                 type="button"
                 onClick={() => setSelectedPortionId(p.id)}
                 className={
-                  "rounded-full border px-3 py-1.5 text-sm " +
+                  "rounded-full px-4 py-2 text-[13px] font-bold transition-colors " +
                   (selectedPortionId === p.id
-                    ? "border-primary-500 bg-primary-100 text-primary-700"
-                    : "border-stone-300 text-stone-700")
+                    ? "bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-glow"
+                    : "border-[1.5px] border-stone-200 text-stone-600")
                 }
               >
                 {p.label}
@@ -141,10 +185,10 @@ export function QuantitySheet({
               type="button"
               onClick={() => setSelectedPortionId(null)}
               className={
-                "rounded-full border px-3 py-1.5 text-sm " +
+                "rounded-full px-4 py-2 text-[13px] font-bold transition-colors " +
                 (selectedPortionId === null
-                  ? "border-primary-500 bg-primary-100 text-primary-700"
-                  : "border-stone-300 text-stone-700")
+                  ? "bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-glow"
+                  : "border-[1.5px] border-stone-200 text-stone-600")
               }
             >
               grams
@@ -152,96 +196,119 @@ export function QuantitySheet({
           </div>
         ) : null}
 
-        <div className="mb-4 flex items-center gap-3">
-          <input
-            type="number"
-            min={0}
-            step="any"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value) || 0)}
-            className="h-10 w-24 field-input"
-          />
-          <span className="text-sm text-stone-600">
-            {selectedPortion ? `× ${selectedPortion.label}` : "grams"}
-          </span>
+        <div className="mb-4 flex items-center justify-center gap-5 rounded-[18px] bg-stone-50 p-3.5">
+          <button
+            type="button"
+            aria-label="Decrease"
+            onClick={() => stepQuantity(-1)}
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[13px] bg-white text-stone-700 shadow-sm active:scale-90"
+          >
+            <Minus size={18} />
+          </button>
+          <div className="text-center">
+            <input
+              type="number"
+              min={0}
+              step="any"
+              placeholder="0"
+              value={quantity}
+              onChange={(e) =>
+                setQuantity(e.target.value === "" ? "" : Number(e.target.value) || 0)
+              }
+              className="w-24 border-none bg-transparent text-center text-[30px] font-extrabold tracking-tight text-stone-900 outline-none"
+            />
+            <p className="text-[11.5px] font-semibold text-stone-500">
+              {selectedPortion ? `× ${selectedPortion.label} (${selectedPortion.grams}g)` : "grams"}
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Increase"
+            onClick={() => stepQuantity(1)}
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[13px] bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-glow active:scale-90"
+          >
+            <Plus size={18} />
+          </button>
         </div>
 
         {showCookedToggle ? (
-          <div className="mb-4 flex items-center gap-2 text-sm">
-            <button
-              type="button"
-              onClick={() => setEnteredState("raw")}
-              className={
-                "rounded-md border px-3 py-1.5 " +
-                (enteredState === "raw"
-                  ? "border-primary-500 bg-primary-100 text-primary-700"
-                  : "border-stone-300 text-stone-700")
-              }
-            >
-              Raw
-            </button>
-            <button
-              type="button"
-              onClick={() => setEnteredState("cooked")}
-              className={
-                "rounded-md border px-3 py-1.5 " +
-                (enteredState === "cooked"
-                  ? "border-primary-500 bg-primary-100 text-primary-700"
-                  : "border-stone-300 text-stone-700")
-              }
-            >
-              Cooked
-            </button>
+          <div className="mb-4">
+            <div className="flex rounded-full bg-stone-100 p-1">
+              <button
+                type="button"
+                onClick={() => setEnteredState("raw")}
+                className={
+                  "flex-1 rounded-full py-2 text-[13px] font-semibold transition-colors " +
+                  (enteredState === "raw" ? "bg-white text-stone-900 shadow-sm" : "text-stone-500")
+                }
+              >
+                Raw
+              </button>
+              <button
+                type="button"
+                onClick={() => setEnteredState("cooked")}
+                className={
+                  "flex-1 rounded-full py-2 text-[13px] font-semibold transition-colors " +
+                  (enteredState === "cooked" ? "bg-white text-stone-900 shadow-sm" : "text-stone-500")
+                }
+              >
+                Cooked
+              </button>
+            </div>
             {enteredState === "cooked" ? (
-              <span className="text-xs text-stone-500">
+              <p className="mt-1.5 text-xs text-stone-500">
                 ≈ {rawEquivalentGrams.toFixed(1)} g raw (estimated)
-              </span>
+              </p>
             ) : null}
           </div>
         ) : null}
 
-        <div className="mb-6 grid grid-cols-4 gap-2 rounded-md bg-stone-100 p-3 text-center text-xs">
-          <div>
-            <div className="font-medium text-primary-700">
+        <div className="mb-5 grid grid-cols-4 gap-2 text-center text-xs">
+          <div className="rounded-2xl bg-primary-50 py-2.5">
+            <div className="text-base font-extrabold text-primary-700">
               {preview.calories.toFixed(0)}
             </div>
-            <div className="text-stone-500">kcal</div>
+            <div className="text-[9.5px] font-semibold text-stone-500">kcal</div>
           </div>
-          <div>
-            <div className="font-medium" style={{ color: "var(--color-protein)" }}>
+          <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-protein-bg)" }}>
+            <div className="text-base font-extrabold" style={{ color: "var(--color-protein)" }}>
               {preview.protein.toFixed(1)}
             </div>
-            <div className="text-stone-500">protein</div>
+            <div className="text-[9.5px] font-semibold text-stone-500">protein</div>
           </div>
-          <div>
-            <div className="font-medium" style={{ color: "var(--color-carbs)" }}>
+          <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-carbs-bg)" }}>
+            <div className="text-base font-extrabold" style={{ color: "var(--color-carbs)" }}>
               {preview.carb.toFixed(1)}
             </div>
-            <div className="text-stone-500">carb</div>
+            <div className="text-[9.5px] font-semibold text-stone-500">carb</div>
           </div>
-          <div>
-            <div className="font-medium" style={{ color: "var(--color-fat)" }}>
+          <div className="rounded-2xl py-2.5" style={{ backgroundColor: "var(--color-fat-bg)" }}>
+            <div className="text-base font-extrabold" style={{ color: "var(--color-fat)" }}>
               {preview.fat.toFixed(1)}
             </div>
-            <div className="text-stone-500">fat</div>
+            <div className="text-[9.5px] font-semibold text-stone-500">fat</div>
           </div>
         </div>
 
         {error ? <p className="mb-3 text-sm text-red-600">{error}</p> : null}
 
         <div className="flex gap-3">
-          <Button variant="outline" className="flex-1" onClick={onClose}>
+          <Button variant="outline" className="flex-1 rounded-2xl" onClick={onClose}>
             Cancel
           </Button>
           <Button
-            className="flex-1"
+            className="flex-1 rounded-2xl shadow-glow"
             onClick={handleLog}
-            disabled={createLogEntry.isPending || enteredGrams <= 0}
+            disabled={isSubmitting || enteredGrams <= 0}
           >
-            {createLogEntry.isPending ? "Logging…" : "Log"}
+            {confirmLlmFood.isPending
+              ? "Adding to catalog…"
+              : createLogEntry.isPending
+                ? "Logging…"
+                : "Log"}
           </Button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
