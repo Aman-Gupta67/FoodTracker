@@ -15,6 +15,7 @@ import { useDailyTargets } from "@/lib/profile/hooks";
 import { useProfile } from "@/lib/profile/hooks";
 import { CalorieRing } from "@/components/kpi/calorie-ring";
 import { MacroBar } from "@/components/kpi/macro-bar";
+import { DayAnalysisSheet } from "@/components/kpi/day-analysis-sheet";
 import { FoodTile } from "@/components/ui/food-tile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ export function TodayClient({ initialDate }: { initialDate: string | null }) {
   const { data: entries = [], isLoading } = useLogEntries(date);
   const { data: targets } = useDailyTargets();
   const { data: profile } = useProfile();
+  const [showDayAnalysis, setShowDayAnalysis] = useState(false);
 
   const byMeal = new Map<MealSlot, LogEntry[]>();
   for (const slot of MEAL_SLOTS) byMeal.set(slot, []);
@@ -62,7 +64,11 @@ export function TodayClient({ initialDate }: { initialDate: string | null }) {
       <WeekStrip date={date} onChange={setDate} />
 
       {targets ? (
-        <div className="mb-4 flex items-center gap-4 rounded-3xl bg-white p-4 shadow-md">
+        <button
+          type="button"
+          onClick={() => setShowDayAnalysis(true)}
+          className="mb-4 flex w-full items-center gap-4 rounded-3xl bg-white p-4 text-left shadow-md active:scale-[0.99]"
+        >
           <CalorieRing consumed={dayTotal} target={targets.calorieTarget} />
           <div className="flex flex-1 flex-col gap-2.5">
             <MacroBar
@@ -106,7 +112,7 @@ export function TodayClient({ initialDate }: { initialDate: string | null }) {
               }
             />
           </div>
-        </div>
+        </button>
       ) : (
         <div className="mb-4">
           <p className="text-2xl font-extrabold">{Math.round(dayTotal)} kcal</p>
@@ -164,6 +170,16 @@ export function TodayClient({ initialDate }: { initialDate: string | null }) {
           </Link>
         </div>
       </div>
+
+      {showDayAnalysis && targets ? (
+        <DayAnalysisSheet
+          date={date}
+          entries={entries}
+          targets={targets}
+          profile={profile}
+          onClose={() => setShowDayAnalysis(false)}
+        />
+      ) : null}
     </main>
   );
 }
@@ -302,6 +318,7 @@ function EntryRow({ entry, date }: { entry: LogEntry; date: string }) {
       <div className="flex items-center gap-2 border-t border-stone-100 px-3.5 py-2 first:border-t-0">
         <input
           type="number"
+          inputMode="decimal"
           min={0}
           step="any"
           value={grams}

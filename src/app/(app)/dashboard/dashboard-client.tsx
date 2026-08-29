@@ -177,7 +177,11 @@ export function DashboardClient() {
                   dataKey="weight"
                   stroke="var(--color-primary-600)"
                   strokeWidth={2.5}
-                  dot={false}
+                  // Weight is logged at most once a day (only on a profile
+                  // save), so a short range often has just one or two real
+                  // points — with dots off, an unconnectable single point
+                  // rendered nothing at all even though the data was there.
+                  dot={{ r: 3, fill: "var(--color-primary-600)", strokeWidth: 0 }}
                   connectNulls
                   isAnimationActive={false}
                 />

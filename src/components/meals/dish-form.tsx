@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FoodTile } from "@/components/ui/food-tile";
 import { resolveFoodCandidates } from "@/lib/providers/resolve";
 import type { FoodCandidate } from "@/lib/providers/types";
 import { useIngredientMacros } from "@/lib/meals/hooks";
 import type { NewDishIngredient } from "@/lib/meals/queries";
+import { resolveParsedItems } from "@/lib/ai/resolve-parsed-items";
+import { useConfirmLlmFood } from "@/lib/ai/confirm-llm-food";
 import { getErrorMessage } from "@/lib/error";
 
 export interface EditableIngredient {
@@ -45,6 +47,20 @@ export function DishForm({
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<FoodCandidate[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isAiSearching, setIsAiSearching] = useState(false);
+  const [aiResults, setAiResults] = useState<FoodCandidate[]>([]);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const confirmLlmFood = useConfirmLlmFood();
+
+  // Disable Save/Create until the form actually differs from what it loaded
+  // with — there's nothing to persist otherwise.
+  const isDirty = useMemo(() => {
+    return (
+      name !== initial.name ||
+      servings !== initial.servings ||
+      JSON.stringify(ingredients) !== JSON.stringify(initial.ingredients)
+    );
+  }, [name, servings, ingredients, initial]);
 
   useEffect(() => {
     if (!query.trim()) {
@@ -89,6 +105,50 @@ export function DishForm({
 
   function removeIngredient(index: number) {
     setIngredients((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  // Catalog + OFF search comes up empty for plenty of home-cooked dishes —
+  // this reuses the same AI meal-parsing endpoint as a single-food lookup so
+  // an ingredient the catalog doesn't have isn't a dead end.
+  async function handleAiSearch() {
+    if (!query.trim()) return;
+    setIsAiSearching(true);
+    setAiError(null);
+    try {
+      const res = await fetch("/api/ai/parse-meal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: query }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error ?? "Could not search with AI.");
+      const resolved = await resolveParsedItems(body.items);
+      setAiResults(resolved.map((r) => r.candidate));
+    } catch (e) {
+      setAiError(getErrorMessage(e));
+    } finally {
+      setIsAiSearching(false);
+    }
+  }
+
+  // An AI-sourced candidate has no food.id yet — write it into the catalog
+  // once (review-sheet-before-write, same rule as everywhere else) before
+  // it can be referenced as a foodId ingredient.
+  async function addAiIngredient(candidate: FoodCandidate) {
+    setAiError(null);
+    try {
+      const foodId = candidate.id
+        ? Number(candidate.id)
+        : await confirmLlmFood.mutateAsync(candidate);
+      setIngredients((prev) => [
+        ...prev,
+        { foodId, foodName: candidate.name, grams: 100 },
+      ]);
+      setQuery("");
+      setAiResults([]);
+    } catch (e) {
+      setAiError(getErrorMessage(e));
+    }
   }
 
   function updateGrams(index: number, grams: number) {
@@ -136,6 +196,7 @@ export function DishForm({
             </label>
             <input
               type="number"
+              inputMode="decimal"
               min={1}
               step="any"
               value={servings}
@@ -145,6 +206,34 @@ export function DishForm({
           </div>
         </div>
       </div>
+
+      {totalMacros ? (
+        <div className="rounded-2xl bg-white p-4 shadow-sm">
+          <p className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
+            Total ({ingredients.length} ingredient
+            {ingredients.length !== 1 ? "s" : ""})
+          </p>
+          <MacroTileGrid
+            calories={totalMacros.calories}
+            protein={totalMacros.protein}
+            carb={totalMacros.carb}
+            fat={totalMacros.fat}
+          />
+          {perServing && servings !== 1 ? (
+            <>
+              <p className="mt-3 mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
+                Per serving
+              </p>
+              <MacroTileGrid
+                calories={perServing.calories}
+                protein={perServing.protein}
+                carb={perServing.carb}
+                fat={perServing.fat}
+              />
+            </>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="rounded-2xl bg-white p-4 shadow-sm">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
@@ -167,6 +256,7 @@ export function DishForm({
                 </span>
                 <input
                   type="number"
+                  inputMode="decimal"
                   min={0}
                   step="any"
                   value={ing.grams}
@@ -210,40 +300,51 @@ export function DishForm({
             ))}
           </ul>
         ) : null}
-      </div>
 
-      {totalMacros ? (
-        <div className="rounded-2xl bg-white p-4 shadow-sm">
-          <p className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
-            Total ({ingredients.length} ingredient
-            {ingredients.length !== 1 ? "s" : ""})
-          </p>
-          <MacroTileGrid
-            calories={totalMacros.calories}
-            protein={totalMacros.protein}
-            carb={totalMacros.carb}
-            fat={totalMacros.fat}
-          />
-          {perServing && servings !== 1 ? (
-            <>
-              <p className="mt-3 mb-2.5 text-xs font-semibold uppercase tracking-wide text-stone-500">
-                Per serving
-              </p>
-              <MacroTileGrid
-                calories={perServing.calories}
-                protein={perServing.protein}
-                carb={perServing.carb}
-                fat={perServing.fat}
-              />
-            </>
-          ) : null}
-        </div>
-      ) : null}
+        {query.trim() && searchResults.length === 0 ? (
+          <div className="mt-1.5">
+            <button
+              type="button"
+              onClick={handleAiSearch}
+              disabled={isAiSearching}
+              className="flex w-full items-center justify-center gap-1.5 rounded-2xl border border-dashed border-primary-200 bg-primary-50 py-2.5 text-[12.5px] font-bold text-primary-700 disabled:opacity-60"
+            >
+              <Sparkles size={14} />
+              {isAiSearching ? "Searching…" : "Not in the list? Search with AI"}
+            </button>
+            {aiError ? <p className="mt-1.5 text-xs text-red-600">{aiError}</p> : null}
+            {aiResults.length > 0 ? (
+              <ul className="mt-1.5 overflow-hidden rounded-2xl bg-stone-50">
+                {aiResults.map((food, i) => (
+                  <li key={`ai-${i}`}>
+                    <button
+                      type="button"
+                      onClick={() => addAiIngredient(food)}
+                      disabled={confirmLlmFood.isPending}
+                      className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[13.5px] font-medium hover:bg-stone-100 disabled:opacity-60"
+                    >
+                      <FoodTile size={28} />
+                      {food.name}
+                      <span className="ml-auto rounded-full bg-primary-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-primary-700">
+                        AI est.
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
 
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
       <div className="flex items-center gap-3">
-        <Button className="rounded-2xl shadow-glow" onClick={handleSubmit} disabled={isSubmitting}>
+        <Button
+          className="rounded-2xl shadow-glow"
+          onClick={handleSubmit}
+          disabled={isSubmitting || !isDirty}
+        >
           {isSubmitting ? "Saving…" : submitLabel}
         </Button>
         <Button variant="outline" className="rounded-2xl" onClick={onCancel}>

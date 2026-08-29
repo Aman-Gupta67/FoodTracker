@@ -93,6 +93,7 @@ export function LogDishSheet({
           <div className="text-center">
             <input
               type="number"
+              inputMode="decimal"
               min={0}
               step="any"
               placeholder="0"

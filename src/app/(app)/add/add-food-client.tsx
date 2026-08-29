@@ -59,6 +59,9 @@ export function AddFoodClient({
   const [parseError, setParseError] = useState<string | null>(null);
   const [pendingItems, setPendingItems] = useState<ResolvedMealItem[]>([]);
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null);
+  const [showAddMissedItem, setShowAddMissedItem] = useState(false);
+  const [missedItemQuery, setMissedItemQuery] = useState("");
+  const [missedItemResults, setMissedItemResults] = useState<FoodCandidate[]>([]);
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [suggestError, setSuggestError] = useState<string | null>(null);
   const [suggestReasoning, setSuggestReasoning] = useState<string | null>(null);
@@ -140,6 +143,33 @@ export function AddFoodClient({
   function removePendingItem(index: number) {
     setPendingItems((prev) => prev.filter((_, i) => i !== index));
   }
+
+  function updatePendingItemGrams(index: number, grams: number) {
+    setPendingItems((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, grams } : item)),
+    );
+  }
+
+  function addMissedItem(candidate: FoodCandidate) {
+    setPendingItems((prev) => [...prev, { candidate, grams: 100 }]);
+    setShowAddMissedItem(false);
+    setMissedItemQuery("");
+    setMissedItemResults([]);
+  }
+
+  useEffect(() => {
+    if (!showAddMissedItem || !missedItemQuery.trim()) {
+      setMissedItemResults([]);
+      return;
+    }
+    const controller = new AbortController();
+    resolveFoodCandidates({ text: missedItemQuery }, controller.signal).then(
+      (results) => {
+        if (!controller.signal.aborted) setMissedItemResults(results);
+      },
+    );
+    return () => controller.abort();
+  }, [missedItemQuery, showAddMissedItem]);
 
   async function handleSuggestMeal() {
     if (!targets) return;
@@ -432,6 +462,53 @@ export function AddFoodClient({
               })}
               </AnimatePresence>
             </ul>
+
+            {showAddMissedItem ? (
+              <div className="mt-1 rounded-2xl bg-stone-50 p-2.5">
+                <input
+                  autoFocus
+                  type="text"
+                  placeholder="Search for what's missing…"
+                  value={missedItemQuery}
+                  onChange={(e) => setMissedItemQuery(e.target.value)}
+                  className="h-10 w-full rounded-xl field-input"
+                />
+                {missedItemResults.length > 0 ? (
+                  <ul className="mt-1.5 overflow-hidden rounded-xl bg-white">
+                    {missedItemResults.map((food) => (
+                      <li key={food.id ?? `off-${food.provenance.sourceRef}`}>
+                        <button
+                          type="button"
+                          onClick={() => addMissedItem(food)}
+                          className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[13px] font-medium hover:bg-stone-50"
+                        >
+                          <FoodTile size={28} />
+                          {food.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                <button
+                  type="button"
+                  className="mt-1.5 text-xs font-semibold text-stone-500"
+                  onClick={() => {
+                    setShowAddMissedItem(false);
+                    setMissedItemQuery("");
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowAddMissedItem(true)}
+                className="mt-1 w-full rounded-xl border border-dashed border-stone-300 py-2 text-[12.5px] font-bold text-stone-500"
+              >
+                + Add item AI missed
+              </button>
+            )}
           </div>
         ) : null}
       </div>
@@ -548,10 +625,8 @@ export function AddFoodClient({
           date={date}
           initialGrams={pendingItems[activeItemIndex]!.grams}
           onClose={() => setActiveItemIndex(null)}
-          onLogged={() => {
-            removePendingItem(activeItemIndex);
-            setActiveItemIndex(null);
-          }}
+          onSaveQuantity={(grams) => updatePendingItemGrams(activeItemIndex, grams)}
+          onLogged={() => setActiveItemIndex(null)}
         />
       ) : null}
 

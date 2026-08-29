@@ -24,6 +24,12 @@ interface QuantitySheetProps {
   initialGrams?: number;
   onClose: () => void;
   onLogged: () => void;
+  // When set, the sheet edits the quantity of an item that's still pending
+  // (not yet logged) — e.g. one row of an AI-parsed meal awaiting the single
+  // bulk "Log this" commit — instead of writing a log entry itself. Button
+  // reads "Save" and no mutation fires; the raw-equivalent grams (accounting
+  // for the selected portion + cooked/raw yield) are handed back instead.
+  onSaveQuantity?: (grams: number) => void;
 }
 
 export function QuantitySheet({
@@ -33,6 +39,7 @@ export function QuantitySheet({
   initialGrams,
   onClose,
   onLogged,
+  onSaveQuantity,
 }: QuantitySheetProps) {
   const foodId = food.id ? Number(food.id) : null;
 
@@ -121,6 +128,11 @@ export function QuantitySheet({
 
   async function handleLog() {
     setError(null);
+    if (onSaveQuantity) {
+      onSaveQuantity(rawEquivalentGrams);
+      onLogged();
+      return;
+    }
     try {
       let resolvedFoodId = foodId;
       if (resolvedFoodId === null) {
@@ -208,6 +220,7 @@ export function QuantitySheet({
           <div className="text-center">
             <input
               type="number"
+              inputMode="decimal"
               min={0}
               step="any"
               placeholder="0"
@@ -301,11 +314,13 @@ export function QuantitySheet({
             onClick={handleLog}
             disabled={isSubmitting || enteredGrams <= 0}
           >
-            {confirmLlmFood.isPending
-              ? "Adding to catalog…"
-              : createLogEntry.isPending
-                ? "Logging…"
-                : "Log"}
+            {onSaveQuantity
+              ? "Save"
+              : confirmLlmFood.isPending
+                ? "Adding to catalog…"
+                : createLogEntry.isPending
+                  ? "Logging…"
+                  : "Log"}
           </Button>
         </div>
       </motion.div>

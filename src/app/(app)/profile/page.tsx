@@ -97,6 +97,19 @@ export default function ProfilePage() {
     () => computeTargets({ ...input, goalRateKgWeek: signedRate }),
     [input, signedRate],
   );
+
+  // Nothing to save until the form actually differs from what was loaded —
+  // key order matches by construction (DEFAULT_INPUT/ProfileInput field
+  // order), so a plain JSON.stringify comparison is safe here.
+  const isDirty = useMemo(() => {
+    if (!existingProfile) return true;
+    const { userId: _userId, ...baseline } = existingProfile as ProfileInput & {
+      userId?: string;
+    };
+    void _userId;
+    const current: ProfileInput = { ...input, goalRateKgWeek: signedRate };
+    return JSON.stringify(current) !== JSON.stringify(baseline);
+  }, [existingProfile, input, signedRate]);
   const bmi = useMemo(
     () => computeBmi(input.heightCm, input.weightKg),
     [input.heightCm, input.weightKg],
@@ -178,6 +191,7 @@ export default function ProfilePage() {
               <Field label="Height (cm)" info={FIELD_INFO.height}>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={input.heightCm}
                   onChange={(e) => update("heightCm", Number(e.target.value) || 0)}
                   className="h-11 w-full rounded-2xl field-input"
@@ -186,6 +200,7 @@ export default function ProfilePage() {
               <Field label="Weight (kg)" info={FIELD_INFO.weight}>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={input.weightKg}
                   onChange={(e) => update("weightKg", Number(e.target.value) || 0)}
                   className="h-11 w-full rounded-2xl field-input"
@@ -393,7 +408,7 @@ export default function ProfilePage() {
         <Button
           className="w-full rounded-2xl shadow-glow"
           onClick={handleSave}
-          disabled={!pctValid || saveProfile.isPending}
+          disabled={!pctValid || saveProfile.isPending || !isDirty}
         >
           {saveProfile.isPending ? "Saving…" : "Save changes"}
         </Button>
@@ -491,6 +506,7 @@ function PctInput({
     <div>
       <input
         type="number"
+        inputMode="decimal"
         value={value}
         onChange={(e) => onChange(Number(e.target.value) || 0)}
         style={{ color }}

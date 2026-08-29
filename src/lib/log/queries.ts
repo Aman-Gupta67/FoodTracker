@@ -1,4 +1,6 @@
 import { createClient, getAuthedClient, type AuthedClient } from "@/lib/supabase/client";
+import { getTodayDateString, shiftDateString } from "@/lib/date";
+import { NUTRIENT_KEYS, type NutrientKey } from "@/lib/providers/types";
 import type {
   CreateLogEntryInput,
   LogEntry,
@@ -167,6 +169,37 @@ export async function fetchDailyMacroTotals(
   return totals;
 }
 
+// Full nutrient breakdown for a single day (all 30 nutrient keys, not just
+// the four macros) — feeds the AI day-analysis report. Summed the same way
+// findNutrient/mapRow do: a nutrient with no log_entry_nutrient row for a
+// given entry simply doesn't contribute, which understates rather than
+// fabricates a zero for a food IFCT never measured that nutrient on
+// (CLAUDE.md "missing is NULL, never 0") — the AI prompt is told this.
+export async function fetchDailyNutrientTotals(
+  date: string,
+): Promise<Partial<Record<NutrientKey, number>>> {
+  const authed = await getAuthedClient();
+  if (!authed) return {};
+  const { data, error } = await authed.supabase
+    .from("log_entry")
+    .select("log_entry_nutrient(nutrient_id, amount)")
+    .eq("consumed_date", date);
+
+  if (error) throw error;
+
+  const totals: Partial<Record<NutrientKey, number>> = {};
+  for (const row of data as unknown as {
+    log_entry_nutrient: { nutrient_id: number; amount: number }[];
+  }[]) {
+    for (const n of row.log_entry_nutrient) {
+      const key = NUTRIENT_KEYS[n.nutrient_id - 1];
+      if (!key) continue;
+      totals[key] = (totals[key] ?? 0) + n.amount;
+    }
+  }
+  return totals;
+}
+
 export interface FoodShortcut {
   foodId: number;
   name: string;
@@ -211,7 +244,7 @@ async function fetchFoodEntriesForSlot(
 
 export async function fetchRecentFoods(
   meal: MealSlot,
-  limit = 10,
+  limit = 5,
 ): Promise<FoodShortcut[]> {
   const rows = await fetchFoodEntriesForSlot(meal);
   const seen = new Set<number>();
@@ -225,24 +258,48 @@ export async function fetchRecentFoods(
   return result;
 }
 
+const FREQUENT_MIN_COUNT = 3;
+const FREQUENT_WINDOW_DAYS = 7;
+
+// "Frequent" means logged at this meal slot at least 3 times in the last 7
+// days — a real recurrence signal, not just "in your last 500 entries ever"
+// (which could surface a food you ate daily for a month last year and
+// haven't touched since).
 export async function fetchFrequentFoods(
   meal: MealSlot,
   limit = 10,
 ): Promise<FoodShortcut[]> {
-  const rows = await fetchFoodEntriesForSlot(meal);
+  const authed = await getAuthedClient();
+  if (!authed) return [];
+  const windowStart = shiftDateString(getTodayDateString(), -(FREQUENT_WINDOW_DAYS - 1));
+  const { data, error } = await authed.supabase
+    .from("log_entry")
+    .select("food_id, consumed_date, food:food_id(name, source_ref)")
+    .eq("meal", meal)
+    .eq("ref_type", "food")
+    .gte("consumed_date", windowStart);
+
+  if (error) throw error;
+
   const counts = new Map<number, { count: number; shortcut: FoodShortcut }>();
-  for (const r of rows) {
-    const existing = counts.get(r.foodId);
+  for (const r of data as unknown as {
+    food_id: number;
+    consumed_date: string;
+    food: { name: string; source_ref: string | null } | null;
+  }[]) {
+    if (!r.food) continue;
+    const existing = counts.get(r.food_id);
     if (existing) {
       existing.count += 1;
     } else {
-      counts.set(r.foodId, {
+      counts.set(r.food_id, {
         count: 1,
-        shortcut: { foodId: r.foodId, name: r.name, sourceRef: r.sourceRef },
+        shortcut: { foodId: r.food_id, name: r.food.name, sourceRef: r.food.source_ref },
       });
     }
   }
   return [...counts.values()]
+    .filter((c) => c.count >= FREQUENT_MIN_COUNT)
     .sort((a, b) => b.count - a.count)
     .slice(0, limit)
     .map((c) => c.shortcut);

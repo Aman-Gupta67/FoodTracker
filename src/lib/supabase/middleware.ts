@@ -51,5 +51,28 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(homeUrl);
   }
 
+  // A brand-new user has no `profile` row until they save the Profile form
+  // once (saveProfileAndTargets writes every required field together in one
+  // upsert, so a row existing at all means it's complete) — until then,
+  // every other screen would just show absent targets. Gate on that instead
+  // of letting them wander a blank app.
+  if (user && !isPublicPath && !request.nextUrl.pathname.startsWith("/profile")) {
+    const { data: profileRow, error: profileError } = await supabase
+      .from("profile")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    // Fail OPEN on a query error (RLS hiccup, transient DB issue) — this
+    // gate is a UX nicety, not a security boundary (RLS already protects
+    // the data regardless), so the wrong failure mode here is locking an
+    // already-onboarded real user out of their own app, not occasionally
+    // skipping the gate for a genuinely new one.
+    if (!profileError && !profileRow) {
+      const profileUrl = request.nextUrl.clone();
+      profileUrl.pathname = "/profile";
+      return NextResponse.redirect(profileUrl);
+    }
+  }
+
   return response;
 }

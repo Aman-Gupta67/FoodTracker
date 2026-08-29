@@ -5,6 +5,7 @@ import {
   deleteLogEntry,
   fetchDailyCalorieTotals,
   fetchDailyMacroTotals,
+  fetchDailyNutrientTotals,
   fetchFrequentFoods,
   fetchLastLogForFood,
   fetchLogEntriesForDate,
@@ -61,6 +62,16 @@ export function useDailyMacroTotals(startDate: string, endDate: string) {
   return useQuery({
     queryKey: ["daily-macro-totals", startDate, endDate],
     queryFn: () => fetchDailyMacroTotals(startDate, endDate),
+  });
+}
+
+// Only fetched when the day-analysis sheet is actually open (enabled) —
+// no reason to pay this extra query on every Home load.
+export function useDailyNutrientTotals(date: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ["daily-nutrient-totals", date],
+    queryFn: () => fetchDailyNutrientTotals(date),
+    enabled,
   });
 }
 

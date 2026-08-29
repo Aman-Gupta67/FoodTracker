@@ -3,7 +3,7 @@
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import { DishForm, type DishFormValue } from "@/components/meals/dish-form";
-import { useDeleteDish, useDish, useUpdateDish } from "@/lib/meals/hooks";
+import { useDish, useUpdateDish } from "@/lib/meals/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditDishPage({
@@ -16,7 +16,6 @@ export default function EditDishPage({
   const router = useRouter();
   const { data: dish, isLoading } = useDish(dishId);
   const updateDish = useUpdateDish();
-  const deleteDish = useDeleteDish();
 
   async function handleSubmit(value: DishFormValue) {
     await updateDish.mutateAsync({
@@ -30,11 +29,6 @@ export default function EditDishPage({
         })),
       },
     });
-    router.push("/meals");
-  }
-
-  async function handleDelete() {
-    await deleteDish.mutateAsync(dishId);
     router.push("/meals");
   }
 
@@ -73,7 +67,6 @@ export default function EditDishPage({
         submitLabel="Save"
         onSubmit={handleSubmit}
         onCancel={() => router.push("/meals")}
-        onDelete={handleDelete}
         isSubmitting={updateDish.isPending}
       />
     </main>

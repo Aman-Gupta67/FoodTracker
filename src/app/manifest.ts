@@ -8,6 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
       "Log Indian food, track calories and macros against a target.",
     start_url: "/",
     display: "standalone",
+    orientation: "portrait",
     background_color: "#ffffff",
     theme_color: "#fc8c2f",
     icons: [

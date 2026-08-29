@@ -57,6 +57,11 @@ export default function RootLayout({
           {children}
           <RegisterServiceWorker />
         </QueryProvider>
+        <div className="landscape-lock" aria-hidden>
+          <p className="text-3xl">📱</p>
+          <p className="text-sm font-bold">Please rotate your device back to portrait</p>
+          <p className="text-xs text-stone-500">Food Tracker is designed for portrait use only.</p>
+        </div>
       </body>
     </html>
   );
