@@ -48,9 +48,10 @@ export function DishForm({
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<FoodCandidate[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isAiSearching, setIsAiSearching] = useState(false);
-  const [aiResults, setAiResults] = useState<FoodCandidate[]>([]);
-  const [aiError, setAiError] = useState<string | null>(null);
+  const [showAiDescribe, setShowAiDescribe] = useState(false);
+  const [aiDescription, setAiDescription] = useState("");
+  const [isAiDescribing, setIsAiDescribing] = useState(false);
+  const [aiDescribeError, setAiDescribeError] = useState<string | null>(null);
   const confirmLlmFood = useConfirmLlmFood();
 
   // Disable Save/Create until the form actually differs from what it loaded
@@ -108,48 +109,42 @@ export function DishForm({
     setIngredients((prev) => prev.filter((_, i) => i !== index));
   }
 
-  // Catalog + OFF search comes up empty for plenty of home-cooked dishes —
-  // this reuses the same AI meal-parsing endpoint as a single-food lookup so
-  // an ingredient the catalog doesn't have isn't a dead end.
-  async function handleAiSearch() {
-    if (!query.trim()) return;
-    setIsAiSearching(true);
-    setAiError(null);
+  // Describe a whole dish in one go ("2 rotis, a bowl of dal") and populate
+  // the ingredient list from it — same parse-meal pipeline the Add-food
+  // screen's "Describe what you ate" card uses, reused here so building a
+  // custom meal doesn't mean hand-searching every ingredient one at a time.
+  async function handleAiDescribe() {
+    if (!aiDescription.trim()) return;
+    setIsAiDescribing(true);
+    setAiDescribeError(null);
     try {
       const { res, body } = await fetchJsonWithRetry("/api/ai/parse-meal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: query }),
+        body: JSON.stringify({ text: aiDescription }),
       });
       if (!res.ok) {
-        throw new Error((body as { error?: string })?.error ?? "Could not search with AI.");
+        throw new Error((body as { error?: string })?.error ?? "Could not parse that.");
       }
       const resolved = await resolveParsedItems((body as { items: ParsedMealItem[] }).items);
-      setAiResults(resolved.map((r) => r.candidate));
+      // Confirmed into the catalog one at a time (review-sheet-before-write,
+      // same rule as everywhere else) — sequential, not Promise.all, so a
+      // failure partway through still leaves the earlier items added.
+      for (const item of resolved) {
+        const foodId = item.candidate.id
+          ? Number(item.candidate.id)
+          : await confirmLlmFood.mutateAsync(item.candidate);
+        setIngredients((prev) => [
+          ...prev,
+          { foodId, foodName: item.candidate.name, grams: item.grams },
+        ]);
+      }
+      setShowAiDescribe(false);
+      setAiDescription("");
     } catch (e) {
-      setAiError(getErrorMessage(e));
+      setAiDescribeError(getErrorMessage(e));
     } finally {
-      setIsAiSearching(false);
-    }
-  }
-
-  // An AI-sourced candidate has no food.id yet — write it into the catalog
-  // once (review-sheet-before-write, same rule as everywhere else) before
-  // it can be referenced as a foodId ingredient.
-  async function addAiIngredient(candidate: FoodCandidate) {
-    setAiError(null);
-    try {
-      const foodId = candidate.id
-        ? Number(candidate.id)
-        : await confirmLlmFood.mutateAsync(candidate);
-      setIngredients((prev) => [
-        ...prev,
-        { foodId, foodName: candidate.name, grams: 100 },
-      ]);
-      setQuery("");
-      setAiResults([]);
-    } catch (e) {
-      setAiError(getErrorMessage(e));
+      setIsAiDescribing(false);
     }
   }
 
@@ -279,13 +274,28 @@ export function DishForm({
           </ul>
         )}
 
-        <input
-          type="text"
-          placeholder="Search foods to add…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="mt-2 h-11 w-full rounded-2xl field-input"
-        />
+        <div className="mt-2 flex gap-2">
+          <input
+            type="text"
+            placeholder="Search foods to add…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-11 flex-1 rounded-2xl field-input"
+          />
+          <button
+            type="button"
+            aria-label="Describe with AI"
+            onClick={() => setShowAiDescribe((v) => !v)}
+            className={
+              "flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl active:scale-95 " +
+              (showAiDescribe
+                ? "bg-primary-100 text-primary-700"
+                : "bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-glow")
+            }
+          >
+            <Sparkles size={18} />
+          </button>
+        </div>
         {searchResults.length > 0 ? (
           <ul className="mt-1.5 overflow-hidden rounded-2xl bg-stone-50">
             {searchResults.map((food) => (
@@ -303,37 +313,40 @@ export function DishForm({
           </ul>
         ) : null}
 
-        {query.trim() && searchResults.length === 0 ? (
-          <div className="mt-1.5">
-            <button
-              type="button"
-              onClick={handleAiSearch}
-              disabled={isAiSearching}
-              className="flex w-full items-center justify-center gap-1.5 rounded-2xl border border-dashed border-primary-200 bg-primary-50 py-2.5 text-[12.5px] font-bold text-primary-700 disabled:opacity-60"
-            >
-              <Sparkles size={14} />
-              {isAiSearching ? "Searching…" : "Not in the list? Search with AI"}
-            </button>
-            {aiError ? <p className="mt-1.5 text-xs text-red-600">{aiError}</p> : null}
-            {aiResults.length > 0 ? (
-              <ul className="mt-1.5 overflow-hidden rounded-2xl bg-stone-50">
-                {aiResults.map((food, i) => (
-                  <li key={`ai-${i}`}>
-                    <button
-                      type="button"
-                      onClick={() => addAiIngredient(food)}
-                      disabled={confirmLlmFood.isPending}
-                      className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-[13.5px] font-medium hover:bg-stone-100 disabled:opacity-60"
-                    >
-                      <FoodTile size={28} />
-                      {food.name}
-                      <span className="ml-auto rounded-full bg-primary-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-primary-700">
-                        AI est.
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+        {showAiDescribe ? (
+          <div className="mt-2 rounded-2xl bg-stone-50 p-3">
+            <p className="mb-2 text-[12.5px] font-semibold text-stone-600">
+              Describe the food and its ingredients will be added below.
+            </p>
+            <textarea
+              rows={2}
+              placeholder="e.g. 2 rotis, a bowl of dal, and a side of curd"
+              value={aiDescription}
+              onChange={(e) => setAiDescription(e.target.value)}
+              className="field-input mb-2 w-full resize-none rounded-[14px] py-2.5"
+            />
+            <div className="flex gap-2">
+              <Button
+                className="flex-1 rounded-xl"
+                onClick={handleAiDescribe}
+                disabled={isAiDescribing || !aiDescription.trim()}
+              >
+                {isAiDescribing ? "Thinking…" : "Add ingredients"}
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={() => {
+                  setShowAiDescribe(false);
+                  setAiDescription("");
+                  setAiDescribeError(null);
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+            {aiDescribeError ? (
+              <p className="mt-1.5 text-xs text-red-600">{aiDescribeError}</p>
             ) : null}
           </div>
         ) : null}
