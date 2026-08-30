@@ -250,21 +250,42 @@ export function AddFoodClient({
     if (pendingItems.length === 0) return;
     setIsLoggingAll(true);
     setLogAllError(null);
+    // Logged one at a time, removing each from the pending list (and state)
+    // as it succeeds — a mid-loop failure (a dropped connection, the app
+    // getting backgrounded) then leaves only the NOT-yet-logged items in
+    // pendingItems, so tapping "Log this" again to retry can't re-submit
+    // ones that already made it into the log.
+    let remaining = [...pendingItems];
     try {
-      for (const item of pendingItems) {
+      while (remaining.length > 0) {
+        const item = remaining[0]!;
         const foodId = await resolveFoodId(item.candidate);
+        // Stamp the resolved id back onto the item BEFORE the next
+        // (possibly-failing) step — if createLogEntry throws right after a
+        // successful confirmLlmFood, a retry must see candidate.id already
+        // set so resolveFoodId doesn't write a second, duplicate catalog
+        // row for the same AI-estimated food (same reasoning as
+        // handleSaveAsDish below).
+        if (!item.candidate.id) {
+          remaining = remaining.map((it, idx) =>
+            idx === 0 ? { ...it, candidate: { ...it.candidate, id: String(foodId) } } : it,
+          );
+          setPendingItems(remaining);
+        }
+        const resolvedItem = remaining[0]!;
         await createLogEntry.mutateAsync({
           consumedAt: getNowIso(),
           consumedDate: date,
           meal,
           foodId,
           portionId: null,
-          quantity: item.grams,
+          quantity: resolvedItem.grams,
           enteredState: "raw",
-          enteredGrams: item.grams,
+          enteredGrams: resolvedItem.grams,
         });
+        remaining = remaining.slice(1);
+        setPendingItems(remaining);
       }
-      setPendingItems([]);
       router.push("/");
     } catch (e) {
       setLogAllError(getErrorMessage(e));
@@ -277,9 +298,21 @@ export function AddFoodClient({
     setIsSavingDish(true);
     setSaveDishError(null);
     try {
-      const ingredients = [];
-      for (const item of pendingItems) {
-        ingredients.push({ foodId: await resolveFoodId(item.candidate), grams: item.grams });
+      const ingredients: { foodId: number; grams: number }[] = [];
+      let items = pendingItems;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]!;
+        const foodId = await resolveFoodId(item.candidate);
+        ingredients.push({ foodId, grams: item.grams });
+        // Stamp the resolved id back onto the pending item — if a later
+        // item in this same list fails (network drop) and the user retries,
+        // resolveFoodId sees candidate.id already set and skips re-running
+        // confirmLlmFood, which would otherwise write a duplicate catalog
+        // row for the same AI-estimated food.
+        items = items.map((it, idx) =>
+          idx === i ? { ...it, candidate: { ...it.candidate, id: String(foodId) } } : it,
+        );
+        setPendingItems(items);
       }
       await createDish.mutateAsync({ name, servings: 1, ingredients });
       setPendingItems([]);
