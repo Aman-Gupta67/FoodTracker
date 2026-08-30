@@ -23,8 +23,10 @@ import { useDishes, useCreateDish } from "@/lib/meals/hooks";
 import type { Dish } from "@/lib/meals/types";
 import {
   resolveParsedItems,
+  type ParsedMealItem,
   type ResolvedMealItem,
 } from "@/lib/ai/resolve-parsed-items";
+import { fetchJsonWithRetry } from "@/lib/ai/fetch-json";
 import { requestMealSuggestion } from "@/lib/ai/suggest-meal-client";
 import { useConfirmLlmFood } from "@/lib/ai/confirm-llm-food";
 import { getErrorMessage } from "@/lib/error";
@@ -124,14 +126,15 @@ export function AddFoodClient({
     setIsParsingMeal(true);
     setParseError(null);
     try {
-      const res = await fetch("/api/ai/parse-meal", {
+      const { res, body } = await fetchJsonWithRetry("/api/ai/parse-meal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: mealDescription }),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error ?? "Could not parse that.");
-      const resolved = await resolveParsedItems(body.items);
+      if (!res.ok) {
+        throw new Error((body as { error?: string })?.error ?? "Could not parse that.");
+      }
+      const resolved = await resolveParsedItems((body as { items: ParsedMealItem[] }).items);
       setPendingItems(resolved);
     } catch (e) {
       setParseError(getErrorMessage(e));

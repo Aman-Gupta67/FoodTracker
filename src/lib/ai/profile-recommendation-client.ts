@@ -1,4 +1,5 @@
 import type { ProfileRecommendation } from "./profile-recommendation";
+import { fetchJsonWithRetry } from "./fetch-json";
 
 export interface ProfileRecommendationRequest {
   sex: string;
@@ -20,14 +21,13 @@ export interface ProfileRecommendationRequest {
 export async function requestProfileRecommendation(
   input: ProfileRecommendationRequest,
 ): Promise<ProfileRecommendation> {
-  const res = await fetch("/api/ai/profile-recommendation", {
+  const { res, body } = await fetchJsonWithRetry("/api/ai/profile-recommendation", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
-  const body = await res.json();
   if (!res.ok) {
-    throw new Error(body.error ?? "Could not get an analysis.");
+    throw new Error((body as { error?: string })?.error ?? "Could not get an analysis.");
   }
   return body as ProfileRecommendation;
 }

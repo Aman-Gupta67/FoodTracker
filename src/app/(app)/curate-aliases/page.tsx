@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { searchFoodByAlias, type FoodSearchResult } from "@/lib/catalog/search";
 import { getFoodAliases } from "@/lib/catalog/food-detail";
 import { useAddFoodAliases } from "@/lib/ai/add-food-aliases";
+import { fetchJsonWithRetry } from "@/lib/ai/fetch-json";
 import { Button } from "@/components/ui/button";
 import { getErrorMessage } from "@/lib/error";
 
@@ -49,7 +50,7 @@ export default function CurateAliasesPage() {
     setIsSuggesting(true);
     setError(null);
     try {
-      const res = await fetch("/api/ai/suggest-aliases", {
+      const { res, body } = await fetchJsonWithRetry("/api/ai/suggest-aliases", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -57,10 +58,14 @@ export default function CurateAliasesPage() {
           existingAliases,
         }),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error ?? "Could not get suggestions.");
-      setSuggestions(body.aliases);
-      setApproved(new Set(body.aliases)); // pre-checked, reviewable before saving
+      if (!res.ok) {
+        throw new Error(
+          (body as { error?: string })?.error ?? "Could not get suggestions.",
+        );
+      }
+      const aliases = (body as { aliases: string[] }).aliases;
+      setSuggestions(aliases);
+      setApproved(new Set(aliases)); // pre-checked, reviewable before saving
     } catch (e) {
       setError(getErrorMessage(e));
     } finally {

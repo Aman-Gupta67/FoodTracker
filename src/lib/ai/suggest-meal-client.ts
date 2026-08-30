@@ -4,6 +4,7 @@ import { getFoodCandidateById } from "@/lib/providers/local-catalog-provider";
 import { getFoodNutrientsByKey } from "@/lib/catalog/food-detail";
 import type { ConsumedToday } from "./suggest-meal";
 import type { ResolvedMealItem } from "./resolve-parsed-items";
+import { fetchJsonWithRetry } from "./fetch-json";
 
 export interface RemainingTargets {
   calories: number;
@@ -73,22 +74,23 @@ export async function requestMealSuggestion(
     );
   }
 
-  const res = await fetch("/api/ai/suggest-meal", {
+  const { res, body } = await fetchJsonWithRetry("/api/ai/suggest-meal", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ targets, candidates, consumedToday }),
   });
-  const body = await res.json();
   if (!res.ok) {
-    throw new Error(body.error ?? "Could not get a suggestion.");
+    throw new Error((body as { error?: string })?.error ?? "Could not get a suggestion.");
   }
 
-  const suggested: { id: number; grams: number }[] = body.items;
+  const suggested: { id: number; grams: number }[] = (
+    body as { items: { id: number; grams: number }[] }
+  ).items;
   const resolved: ResolvedMealItem[] = [];
   for (const item of suggested) {
     const candidate = await getFoodCandidateById(item.id);
     if (candidate) resolved.push({ candidate, grams: item.grams });
   }
 
-  return { items: resolved, reasoning: body.reasoning ?? "" };
+  return { items: resolved, reasoning: (body as { reasoning?: string }).reasoning ?? "" };
 }

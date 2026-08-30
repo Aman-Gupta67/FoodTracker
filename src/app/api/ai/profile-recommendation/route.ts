@@ -26,6 +26,13 @@ function isValidInput(value: unknown): value is ProfileRecommendationInput {
   );
 }
 
+// Groq calls plus a cold serverless-function start can occasionally
+// exceed the platform's default function timeout, killing the request
+// mid-flight (surfaces client-side as a generic "Load failed"/"Failed to
+// fetch") — the client already retries once on that shape of failure,
+// but giving the function more room to begin with means it rarely needs to.
+export const maxDuration = 30;
+
 export async function POST(request: Request) {
   const supabase = await createClient();
   const {

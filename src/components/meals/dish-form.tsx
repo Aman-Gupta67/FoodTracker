@@ -8,7 +8,8 @@ import { resolveFoodCandidates } from "@/lib/providers/resolve";
 import type { FoodCandidate } from "@/lib/providers/types";
 import { useIngredientMacros } from "@/lib/meals/hooks";
 import type { NewDishIngredient } from "@/lib/meals/queries";
-import { resolveParsedItems } from "@/lib/ai/resolve-parsed-items";
+import { resolveParsedItems, type ParsedMealItem } from "@/lib/ai/resolve-parsed-items";
+import { fetchJsonWithRetry } from "@/lib/ai/fetch-json";
 import { useConfirmLlmFood } from "@/lib/ai/confirm-llm-food";
 import { getErrorMessage } from "@/lib/error";
 
@@ -115,14 +116,15 @@ export function DishForm({
     setIsAiSearching(true);
     setAiError(null);
     try {
-      const res = await fetch("/api/ai/parse-meal", {
+      const { res, body } = await fetchJsonWithRetry("/api/ai/parse-meal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: query }),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error ?? "Could not search with AI.");
-      const resolved = await resolveParsedItems(body.items);
+      if (!res.ok) {
+        throw new Error((body as { error?: string })?.error ?? "Could not search with AI.");
+      }
+      const resolved = await resolveParsedItems((body as { items: ParsedMealItem[] }).items);
       setAiResults(resolved.map((r) => r.candidate));
     } catch (e) {
       setAiError(getErrorMessage(e));
