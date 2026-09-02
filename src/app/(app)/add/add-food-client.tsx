@@ -28,9 +28,9 @@ import {
 } from "@/lib/ai/resolve-parsed-items";
 import { fetchJsonWithRetry } from "@/lib/ai/fetch-json";
 import { requestMealSuggestion } from "@/lib/ai/suggest-meal-client";
-import { useConfirmLlmFood } from "@/lib/ai/confirm-llm-food";
+import { useConfirmLlmFoodsBulk } from "@/lib/ai/confirm-llm-food";
 import { getErrorMessage } from "@/lib/error";
-import { useCreateLogEntry, useLogEntries } from "@/lib/log/hooks";
+import { useCreateLogEntriesBulk, useLogEntries } from "@/lib/log/hooks";
 import { useDailyTargets } from "@/lib/profile/hooks";
 
 const SEARCH_DEBOUNCE_MS = 150;
@@ -77,8 +77,8 @@ export function AddFoodClient({
   const { data: dishes = [] } = useDishes();
   const { data: targets } = useDailyTargets();
   const { data: todayEntries = [] } = useLogEntries(date);
-  const confirmLlmFood = useConfirmLlmFood();
-  const createLogEntry = useCreateLogEntry(date);
+  const confirmLlmFoodsBulk = useConfirmLlmFoodsBulk();
+  const createLogEntriesBulk = useCreateLogEntriesBulk(date);
   const createDish = useCreateDish();
 
   useEffect(() => {
@@ -240,55 +240,49 @@ export function AddFoodClient({
     { calories: 0, protein: 0, carb: 0, fat: 0 },
   );
 
-  // Shared by "Log this" and "Add to Eat List" — an AI-estimate item has no
-  // food.id yet, so it has to be written into the catalog once (review-
-  // sheet-before-write, same rule as everywhere else) before it can be
-  // referenced as a foodId.
-  async function resolveFoodId(candidate: FoodCandidate): Promise<number> {
-    if (candidate.id) return Number(candidate.id);
-    return confirmLlmFood.mutateAsync(candidate);
+  // Shared by "Log this" and "Add to Eat List": resolves every pending
+  // item's foodId in ONE round trip (confirm_llm_foods_bulk) instead of one
+  // RPC call per AI-estimated item — items that are already real catalog
+  // matches (candidate.id set) skip confirmation entirely. Idempotent per
+  // food, so calling it again after a later failure elsewhere is safe.
+  async function resolveAllFoodIds(items: ResolvedMealItem[]): Promise<number[]> {
+    const needsConfirm = items
+      .map((item, idx) => ({ item, idx }))
+      .filter(({ item }) => !item.candidate.id);
+
+    const resolved = new Map<number, number>();
+    if (needsConfirm.length > 0) {
+      const confirmed = await confirmLlmFoodsBulk.mutateAsync(
+        needsConfirm.map(({ item, idx }) => ({ idx, candidate: item.candidate })),
+      );
+      confirmed.forEach((foodId, idx) => resolved.set(idx, foodId));
+    }
+    return items.map((item, idx) =>
+      item.candidate.id ? Number(item.candidate.id) : resolved.get(idx)!,
+    );
   }
 
   async function handleLogAllPending() {
     if (pendingItems.length === 0) return;
     setIsLoggingAll(true);
     setLogAllError(null);
-    // Logged one at a time, removing each from the pending list (and state)
-    // as it succeeds — a mid-loop failure (a dropped connection, the app
-    // getting backgrounded) then leaves only the NOT-yet-logged items in
-    // pendingItems, so tapping "Log this" again to retry can't re-submit
-    // ones that already made it into the log.
-    let remaining = [...pendingItems];
     try {
-      while (remaining.length > 0) {
-        const item = remaining[0]!;
-        const foodId = await resolveFoodId(item.candidate);
-        // Stamp the resolved id back onto the item BEFORE the next
-        // (possibly-failing) step — if createLogEntry throws right after a
-        // successful confirmLlmFood, a retry must see candidate.id already
-        // set so resolveFoodId doesn't write a second, duplicate catalog
-        // row for the same AI-estimated food (same reasoning as
-        // handleSaveAsDish below).
-        if (!item.candidate.id) {
-          remaining = remaining.map((it, idx) =>
-            idx === 0 ? { ...it, candidate: { ...it.candidate, id: String(foodId) } } : it,
-          );
-          setPendingItems(remaining);
-        }
-        const resolvedItem = remaining[0]!;
-        await createLogEntry.mutateAsync({
-          consumedAt: getNowIso(),
+      const foodIds = await resolveAllFoodIds(pendingItems);
+      const consumedAt = getNowIso();
+      await createLogEntriesBulk.mutateAsync({
+        entries: pendingItems.map((item, idx) => ({
+          foodId: foodIds[idx]!,
+          portionId: null,
+          quantity: item.grams,
+          enteredState: "raw",
+          enteredGrams: item.grams,
+          consumedAt,
           consumedDate: date,
           meal,
-          foodId,
-          portionId: null,
-          quantity: resolvedItem.grams,
-          enteredState: "raw",
-          enteredGrams: resolvedItem.grams,
-        });
-        remaining = remaining.slice(1);
-        setPendingItems(remaining);
-      }
+        })),
+        description: mealDescription.trim() || suggestReasoning || "Multiple items",
+      });
+      setPendingItems([]);
       router.push("/");
     } catch (e) {
       setLogAllError(getErrorMessage(e));
@@ -301,22 +295,11 @@ export function AddFoodClient({
     setIsSavingDish(true);
     setSaveDishError(null);
     try {
-      const ingredients: { foodId: number; grams: number }[] = [];
-      let items = pendingItems;
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i]!;
-        const foodId = await resolveFoodId(item.candidate);
-        ingredients.push({ foodId, grams: item.grams });
-        // Stamp the resolved id back onto the pending item — if a later
-        // item in this same list fails (network drop) and the user retries,
-        // resolveFoodId sees candidate.id already set and skips re-running
-        // confirmLlmFood, which would otherwise write a duplicate catalog
-        // row for the same AI-estimated food.
-        items = items.map((it, idx) =>
-          idx === i ? { ...it, candidate: { ...it.candidate, id: String(foodId) } } : it,
-        );
-        setPendingItems(items);
-      }
+      const foodIds = await resolveAllFoodIds(pendingItems);
+      const ingredients = pendingItems.map((item, idx) => ({
+        foodId: foodIds[idx]!,
+        grams: item.grams,
+      }));
       await createDish.mutateAsync({ name, servings: 1, ingredients });
       setPendingItems([]);
       setShowSaveAsDish(false);
@@ -435,7 +418,7 @@ export function AddFoodClient({
               <Button
                 className="flex-1 rounded-xl"
                 onClick={handleLogAllPending}
-                disabled={isLoggingAll || confirmLlmFood.isPending}
+                disabled={isLoggingAll || confirmLlmFoodsBulk.isPending}
               >
                 {isLoggingAll ? "Logging…" : "Log this"}
               </Button>

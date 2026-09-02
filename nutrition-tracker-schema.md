@@ -309,6 +309,17 @@ create type log_ref as enum ('food', 'dish');
 create type meal_slot as enum
   ('breakfast','morning_snack','lunch','evening_snack','dinner');
 
+-- One row per "Describe what you ate" bulk-log action — lets the Home
+-- screen collapse every log_entry it produced into a single card (name =
+-- the description text, trimmed) instead of showing each ingredient as its
+-- own row. Never created for manual single-item logging.
+create table ai_meal_group (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null references auth.users(id),
+  description text not null,
+  created_at  timestamptz not null default now()
+);
+
 create table log_entry (
   id            bigserial primary key,
   user_id       uuid not null references auth.users(id),
@@ -326,11 +337,13 @@ create table log_entry (
   entered_grams real not null,                 -- what the user actually typed
   yield_factor  real not null default 1.0,     -- snapshot of resolve_yield() at insert
   note          text,
+  ai_group_id   uuid references ai_meal_group(id), -- set only by create_log_entries_bulk
   created_at    timestamptz not null default now(),
   check ((ref_type = 'food' and food_id is not null and dish_id is null)
       or (ref_type = 'dish' and dish_id is not null and food_id is null))
 );
 create index log_entry_user_date_idx on log_entry (user_id, consumed_date);
+create index log_entry_ai_group_idx on log_entry (ai_group_id) where ai_group_id is not null;
 
 -- snapshot: computed at insert, never recomputed
 create table log_entry_nutrient (

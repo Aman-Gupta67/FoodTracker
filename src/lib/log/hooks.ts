@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createDishLogEntry,
   createLogEntry,
+  createLogEntriesBulk,
   deleteLogEntry,
   fetchDailyCalorieTotals,
   fetchDailyMacroTotals,
@@ -14,6 +15,7 @@ import {
   type CreateDishLogEntryInput,
 } from "./queries";
 import type {
+  BulkLogEntryInput,
   CreateLogEntryInput,
   LogEntry,
   MealSlot,
@@ -97,6 +99,8 @@ function buildPendingEntry(input: CreateLogEntryInput, tempId: number): LogEntry
     note: input.note ?? null,
     foodName: null,
     dishName: null,
+    aiGroupId: null,
+    aiGroupDescription: null,
     calories: 0,
     protein: 0,
     carb: 0,
@@ -126,6 +130,25 @@ export function useCreateLogEntry(date: string) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: key });
+    },
+  });
+}
+
+// No optimistic placeholder here (unlike useCreateLogEntry) — the RPC
+// itself is now a single ~1s round trip for the whole batch, so the extra
+// complexity of an N-item optimistic insert isn't buying back much.
+export function useCreateLogEntriesBulk(date: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      entries,
+      description,
+    }: {
+      entries: BulkLogEntryInput[];
+      description: string | null;
+    }) => createLogEntriesBulk(entries, description),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: logEntriesKey(date) });
     },
   });
 }

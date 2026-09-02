@@ -19,6 +19,7 @@ import { DayAnalysisSheet } from "@/components/kpi/day-analysis-sheet";
 import { FoodTile } from "@/components/ui/food-tile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { AiMealSheet } from "@/components/logging/ai-meal-sheet";
 
 const MEAL_ICONS: Record<MealSlot, typeof Sunrise> = {
   breakfast: Sunrise,
@@ -252,6 +253,40 @@ function EmptyDay({ date }: { date: string }) {
   );
 }
 
+// Entries created together by one "Log this" bulk action share an
+// ai_group_id — collapsed here into a single display item so the Home
+// screen shows one row per logging action, not one per ingredient.
+// Grouping order follows first-appearance order in `entries` (already
+// consumed_at-ascending from the query), not creation order across groups.
+type DisplayItem =
+  | { type: "single"; entry: LogEntry }
+  | { type: "group"; groupId: string; description: string; entries: LogEntry[] };
+
+function groupEntriesForDisplay(entries: LogEntry[]): DisplayItem[] {
+  const items: DisplayItem[] = [];
+  const groupIndex = new Map<string, number>();
+  for (const entry of entries) {
+    if (entry.aiGroupId) {
+      const existingIdx = groupIndex.get(entry.aiGroupId);
+      const existing = existingIdx !== undefined ? items[existingIdx] : undefined;
+      if (existing && existing.type === "group") {
+        existing.entries.push(entry);
+        continue;
+      }
+      groupIndex.set(entry.aiGroupId, items.length);
+      items.push({
+        type: "group",
+        groupId: entry.aiGroupId,
+        description: entry.aiGroupDescription ?? "AI meal",
+        entries: [entry],
+      });
+    } else {
+      items.push({ type: "single", entry });
+    }
+  }
+  return items;
+}
+
 function MealSection({
   slot,
   entries,
@@ -263,6 +298,7 @@ function MealSection({
 }) {
   const subtotal = entries.reduce((sum, e) => sum + e.calories, 0);
   const Icon = MEAL_ICONS[slot];
+  const displayItems = groupEntriesForDisplay(entries);
 
   return (
     <section className="overflow-hidden rounded-2xl border border-stone-100 bg-white shadow-md">
@@ -277,9 +313,18 @@ function MealSection({
       </div>
 
       <AnimatePresence initial={false}>
-        {entries.map((entry) => (
-          <EntryRow key={entry.id} entry={entry} date={date} />
-        ))}
+        {displayItems.map((item) =>
+          item.type === "single" ? (
+            <EntryRow key={item.entry.id} entry={item.entry} date={date} />
+          ) : (
+            <AiMealRow
+              key={item.groupId}
+              description={item.description}
+              entries={item.entries}
+              date={date}
+            />
+          ),
+        )}
       </AnimatePresence>
 
       <Link
@@ -399,5 +444,58 @@ function EntryRow({ entry, date }: { entry: LogEntry; date: string }) {
         <Trash2 size={14} />
       </button>
     </motion.div>
+  );
+}
+
+const GROUP_NAME_MAX_CHARS = 42;
+
+function AiMealRow({
+  description,
+  entries,
+  date,
+}: {
+  description: string;
+  entries: LogEntry[];
+  date: string;
+}) {
+  const [showSheet, setShowSheet] = useState(false);
+  const totalCalories = entries.reduce((sum, e) => sum + e.calories, 0);
+  const trimmedName =
+    description.length > GROUP_NAME_MAX_CHARS
+      ? description.slice(0, GROUP_NAME_MAX_CHARS - 1).trimEnd() + "…"
+      : description;
+
+  return (
+    <>
+      <motion.button
+        type="button"
+        layout
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={() => setShowSheet(true)}
+        className="flex w-full items-center gap-2.5 border-t border-stone-100 px-3.5 py-2 text-left first:border-t-0"
+      >
+        <FoodTile size={38} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[13.5px] font-semibold">{trimmedName}</p>
+          <p className="text-[11.5px] text-stone-500">
+            {entries.length} ingredient{entries.length !== 1 ? "s" : ""}
+          </p>
+        </div>
+        <span className="text-[13px] font-bold text-stone-700">{Math.round(totalCalories)}</span>
+        <ChevronRight size={16} className="flex-shrink-0 text-stone-400" />
+      </motion.button>
+
+      {showSheet ? (
+        <AiMealSheet
+          description={description}
+          entries={entries}
+          date={date}
+          onClose={() => setShowSheet(false)}
+        />
+      ) : null}
+    </>
   );
 }

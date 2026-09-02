@@ -38,6 +38,12 @@ export interface LogEntry {
   note: string | null;
   foodName: string | null;
   dishName: string | null;
+  // Set only for entries created together by one "Log this" bulk action
+  // (see create_log_entries_bulk) — entries sharing the same aiGroupId
+  // collapse into a single card on Home, named by aiGroupDescription (the
+  // original "Describe what you ate" text).
+  aiGroupId: string | null;
+  aiGroupDescription: string | null;
   calories: number;
   protein: number;
   carb: number;
@@ -72,5 +78,18 @@ export interface UpdateLogEntryInput {
   quantity: number;
   enteredState: "raw" | "cooked";
   enteredGrams: number;
+  note?: string;
+}
+
+// One item of a bulk "Log this" commit — see create_log_entries_bulk.
+export interface BulkLogEntryInput {
+  foodId: number;
+  portionId: number | null;
+  quantity: number;
+  enteredState: "raw" | "cooked";
+  enteredGrams: number;
+  consumedAt: string;
+  consumedDate: string;
+  meal: MealSlot;
   note?: string;
 }

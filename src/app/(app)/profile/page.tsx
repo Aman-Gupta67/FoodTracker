@@ -430,6 +430,11 @@ function SignOutButton() {
     setIsSigningOut(true);
     const supabase = createClient();
     await supabase.auth.signOut();
+    // Clears the middleware's cached "has a profile" flag (see
+    // src/lib/supabase/middleware.ts) — otherwise a different number
+    // logging in on this same device would inherit this account's cached
+    // "yes" and skip the onboarding check it actually needs.
+    document.cookie = "ft_has_profile=; path=/; max-age=0";
     window.location.href = "/login";
   }
 

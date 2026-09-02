@@ -2,6 +2,7 @@ import { createClient, getAuthedClient, type AuthedClient } from "@/lib/supabase
 import { getTodayDateString, shiftDateString } from "@/lib/date";
 import { NUTRIENT_KEYS, type NutrientKey } from "@/lib/providers/types";
 import type {
+  BulkLogEntryInput,
   CreateLogEntryInput,
   LogEntry,
   MealSlot,
@@ -14,7 +15,7 @@ import type {
 const NUTRIENT_ID = { energy: 1, protein: 2, fat: 3, carb: 4 } as const;
 
 const LOG_ENTRY_SELECT =
-  "*, food:food_id(name, source_ref, energy_source, fetch_confidence), dish:dish_id(name), log_entry_nutrient(nutrient_id, amount)";
+  "*, food:food_id(name, source_ref, energy_source, fetch_confidence), dish:dish_id(name), ai_meal_group:ai_group_id(description), log_entry_nutrient(nutrient_id, amount)";
 
 interface RawLogEntryRow {
   id: number;
@@ -31,6 +32,7 @@ interface RawLogEntryRow {
   entered_grams: number;
   yield_factor: number;
   note: string | null;
+  ai_group_id: string | null;
   food: {
     name: string;
     source_ref: string | null;
@@ -38,6 +40,7 @@ interface RawLogEntryRow {
     fetch_confidence: string | null;
   } | null;
   dish: { name: string } | null;
+  ai_meal_group: { description: string } | null;
   log_entry_nutrient: { nutrient_id: number; amount: number }[];
 }
 
@@ -66,6 +69,8 @@ function mapRow(r: RawLogEntryRow): LogEntry {
     note: r.note,
     foodName: r.food?.name ?? null,
     dishName: r.dish?.name ?? null,
+    aiGroupId: r.ai_group_id,
+    aiGroupDescription: r.ai_meal_group?.description ?? null,
     calories: findNutrient(r.log_entry_nutrient, NUTRIENT_ID.energy),
     protein: findNutrient(r.log_entry_nutrient, NUTRIENT_ID.protein),
     carb: findNutrient(r.log_entry_nutrient, NUTRIENT_ID.carb),
@@ -435,6 +440,37 @@ export async function createDishLogEntry(
 
   if (error) throw error;
   return data as number;
+}
+
+// Bulk version of createLogEntry — one round trip for the whole "Log this"
+// batch, atomic (a failure anywhere rolls back everything, so there's no
+// partial-success state to reconcile on retry). p_description, when given,
+// creates one ai_meal_group row shared by every entry in this call.
+export async function createLogEntriesBulk(
+  entries: BulkLogEntryInput[],
+  description: string | null,
+): Promise<number[]> {
+  if (entries.length === 0) return [];
+  const supabase = createClient();
+  const { data, error } = await supabase.rpc("create_log_entries_bulk", {
+    p_entries: entries.map((e, idx) => ({
+      idx,
+      food_id: e.foodId,
+      portion_id: e.portionId,
+      quantity: e.quantity,
+      entered_state: e.enteredState,
+      entered_grams: e.enteredGrams,
+      consumed_at: e.consumedAt,
+      consumed_date: e.consumedDate,
+      meal: e.meal,
+      note: e.note ?? null,
+    })),
+    p_description: description,
+  });
+  if (error) throw error;
+  return (data as { idx: number; entry_id: number }[])
+    .sort((a, b) => a.idx - b.idx)
+    .map((r) => r.entry_id);
 }
 
 export async function updateLogEntry(

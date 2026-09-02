@@ -7,6 +7,13 @@ import { NextResponse, type NextRequest } from "next/server";
 // shape (phone-login has none by design; parse-meal returns a 401 JSON).
 const PUBLIC_PATHS = ["/login", "/api/"];
 
+// Caches "this session's user has a profile row" so the check below only
+// hits the DB once per session instead of once per navigation — profiles
+// are never deleted in this app, so once true it stays true for the life
+// of the session. Cleared on sign-out (see ProfilePage) so a different
+// number logging in on the same device/browser gets re-checked fresh.
+const HAS_PROFILE_COOKIE = "ft_has_profile";
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -56,7 +63,12 @@ export async function updateSession(request: NextRequest) {
   // upsert, so a row existing at all means it's complete) — until then,
   // every other screen would just show absent targets. Gate on that instead
   // of letting them wander a blank app.
-  if (user && !isPublicPath && !request.nextUrl.pathname.startsWith("/profile")) {
+  if (
+    user &&
+    !isPublicPath &&
+    !request.nextUrl.pathname.startsWith("/profile") &&
+    request.cookies.get(HAS_PROFILE_COOKIE)?.value !== "1"
+  ) {
     const { data: profileRow, error: profileError } = await supabase
       .from("profile")
       .select("user_id")
@@ -71,6 +83,13 @@ export async function updateSession(request: NextRequest) {
       const profileUrl = request.nextUrl.clone();
       profileUrl.pathname = "/profile";
       return NextResponse.redirect(profileUrl);
+    }
+    if (!profileError && profileRow) {
+      response.cookies.set(HAS_PROFILE_COOKIE, "1", {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: "lax",
+      });
     }
   }
 
