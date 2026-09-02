@@ -40,16 +40,13 @@ function mapProfile(r: RawProfileRow): Profile {
 }
 
 export async function fetchProfile(): Promise<Profile | null> {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
+  const authed = await getAuthedClient();
+  if (!authed) return null;
 
-  const { data, error } = await supabase
+  const { data, error } = await authed.supabase
     .from("profile")
     .select("*")
-    .eq("user_id", user.id)
+    .eq("user_id", authed.userId)
     .maybeSingle();
 
   if (error) throw error;
@@ -117,16 +114,13 @@ export async function saveProfileAndTargets(input: ProfileInput) {
 }
 
 export async function fetchDailyTargets(): Promise<DailyTargets | null> {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
+  const authed = await getAuthedClient();
+  if (!authed) return null;
 
-  const { data, error } = await supabase
+  const { data, error } = await authed.supabase
     .from("daily_target")
     .select("nutrient_id, target_min")
-    .eq("user_id", user.id);
+    .eq("user_id", authed.userId);
 
   if (error) throw error;
   if (!data || data.length === 0) return null;

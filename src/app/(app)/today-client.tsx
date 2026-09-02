@@ -3,12 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Pencil, Trash2, Sunrise, Sun, Moon, Coffee, LayoutDashboard, ChevronRight } from "lucide-react";
-import {
-  useDeleteLogEntry,
-  useLogEntries,
-  useUpdateLogEntry,
-} from "@/lib/log/hooks";
+import { Plus, Trash2, Sunrise, Sun, Moon, Coffee, LayoutDashboard, ChevronRight } from "lucide-react";
+import { useDeleteLogEntry, useLogEntries } from "@/lib/log/hooks";
 import { MEAL_SLOTS, MEAL_SLOT_LABELS, type LogEntry, type MealSlot } from "@/lib/log/types";
 import { getTodayDateString, shiftDateString } from "@/lib/date";
 import { useDailyTargets } from "@/lib/profile/hooks";
@@ -19,7 +15,7 @@ import { DayAnalysisSheet } from "@/components/kpi/day-analysis-sheet";
 import { FoodTile } from "@/components/ui/food-tile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { AiMealSheet } from "@/components/logging/ai-meal-sheet";
+import { LogEntryDetailSheet } from "@/components/logging/log-entry-detail-sheet";
 
 const MEAL_ICONS: Record<MealSlot, typeof Sunrise> = {
   breakfast: Sunrise,
@@ -338,11 +334,8 @@ function MealSection({
 }
 
 function EntryRow({ entry, date }: { entry: LogEntry; date: string }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [grams, setGrams] = useState(entry.enteredGrams);
-  const [state, setState] = useState(entry.enteredState);
+  const [showSheet, setShowSheet] = useState(false);
   const deleteLogEntry = useDeleteLogEntry(date);
-  const updateLogEntry = useUpdateLogEntry(date);
 
   const name = entry.foodName ?? entry.dishName ?? "Unknown";
 
@@ -358,92 +351,54 @@ function EntryRow({ entry, date }: { entry: LogEntry; date: string }) {
     );
   }
 
-  if (isEditing) {
-    return (
-      <div className="flex items-center gap-2 border-t border-stone-100 px-3.5 py-2 first:border-t-0">
-        <input
-          type="number"
-          inputMode="decimal"
-          min={0}
-          step="any"
-          value={grams}
-          onChange={(e) => setGrams(Number(e.target.value) || 0)}
-          className="h-8 w-20 field-input"
-        />
-        <select
-          value={state}
-          onChange={(e) => setState(e.target.value as "raw" | "cooked")}
-          className="h-8 field-input"
-        >
-          <option value="raw">raw</option>
-          <option value="cooked">cooked</option>
-        </select>
-        <button
-          type="button"
-          className="text-sm font-semibold text-primary-700"
-          onClick={async () => {
-            await updateLogEntry.mutateAsync({
-              id: entry.id,
-              meal: entry.meal,
-              quantity: grams,
-              enteredState: state,
-              enteredGrams: grams,
-            });
-            setIsEditing(false);
-          }}
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          className="text-sm text-stone-500"
-          onClick={() => setIsEditing(false)}
-        >
-          Cancel
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.2 }}
-      className="flex items-center gap-2.5 border-t border-stone-100 px-3.5 py-2 first:border-t-0"
-    >
-      <FoodTile size={38} />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[13.5px] font-semibold">{name}</p>
-        <p className="text-[11.5px] text-stone-500">
-          {entry.enteredGrams}g {entry.enteredState}
-          {entry.isEstimated ? (
-            <span className="ml-1.5 rounded-full bg-stone-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-stone-500">
-              estimated
-            </span>
-          ) : null}
-        </p>
-      </div>
-      <span className="text-[13px] font-bold text-stone-700">{Math.round(entry.calories)}</span>
-      <button
-        type="button"
-        aria-label="Edit"
-        onClick={() => setIsEditing(true)}
-        className="rounded-lg p-1.5 text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-600 active:scale-90"
+    <>
+      <motion.div
+        layout
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.2 }}
+        className="flex items-center gap-2.5 border-t border-stone-100 px-3.5 py-2 first:border-t-0"
       >
-        <Pencil size={14} />
-      </button>
-      <button
-        type="button"
-        aria-label="Delete"
-        onClick={() => deleteLogEntry.mutate(entry.id)}
-        className="rounded-lg p-1.5 text-red-500 transition-colors hover:bg-red-50 active:scale-90"
-      >
-        <Trash2 size={14} />
-      </button>
-    </motion.div>
+        <button
+          type="button"
+          onClick={() => setShowSheet(true)}
+          className="flex min-w-0 flex-1 items-center gap-2.5 text-left"
+        >
+          <FoodTile size={38} />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[13.5px] font-semibold">{name}</p>
+            <p className="text-[11.5px] text-stone-500">
+              {entry.enteredGrams}g {entry.enteredState}
+              {entry.isEstimated ? (
+                <span className="ml-1.5 rounded-full bg-stone-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-stone-500">
+                  estimated
+                </span>
+              ) : null}
+            </p>
+          </div>
+        </button>
+        <span className="text-[13px] font-bold text-stone-700">{Math.round(entry.calories)}</span>
+        <button
+          type="button"
+          aria-label="Delete"
+          onClick={() => deleteLogEntry.mutate(entry.id)}
+          className="rounded-lg p-1.5 text-red-500 transition-colors hover:bg-red-50 active:scale-90"
+        >
+          <Trash2 size={14} />
+        </button>
+      </motion.div>
+
+      {showSheet ? (
+        <LogEntryDetailSheet
+          title={name}
+          entries={[entry]}
+          date={date}
+          onClose={() => setShowSheet(false)}
+        />
+      ) : null}
+    </>
   );
 }
 
@@ -489,8 +444,8 @@ function AiMealRow({
       </motion.button>
 
       {showSheet ? (
-        <AiMealSheet
-          description={description}
+        <LogEntryDetailSheet
+          title={description}
           entries={entries}
           date={date}
           onClose={() => setShowSheet(false)}

@@ -2,26 +2,28 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FoodTile } from "@/components/ui/food-tile";
-import { useUpdateLogEntry } from "@/lib/log/hooks";
+import { useDeleteLogEntry, useUpdateLogEntry } from "@/lib/log/hooks";
 import type { LogEntry } from "@/lib/log/types";
+import { createClient } from "@/lib/supabase/client";
 import { getErrorMessage } from "@/lib/error";
 
-// Every ingredient logged together from one "Describe what you ate" bulk
-// action shares an ai_group_id — this is the expanded view of that group:
-// total macros at top (same tinted-tile pattern as everywhere else this
-// preview appears), each ingredient with its own calories, and an Edit
-// toggle that turns grams into editable fields with a live macro preview
-// before anything is actually saved.
-export function AiMealSheet({
-  description,
+// One shared detail view for anything logged, whatever the source — a
+// single food from search/scan, a logged dish, or every ingredient of one
+// AI "Describe what you ate" action (entries sharing an ai_group_id). Shows
+// the macro total at top (the whole point: "click any logged item to see
+// its macro information"), each entry with its own calories, an Edit
+// toggle that turns grams into editable fields with a live preview before
+// saving, and Delete for the whole thing — one entry or the whole group.
+export function LogEntryDetailSheet({
+  title,
   entries,
   date,
   onClose,
 }: {
-  description: string;
+  title: string;
   entries: LogEntry[];
   date: string;
   onClose: () => void;
@@ -31,8 +33,12 @@ export function AiMealSheet({
     Object.fromEntries(entries.map((e) => [e.id, e.enteredGrams])),
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const updateLogEntry = useUpdateLogEntry(date);
+  const deleteLogEntry = useDeleteLogEntry(date);
+
+  const groupId = entries[0]?.aiGroupId ?? null;
 
   // Nutrient amounts scale exactly linearly with raw-equivalent grams
   // (food_nutrient is a fixed per-100g table) — same math
@@ -89,6 +95,28 @@ export function AiMealSheet({
     }
   }
 
+  async function handleDelete() {
+    const label = entries.length > 1 ? `"${title}" (${entries.length} items)` : `"${title}"`;
+    if (!window.confirm(`Delete ${label}? This can't be undone.`)) return;
+    setError(null);
+    setIsDeleting(true);
+    try {
+      await Promise.all(entries.map((e) => deleteLogEntry.mutateAsync(e.id)));
+      // The ai_meal_group row itself has no direct UI — clean it up once
+      // every entry that referenced it is gone, so it doesn't linger as
+      // orphaned metadata. Not critical if this part fails (RLS still
+      // scopes it to this user, it's just unused rows), so no retry.
+      if (groupId) {
+        await createClient().from("ai_meal_group").delete().eq("id", groupId);
+      }
+      onClose();
+    } catch (e) {
+      setError(getErrorMessage(e));
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45">
       <motion.div
@@ -100,20 +128,31 @@ export function AiMealSheet({
       >
         <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-stone-200" />
         <div className="mb-4 flex items-start justify-between gap-3">
-          <h2 className="text-lg font-extrabold">{description}</h2>
-          <button
-            type="button"
-            aria-label={isEditing ? "Done editing" : "Edit quantities"}
-            onClick={() => setIsEditing((v) => !v)}
-            className={
-              "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full active:scale-90 " +
-              (isEditing
-                ? "bg-primary-100 text-primary-700"
-                : "text-stone-400 hover:bg-stone-100 hover:text-stone-600")
-            }
-          >
-            <Pencil size={15} />
-          </button>
+          <h2 className="text-lg font-extrabold">{title}</h2>
+          <div className="flex flex-shrink-0 gap-1.5">
+            <button
+              type="button"
+              aria-label={isEditing ? "Done editing" : "Edit quantities"}
+              onClick={() => setIsEditing((v) => !v)}
+              className={
+                "flex h-9 w-9 items-center justify-center rounded-full active:scale-90 " +
+                (isEditing
+                  ? "bg-primary-100 text-primary-700"
+                  : "text-stone-400 hover:bg-stone-100 hover:text-stone-600")
+              }
+            >
+              <Pencil size={15} />
+            </button>
+            <button
+              type="button"
+              aria-label="Delete"
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-red-500 hover:bg-red-50 active:scale-90 disabled:opacity-50"
+            >
+              <Trash2 size={15} />
+            </button>
+          </div>
         </div>
 
         <div className="mb-4 grid grid-cols-4 gap-2 text-center text-xs">
