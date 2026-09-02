@@ -28,6 +28,11 @@
   --color-fat-bg: #f5f3ff;
   --color-calories: var(--color-primary-500);
 
+  /* Activity, not a food macro — a distinct hue from the macro trio and
+     from brand orange so it never reads as a 5th macro. */
+  --color-steps: #16a34a;
+  --color-steps-bg: #f0fdf4;
+
   --background: #ffffff;
   --foreground: var(--color-stone-900);
 
@@ -63,6 +68,8 @@
   --color-fat: var(--color-fat);
   --color-fat-bg: var(--color-fat-bg);
   --color-calories: var(--color-calories);
+  --color-steps: var(--color-steps);
+  --color-steps-bg: var(--color-steps-bg);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AiRecommendationSection } from "@/components/profile/ai-recommendation-section";
+import { StepsSyncSection } from "@/components/profile/steps-sync-section";
 import { getErrorMessage } from "@/lib/error";
 import { createClient } from "@/lib/supabase/client";
 import { useProfile, useSaveProfile } from "@/lib/profile/hooks";
@@ -74,10 +75,9 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (existingProfile) {
-      const { userId: _userId, ...rest } = existingProfile as ProfileInput & {
-        userId?: string;
-      };
+      const { userId: _userId, stepsSyncToken: _stepsSyncToken, ...rest } = existingProfile;
       void _userId;
+      void _stepsSyncToken;
       setInput(rest);
       setRateMagnitude(Math.abs(existingProfile.goalRateKgWeek));
     }
@@ -103,10 +103,9 @@ export default function ProfilePage() {
   // order), so a plain JSON.stringify comparison is safe here.
   const isDirty = useMemo(() => {
     if (!existingProfile) return true;
-    const { userId: _userId, ...baseline } = existingProfile as ProfileInput & {
-      userId?: string;
-    };
+    const { userId: _userId, stepsSyncToken: _stepsSyncToken, ...baseline } = existingProfile;
     void _userId;
+    void _stepsSyncToken;
     const current: ProfileInput = { ...input, goalRateKgWeek: signedRate };
     return JSON.stringify(current) !== JSON.stringify(baseline);
   }, [existingProfile, input, signedRate]);
@@ -404,6 +403,8 @@ export default function ProfilePage() {
             fatG: preview.fatG,
           }}
         />
+
+        <StepsSyncSection stepsSyncToken={existingProfile?.stepsSyncToken ?? null} />
 
         <Button
           className="w-full rounded-2xl shadow-glow"

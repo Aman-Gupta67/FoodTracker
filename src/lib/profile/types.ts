@@ -14,9 +14,13 @@ export interface Profile {
   carbPct: number;
   fatPct: number;
   timezone: string;
+  // Bearer token an iOS Shortcuts automation posts to /api/steps/sync with
+  // — not a form field, managed separately from the rest of the profile
+  // (generate/regenerate, not edited inline), so excluded from ProfileInput.
+  stepsSyncToken: string | null;
 }
 
-export type ProfileInput = Omit<Profile, "userId">;
+export type ProfileInput = Omit<Profile, "userId" | "stepsSyncToken">;
 
 export interface DailyTargets {
   calorieTarget: number;

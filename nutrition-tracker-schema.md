@@ -373,6 +373,7 @@ create table profile (
   fat_pct           smallint not null default 30,
   timezone          text not null default 'Asia/Kolkata',
   updated_at        timestamptz not null default now(),
+  steps_sync_token  text unique, -- bearer token an iOS Shortcut posts to /api/steps/sync with
   check (protein_pct + carb_pct + fat_pct = 100),
   check (goal_rate_kg_week between -0.75 and 0.75)
 );
@@ -384,6 +385,31 @@ create table daily_target (
   target_min  real,
   target_max  real,
   primary key (user_id, nutrient_id)
+);
+
+-- Weight-over-time for the Dashboard's trend chart — profile.weight_kg is a
+-- single current snapshot, this is the daily history. Populated
+-- automatically whenever a profile save changes weight, not via a separate
+-- logging UI.
+create table weight_log (
+  id          bigserial primary key,
+  user_id     uuid not null references auth.users(id),
+  logged_date date not null,
+  weight_kg   real not null,
+  created_at  timestamptz not null default now(),
+  unique (user_id, logged_date)
+);
+
+-- Steps can't be read from a PWA directly (no web API reaches HealthKit) —
+-- populated by an iOS Shortcuts automation POSTing to /api/steps/sync,
+-- authenticated by profile.steps_sync_token rather than a normal session.
+create table steps_log (
+  id          bigserial primary key,
+  user_id     uuid not null references auth.users(id),
+  logged_date date not null,
+  steps       integer not null check (steps >= 0),
+  created_at  timestamptz not null default now(),
+  unique (user_id, logged_date)
 );
 ```
 

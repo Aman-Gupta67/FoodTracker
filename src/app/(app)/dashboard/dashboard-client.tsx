@@ -29,6 +29,7 @@ interface ChartPoint {
   fat: number;
   targetFat: number | null;
   weight: number | null;
+  steps: number | null;
 }
 
 function formatShort(date: string): string {
@@ -54,8 +55,10 @@ export function DashboardClient() {
 
   const macroTotals = dashboardData?.macroTotals;
   const weightLog = dashboardData?.weightLog;
+  const stepsLog = dashboardData?.stepsLog;
 
   const weightByDate = new Map((weightLog ?? []).map((w) => [w.date, w.weightKg]));
+  const stepsByDate = new Map((stepsLog ?? []).map((s) => [s.date, s.steps]));
   const days = Array.from({ length: rangeDays }, (_, i) => shiftDateString(startDate, i));
   const data: ChartPoint[] = days.map((date) => {
     const m = macroTotals?.[date] ?? { calories: 0, protein: 0, carb: 0, fat: 0 };
@@ -70,10 +73,12 @@ export function DashboardClient() {
       fat: m.fat,
       targetFat: targets?.fatG ?? null,
       weight: weightByDate.get(date) ?? null,
+      steps: stepsByDate.get(date) ?? null,
     };
   });
   const latestWeightEntry = [...data].reverse().find((d) => d.weight !== null);
   const latestWeight = latestWeightEntry?.weight ?? null;
+  const todaySteps = data[data.length - 1]?.steps ?? null;
 
   return (
     <main className="flex-1 px-4 py-4">
@@ -189,6 +194,38 @@ export function DashboardClient() {
                   contentStyle={tooltipStyle}
                   labelFormatter={(d) => formatShort(String(d))}
                   formatter={(value) => [`${Number(value).toFixed(1)} kg`, "Weight"]}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+            <div className="flex justify-between text-[10px] font-semibold text-stone-400">
+              <span>{formatShort(days[0]!)}</span>
+              <span>Today</span>
+            </div>
+          </div>
+
+          <div className="mt-2.5 rounded-2xl bg-white p-3.5 shadow-sm">
+            <div className="mb-1 flex items-baseline justify-between">
+              <p className="text-[12.5px] font-bold text-stone-600">Steps</p>
+              <p className="text-base font-extrabold">
+                {todaySteps !== null ? todaySteps.toLocaleString() : "—"}
+              </p>
+            </div>
+            <ResponsiveContainer width="100%" height={90}>
+              <LineChart data={data} margin={{ top: 6, right: 6, bottom: 0, left: 6 }}>
+                <XAxis dataKey="date" hide />
+                <Line
+                  type="monotone"
+                  dataKey="steps"
+                  stroke="var(--color-steps)"
+                  strokeWidth={2.5}
+                  dot={{ r: 3, fill: "var(--color-steps)", strokeWidth: 0 }}
+                  connectNulls
+                  isAnimationActive={false}
+                />
+                <Tooltip
+                  contentStyle={tooltipStyle}
+                  labelFormatter={(d) => formatShort(String(d))}
+                  formatter={(value) => [`${Number(value).toLocaleString()} steps`, "Steps"]}
                 />
               </LineChart>
             </ResponsiveContainer>

@@ -19,6 +19,7 @@ interface RawProfileRow {
   carb_pct: number;
   fat_pct: number;
   timezone: string;
+  steps_sync_token: string | null;
 }
 
 function mapProfile(r: RawProfileRow): Profile {
@@ -36,6 +37,7 @@ function mapProfile(r: RawProfileRow): Profile {
     carbPct: r.carb_pct,
     fatPct: r.fat_pct,
     timezone: r.timezone,
+    stepsSyncToken: r.steps_sync_token,
   };
 }
 
@@ -158,4 +160,46 @@ export async function fetchWeightLog(
     date: r.logged_date,
     weightKg: r.weight_kg,
   }));
+}
+
+// Day-by-day steps for the Dashboard's steps trend chart — populated by an
+// iOS Shortcuts automation via /api/steps/sync, not read here.
+export async function fetchStepsLog(
+  startDate: string,
+  endDate: string,
+  preAuthed?: AuthedClient,
+): Promise<{ date: string; steps: number }[]> {
+  const authed = preAuthed ?? (await getAuthedClient());
+  if (!authed) return [];
+
+  const { data, error } = await authed.supabase
+    .from("steps_log")
+    .select("logged_date, steps")
+    .gte("logged_date", startDate)
+    .lte("logged_date", endDate)
+    .order("logged_date", { ascending: true });
+
+  if (error) throw error;
+  return (data as { logged_date: string; steps: number }[]).map((r) => ({
+    date: r.logged_date,
+    steps: r.steps,
+  }));
+}
+
+// A Shortcut can't hold a normal Supabase session, so it authenticates with
+// this bearer token instead (see /api/steps/sync) — generated/regenerated
+// here via a plain authenticated update, same RLS as any other profile
+// edit. Regenerating invalidates whatever Shortcut still has the old one.
+export async function regenerateStepsSyncToken(): Promise<string> {
+  const authed = await getAuthedClient();
+  if (!authed) throw new Error("Not authenticated");
+
+  const token = crypto.randomUUID().replace(/-/g, "");
+  const { error } = await authed.supabase
+    .from("profile")
+    .update({ steps_sync_token: token })
+    .eq("user_id", authed.userId);
+
+  if (error) throw error;
+  return token;
 }
