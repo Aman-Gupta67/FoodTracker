@@ -177,13 +177,22 @@ export function useUpdateLogEntry(date: string) {
       // server will do, just done twice. yieldFactor is reused rather than
       // re-resolved because the server's own resolve_yield() call depends
       // only on food_id, which this RPC never lets an update change.
+      //
+      // A dish's enteredGrams holds its SERVING count, not grams — its
+      // raw-equivalent total (e.grams) scales with that serving count, not
+      // with entered_state/yield_factor (which don't apply to a dish at
+      // all). Deriving grams-per-serving from this entry's own existing
+      // grams/enteredGrams keeps the two ref_types on the same formula
+      // shape without needing the dish's servings/ingredient totals here.
       queryClient.setQueryData<LogEntry[]>(key, (old = []) =>
         (old ?? []).map((e) => {
           if (e.id !== input.id) return e;
           const newGrams =
-            input.enteredState === "cooked"
-              ? input.enteredGrams / e.yieldFactor
-              : input.enteredGrams;
+            e.refType === "dish"
+              ? (e.enteredGrams > 0 ? e.grams / e.enteredGrams : 0) * input.enteredGrams
+              : input.enteredState === "cooked"
+                ? input.enteredGrams / e.yieldFactor
+                : input.enteredGrams;
           const ratio = e.grams > 0 ? newGrams / e.grams : 1;
           return {
             ...e,

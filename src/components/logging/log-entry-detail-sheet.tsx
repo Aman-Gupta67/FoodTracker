@@ -40,15 +40,21 @@ export function LogEntryDetailSheet({
 
   const groupId = entries[0]?.aiGroupId ?? null;
 
-  // Nutrient amounts scale exactly linearly with raw-equivalent grams
-  // (food_nutrient is a fixed per-100g table) — same math
-  // useUpdateLogEntry's own optimistic update uses server-side, done here
-  // client-side purely for an instant preview before Save is pressed.
+  // Nutrient amounts scale linearly with whatever the edit field actually
+  // represents — which is NOT always e.grams (the raw-equivalent value):
+  // a cooked food's e.grams already has the yield conversion baked in
+  // while the field being edited is enteredGrams (what was typed, in
+  // cooked terms), and a dish's e.grams is its raw-equivalent total while
+  // enteredGrams holds the *serving count*. Dividing by e.enteredGrams
+  // instead keeps numerator and denominator in the same unit for every
+  // ref_type, matching what create_log_entry/update_log_entry do server-
+  // side — done here client-side purely for an instant preview before
+  // Save is pressed.
   const previewEntries = useMemo(
     () =>
       entries.map((e) => {
         const newGrams = grams[e.id] ?? e.enteredGrams;
-        const ratio = e.grams > 0 ? newGrams / e.grams : 1;
+        const ratio = e.enteredGrams > 0 ? newGrams / e.enteredGrams : 1;
         return {
           entry: e,
           grams: newGrams,
@@ -196,22 +202,31 @@ export function LogEntryDetailSheet({
                 {p.entry.foodName ?? p.entry.dishName ?? "Unknown"}
               </span>
               {isEditing ? (
-                <input
-                  type="number"
-                  inputMode="decimal"
-                  min={0}
-                  step="any"
-                  value={grams[p.entry.id] ?? ""}
-                  onChange={(e) =>
-                    setGrams((prev) => ({
-                      ...prev,
-                      [p.entry.id]: Number(e.target.value) || 0,
-                    }))
-                  }
-                  className="h-8 w-16 rounded-xl field-input text-center"
-                />
+                <div className="flex items-center gap-1">
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="any"
+                    value={grams[p.entry.id] ?? ""}
+                    onChange={(e) =>
+                      setGrams((prev) => ({
+                        ...prev,
+                        [p.entry.id]: Number(e.target.value) || 0,
+                      }))
+                    }
+                    className="h-8 w-16 rounded-xl field-input text-center"
+                  />
+                  <span className="text-[10px] font-medium text-stone-400">
+                    {p.entry.refType === "dish" ? "svg" : "g"}
+                  </span>
+                </div>
               ) : (
-                <span className="text-[11.5px] text-stone-500">{p.grams}g</span>
+                <span className="text-[11.5px] text-stone-500">
+                  {p.entry.refType === "dish"
+                    ? `${p.grams} serving${p.grams !== 1 ? "s" : ""}`
+                    : `${p.grams}g`}
+                </span>
               )}
               <span className="w-12 flex-shrink-0 text-right text-[13px] font-bold text-stone-700">
                 {Math.round(p.calories)}

@@ -370,7 +370,9 @@ function EntryRow({ entry, date }: { entry: LogEntry; date: string }) {
           <div className="min-w-0 flex-1">
             <p className="truncate text-[13.5px] font-semibold">{name}</p>
             <p className="text-[11.5px] text-stone-500">
-              {entry.enteredGrams}g {entry.enteredState}
+              {entry.refType === "dish"
+                ? `${entry.quantity} serving${entry.quantity !== 1 ? "s" : ""}`
+                : `${entry.enteredGrams}g ${entry.enteredState}`}
               {entry.isEstimated ? (
                 <span className="ml-1.5 rounded-full bg-stone-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-stone-500">
                   estimated
