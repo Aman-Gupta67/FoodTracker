@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
-import { syncCatalogIfStale } from "@/lib/catalog/sync";
+import { syncFoodAliasesIntoLocalCatalog } from "@/lib/catalog/sync";
 
 async function addFoodAliases(input: {
   foodId: number;
@@ -13,7 +13,7 @@ async function addFoodAliases(input: {
   });
   if (error) throw error;
 
-  await syncCatalogIfStale();
+  await syncFoodAliasesIntoLocalCatalog(input.foodId);
 }
 
 // Only ever called with aliases a human has explicitly approved — the LLM

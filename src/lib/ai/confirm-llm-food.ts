@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
-import { syncCatalogIfStale } from "@/lib/catalog/sync";
+import { syncFoodsIntoLocalCatalog } from "@/lib/catalog/sync";
 import type { FoodCandidate } from "@/lib/providers/types";
 
 async function confirmLlmFood(candidate: FoodCandidate): Promise<number> {
@@ -18,9 +18,10 @@ async function confirmLlmFood(candidate: FoodCandidate): Promise<number> {
   });
   if (error) throw error;
 
-  await syncCatalogIfStale();
+  const foodId = data as number;
+  await syncFoodsIntoLocalCatalog([foodId]);
 
-  return data as number;
+  return foodId;
 }
 
 // Persists a needsConfirmation LLM candidate into the catalog, then resyncs
@@ -59,11 +60,10 @@ async function confirmLlmFoodsBulk(
   });
   if (error) throw error;
 
-  await syncCatalogIfStale();
+  const results = data as { idx: number; food_id: number }[];
+  await syncFoodsIntoLocalCatalog(results.map((r) => r.food_id));
 
-  return new Map(
-    (data as { idx: number; food_id: number }[]).map((r) => [r.idx, r.food_id]),
-  );
+  return new Map(results.map((r) => [r.idx, r.food_id]));
 }
 
 // One round trip for every AI-estimated item in a pending list instead of

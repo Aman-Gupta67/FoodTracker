@@ -19,7 +19,7 @@ export interface SyncResult {
   version: number;
 }
 
-async function getRemoteVersion(): Promise<number> {
+export async function getRemoteVersion(): Promise<number> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("catalog_version")
@@ -78,4 +78,62 @@ export async function syncCatalogIfStale(): Promise<SyncResult> {
   );
 
   return { synced: true, version: remoteVersion };
+}
+
+// Every catalog_version bump comes from one of exactly four write paths —
+// confirm_llm_food(s), confirm_off_food, add_food_aliases — each of which
+// already knows precisely which food(s) changed. Re-running the full
+// syncCatalogIfStale() after any of them means re-downloading and
+// rewriting the ENTIRE catalog (600+ foods, 16k+ nutrient rows) just to
+// pick up one new/updated food — and since bulk AI-logging makes
+// confirming several new foods a routine, fast action now, that full
+// resync started firing on nearly every visit to Add, which is what made
+// it feel slow. This folds in just what changed and advances the local
+// version marker to match remote, so syncCatalogIfStale()'s own mount-time
+// check finds nothing stale and does no work.
+export async function syncFoodsIntoLocalCatalog(foodIds: number[]): Promise<void> {
+  if (foodIds.length === 0) return;
+  const supabase = createClient();
+  const [foodResult, nutrientResult, remoteVersion] = await Promise.all([
+    supabase.from("food").select("*").in("id", foodIds),
+    supabase.from("food_nutrient").select("*").in("food_id", foodIds),
+    getRemoteVersion(),
+  ]);
+  if (foodResult.error) throw foodResult.error;
+  if (nutrientResult.error) throw nutrientResult.error;
+
+  await catalogDb.transaction(
+    "rw",
+    [catalogDb.food, catalogDb.foodNutrient, catalogDb.meta],
+    async () => {
+      await catalogDb.food.bulkPut((foodResult.data as RawFoodRow[]).map(mapFood));
+      // foodNutrient rows are Dexie-auto-keyed (no natural id from
+      // Postgres), so a re-confirmed food's updated amounts have to
+      // replace the old rows outright rather than risk duplicating them.
+      await catalogDb.foodNutrient.where("foodId").anyOf(foodIds).delete();
+      await catalogDb.foodNutrient.bulkAdd(
+        (nutrientResult.data as RawFoodNutrientRow[]).map(mapFoodNutrient),
+      );
+      await catalogDb.meta.put({ key: "version", value: remoteVersion });
+    },
+  );
+}
+
+// Same reasoning, for add_food_aliases (which only ever adds rows to an
+// existing food, never touches `food`/`food_nutrient`).
+export async function syncFoodAliasesIntoLocalCatalog(foodId: number): Promise<void> {
+  const supabase = createClient();
+  const [aliasResult, remoteVersion] = await Promise.all([
+    supabase.from("food_alias").select("*").eq("food_id", foodId),
+    getRemoteVersion(),
+  ]);
+  if (aliasResult.error) throw aliasResult.error;
+
+  await catalogDb.transaction("rw", [catalogDb.foodAlias, catalogDb.meta], async () => {
+    await catalogDb.foodAlias.where("foodId").equals(foodId).delete();
+    await catalogDb.foodAlias.bulkAdd(
+      (aliasResult.data as RawFoodAliasRow[]).map(mapFoodAlias),
+    );
+    await catalogDb.meta.put({ key: "version", value: remoteVersion });
+  });
 }

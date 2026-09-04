@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
-import { syncCatalogIfStale } from "@/lib/catalog/sync";
+import { syncFoodsIntoLocalCatalog } from "@/lib/catalog/sync";
 import type { FoodCandidate, NutrientKey } from "./types";
 
 async function confirmOffFood(candidate: FoodCandidate): Promise<FoodCandidate> {
@@ -24,11 +24,12 @@ async function confirmOffFood(candidate: FoodCandidate): Promise<FoodCandidate> 
   });
   if (error) throw error;
 
-  await syncCatalogIfStale();
+  const foodId = data as number;
+  await syncFoodsIntoLocalCatalog([foodId]);
 
   return {
     ...candidate,
-    id: String(data as number),
+    id: String(foodId),
     needsConfirmation: false,
   };
 }
