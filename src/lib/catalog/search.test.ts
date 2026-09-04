@@ -144,4 +144,56 @@ describe("offline catalog search (IndexedDB)", () => {
 
     expect(calcium?.amount).toBe(126);
   });
+
+  // Regression test for a real misidentification: an AI-parsed "water"
+  // ingredient (near-universal in chai/tea recipes) used to resolve to
+  // "Yam, ordinary" (aliased "water yam") or "Water melon" — both start
+  // with "water" too, and resolveParsedItems only ever looks at
+  // matches[0]. A synthetic fixture rather than the real out/*.csv data,
+  // since this is asserting the ranking algorithm itself, not any
+  // particular catalog content (which is generated, not hand-edited —
+  // see CLAUDE.md "What not to touch").
+  it("prefers an exact alias match over a longer alias that merely starts with the same text", async () => {
+    const WATER_ID = 900001;
+    const WATERMELON_ID = 900002;
+    await catalogDb.food.bulkAdd([
+      mapFood({
+        id: WATER_ID,
+        source: "user",
+        source_ref: "water-test",
+        name: "Water",
+        source_name: "Water",
+        scientific_name: null,
+        food_group: "Beverages",
+        state: "raw",
+        b12_unknown: false,
+        is_curated: true,
+        tags: null,
+        n_regions: null,
+        energy_source: "measured",
+      }),
+      mapFood({
+        id: WATERMELON_ID,
+        source: "ifct2017",
+        source_ref: "test-watermelon",
+        name: "Water melon, test fixture",
+        source_name: "Water melon",
+        scientific_name: null,
+        food_group: "Fruits",
+        state: "raw",
+        b12_unknown: false,
+        is_curated: false,
+        tags: null,
+        n_regions: null,
+        energy_source: "measured",
+      }),
+    ]);
+    await catalogDb.foodAlias.bulkAdd([
+      mapFoodAlias({ food_id: WATER_ID, alias: "water" }),
+      mapFoodAlias({ food_id: WATERMELON_ID, alias: "watermelon" }),
+    ]);
+
+    const results = await searchFoodByAlias("water");
+    expect(results[0]?.name).toBe("Water");
+  });
 });

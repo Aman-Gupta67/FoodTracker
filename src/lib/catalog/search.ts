@@ -54,6 +54,20 @@ export async function searchFoodByAlias(
     .startsWithIgnoreCase(trimmed)
     .toArray();
 
+  // An exact alias match is always a stronger signal than a merely-prefix
+  // one — "water" should resolve to the food aliased exactly "water", not
+  // to "watermelon"/"water yam" just because they also start with the
+  // same letters and happen to sort first in an otherwise-unordered index
+  // scan (a real case: both those foods outrank actual water this way).
+  // resolveParsedItems only ever looks at matches[0], so this ordering is
+  // the whole difference between a correct and a silently wrong match.
+  const lowerTrimmed = trimmed.toLowerCase();
+  aliasMatches.sort((a, b) => {
+    const aExact = a.alias.toLowerCase() === lowerTrimmed ? 0 : 1;
+    const bExact = b.alias.toLowerCase() === lowerTrimmed ? 0 : 1;
+    return aExact - bExact;
+  });
+
   const aliasFoodIds = [...new Set(aliasMatches.map((m) => m.foodId))];
   const aliasFoods = await catalogDb.food.bulkGet(aliasFoodIds);
   const foodById = new Map<number, CachedFood>(
