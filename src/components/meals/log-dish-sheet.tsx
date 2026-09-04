@@ -13,15 +13,20 @@ import type { Dish } from "@/lib/meals/types";
 export function LogDishSheet({
   dish,
   initialMeal,
+  date: dateProp,
   onClose,
   onLogged,
 }: {
   dish: Dish;
   initialMeal?: MealSlot;
+  // Defaults to today for the Meals list (no date context there); Add
+  // passes the day actually being logged for, so a dish logged while
+  // viewing a past date lands on that date, not today.
+  date?: string;
   onClose: () => void;
   onLogged: () => void;
 }) {
-  const date = getTodayDateString();
+  const date = dateProp ?? getTodayDateString();
   const [meal, setMeal] = useState<MealSlot>(initialMeal ?? "breakfast");
   const [servings, setServings] = useState<number | "">("");
   const numericServings = servings === "" ? 0 : servings;

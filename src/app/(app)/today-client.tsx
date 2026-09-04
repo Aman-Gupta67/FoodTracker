@@ -159,7 +159,7 @@ export function TodayClient({ initialDate }: { initialDate: string | null }) {
       <div className="pointer-events-none fixed inset-x-0 bottom-24 z-20 flex justify-center">
         <div className="flex w-full max-w-[480px] justify-end px-6">
           <Link
-            href="/add"
+            href={`/add?date=${date}`}
             aria-label="Add food"
             className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-glow transition-transform active:scale-95"
           >
@@ -241,7 +241,7 @@ function EmptyDay({ date }: { date: string }) {
         {isToday ? "Nothing logged yet today." : "Nothing logged this day."}
       </p>
       {isToday ? (
-        <Link href="/add">
+        <Link href={`/add?date=${date}`}>
           <Button>+ Log your first item</Button>
         </Link>
       ) : null}
@@ -324,7 +324,7 @@ function MealSection({
       </AnimatePresence>
 
       <Link
-        href={`/add?slot=${slot}`}
+        href={`/add?slot=${slot}&date=${date}`}
         className="block border-t border-stone-100 px-3.5 py-2.5 text-[12.5px] font-bold text-primary-700"
       >
         + Add to {MEAL_SLOT_LABELS[slot]}

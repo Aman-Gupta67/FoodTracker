@@ -38,9 +38,11 @@ const SEARCH_DEBOUNCE_MS = 150;
 export function AddFoodClient({
   initialSlot,
   autoOpenScanner = false,
+  initialDate = null,
 }: {
   initialSlot: MealSlot | null;
   autoOpenScanner?: boolean;
+  initialDate?: string | null;
 }) {
   const router = useRouter();
   const [meal, setMeal] = useState<MealSlot>(
@@ -72,7 +74,11 @@ export function AddFoodClient({
   const [showSaveAsDish, setShowSaveAsDish] = useState(false);
   const [isSavingDish, setIsSavingDish] = useState(false);
   const [saveDishError, setSaveDishError] = useState<string | null>(null);
-  const date = getTodayDateString();
+  // The day Home's WeekStrip had selected when "+ Add" was tapped — logging
+  // for a past date must land on that date, not silently fall back to
+  // today just because this screen doesn't otherwise track which day it's
+  // for.
+  const date = initialDate ?? getTodayDateString();
 
   const { data: dishes = [] } = useDishes();
   const { data: targets } = useDailyTargets();
@@ -653,6 +659,7 @@ export function AddFoodClient({
         <LogDishSheet
           dish={selectedDish}
           initialMeal={meal}
+          date={date}
           onClose={() => setSelectedDish(null)}
           onLogged={() => {
             setSelectedDish(null);
