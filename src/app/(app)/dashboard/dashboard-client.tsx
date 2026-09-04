@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import {
+  Bar,
+  BarChart,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -211,23 +213,22 @@ export function DashboardClient() {
               </p>
             </div>
             <ResponsiveContainer width="100%" height={90}>
-              <LineChart data={data} margin={{ top: 6, right: 6, bottom: 0, left: 6 }}>
+              <BarChart data={data} margin={{ top: 6, right: 6, bottom: 0, left: 6 }}>
                 <XAxis dataKey="date" hide />
-                <Line
-                  type="monotone"
+                <Bar
                   dataKey="steps"
-                  stroke="var(--color-steps)"
-                  strokeWidth={2.5}
-                  dot={{ r: 3, fill: "var(--color-steps)", strokeWidth: 0 }}
-                  connectNulls
+                  fill="var(--color-steps)"
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={18}
                   isAnimationActive={false}
                 />
                 <Tooltip
+                  cursor={{ fill: "var(--color-steps-bg)" }}
                   contentStyle={tooltipStyle}
                   labelFormatter={(d) => formatShort(String(d))}
                   formatter={(value) => [`${Number(value).toLocaleString()} steps`, "Steps"]}
                 />
-              </LineChart>
+              </BarChart>
             </ResponsiveContainer>
             <div className="flex justify-between text-[10px] font-semibold text-stone-400">
               <span>{formatShort(days[0]!)}</span>
